@@ -1329,6 +1329,17 @@
   };
   window.__discoveredWallets = new Map();
 
+  const KNOWN_WALLETS = [
+    { name: "Phantom", color: "#AB9FF2", initial: "P", install: "https://phantom.app/" },
+    { name: "Solflare", color: "#FC9231", initial: "S", install: "https://solflare.com/" },
+    { name: "Backpack", color: "#E33E3E", initial: "B", install: "https://backpack.app/" },
+    { name: "Bitget Wallet", color: "#00F0C0", initial: "B", install: "https://web3.bitget.com/wallet-download" },
+    { name: "Coinbase Wallet", color: "#0052FF", initial: "C", install: "https://www.coinbase.com/wallet" },
+    { name: "Trust Wallet", color: "#3375BB", initial: "T", install: "https://trustwallet.com/" },
+    { name: "MetaMask", color: "#F6851B", initial: "🦊", install: "https://metamask.io/" },
+    { name: "Magic Eden", color: "#E42575", initial: "M", install: "https://wallet.magiceden.io/" },
+  ];
+
   const ADMIN_WALLET = "A4zUeyAsG1R9JGgqAThryftTZdYDxtEe3fkXhGvkzCPB";
   const ADMIN_PASSCODE = "mp-9f3ak2x7Lq-2026";
   const SUPABASE_URL = "https://dmryjxwglpdubjqpyapi.supabase.co";
@@ -1551,17 +1562,6 @@
     try{ event.detail.register(appRegister); }catch(e){ console.error(e); }
   });
   window.dispatchEvent(new CustomEvent("wallet-standard:app-ready", { detail: { register: appRegister } }));
-
-  const KNOWN_WALLETS = [
-    { name: "Phantom", color: "#AB9FF2", initial: "P", install: "https://phantom.app/" },
-    { name: "Solflare", color: "#FC9231", initial: "S", install: "https://solflare.com/" },
-    { name: "Backpack", color: "#E33E3E", initial: "B", install: "https://backpack.app/" },
-    { name: "Bitget Wallet", color: "#00F0C0", initial: "B", install: "https://web3.bitget.com/wallet-download" },
-    { name: "Coinbase Wallet", color: "#0052FF", initial: "C", install: "https://www.coinbase.com/wallet" },
-    { name: "Trust Wallet", color: "#3375BB", initial: "T", install: "https://trustwallet.com/" },
-    { name: "MetaMask", color: "#F6851B", initial: "🦊", install: "https://metamask.io/" },
-    { name: "Magic Eden", color: "#E42575", initial: "M", install: "https://wallet.magiceden.io/" },
-  ];
 
   function findDiscoveredKey(knownName){
     const target = knownName.toLowerCase();
