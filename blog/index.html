@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Blog | DegenKit</title>
+<meta name="description" content="Updates, guides, and notes from the DegenKit team.">
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/styles.css">
+<style>
+  .blog-hero{padding:56px clamp(20px,4vw,56px) 20px; max-width:760px; margin:0 auto; text-align:center;}
+  .blog-hero h1{font-family:'Space Grotesk',sans-serif; font-weight:800; font-size:clamp(30px,4.5vw,44px); margin:0 0 12px;}
+  .blog-hero p{color:var(--muted); font-size:15.5px;}
+  .blog-list{max-width:760px; margin:30px auto 100px; padding:0 clamp(20px,4vw,56px); display:flex; flex-direction:column; gap:18px;}
+  .blog-card{
+    display:block; border:1px solid var(--line); border-radius:14px; padding:24px 26px;
+    background:var(--panel); transition:border-color .15s, transform .15s;
+  }
+  .blog-card:hover{border-color:rgba(255,122,26,0.4); transform:translateY(-2px);}
+  .blog-card .b-date{font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--orange-bright); letter-spacing:0.06em; text-transform:uppercase;}
+  .blog-card h2{font-family:'Space Grotesk',sans-serif; font-size:20px; margin:8px 0 8px;}
+  .blog-card p{color:var(--muted); font-size:14px; line-height:1.6; margin:0;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-row">
+    <a class="logo" href="/"><img src="../assets/icon.png" alt="" class="logo-icon"><span class="logo-text">DegenKit</span></a>
+    <nav class="site-nav">
+      <a class="navlink" href="/#features">Features</a>
+      <a class="navlink" href="/#roadmap">Roadmap</a>
+      <a class="navlink" href="/#faq">FAQ</a>
+    </nav>
+    <div class="header-actions">
+      <a class="btn-launch" href="/launch/solana/">Launch App</a>
+    </div>
+  </div>
+</header>
+
+<div class="blog-hero">
+  <div class="eyebrow" style="display:inline-flex;">Blog</div>
+  <h1>Notes from the runway</h1>
+  <p>Updates, guides, and behind-the-scenes notes on building DegenKit.</p>
+</div>
+
+<div class="blog-list">
+  <a class="blog-card" href="/blog/welcome-to-degenkit/">
+    <div class="b-date">July 2026</div>
+    <h2>Welcome to DegenKit</h2>
+    <p>Why we built a one-signature token creator for Solana, what "locked by default" actually means on-chain, and what's coming next.</p>
+  </a>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-bottom" style="border-top:none; padding-top:0;">
+      <p>© 2026 DegenKit. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

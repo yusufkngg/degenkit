@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Choose your network — DegenKit</title>
+<meta name="description" content="Choose a network to launch your token on with DegenKit.">
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/styles.css">
+<style>
+  .select-hero{padding:clamp(64px,10vw,110px) 0 30px; text-align:center;}
+  .select-hero h1{
+    font-family:'Space Grotesk',sans-serif; font-weight:800; letter-spacing:-0.02em;
+    font-size:clamp(32px,4.6vw,48px); margin:0 0 16px;
+  }
+  .select-hero p{color:var(--muted); font-size:16px; max-width:480px; margin:0 auto;}
+
+  .chain-grid{
+    max-width:900px; margin:56px auto 120px; padding:0 clamp(20px,4vw,56px);
+    display:grid; grid-template-columns:1fr 1fr; gap:22px;
+  }
+  @media (max-width:700px){ .chain-grid{grid-template-columns:1fr;} }
+
+  .chain-card{
+    background:var(--panel); border:1px solid var(--line); border-radius:22px;
+    padding:36px 30px; text-align:center; position:relative; overflow:hidden;
+    transition:transform .18s, border-color .18s;
+  }
+  .chain-card.live{cursor:pointer;}
+  .chain-card.live:hover{transform:translateY(-6px); border-color:rgba(255,122,26,0.5);}
+  .chain-card.soon{opacity:0.6;}
+
+  .chain-port{
+    width:88px; height:88px; margin:0 auto 22px; border-radius:50%;
+    background:var(--panel-2); border:2px solid var(--line);
+    display:flex; align-items:center; justify-content:center; font-size:34px;
+  }
+  .chain-card.live .chain-port{border-color:var(--orange);}
+
+  .chain-card h3{font-family:'Space Grotesk',sans-serif; font-size:21px; margin:0 0 10px;}
+  .chain-card p{color:var(--muted); font-size:14px; line-height:1.6; margin:0 0 24px; min-height:44px;}
+
+  .chain-status{
+    display:inline-flex; align-items:center; gap:7px;
+    font-family:'JetBrains Mono',monospace; font-size:11.5px; letter-spacing:0.08em;
+    text-transform:uppercase; padding:5px 14px; border-radius:100px; margin-bottom:20px;
+  }
+  .chain-status.live{color:var(--mint); border:1px solid rgba(28,227,155,0.4); background:rgba(28,227,155,0.08);}
+  .chain-status.soon{color:var(--muted); border:1px solid var(--line);}
+  .chain-status .dot{width:6px; height:6px; border-radius:50%; background:currentColor;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-row">
+    <a class="logo" href="/"><img src="../assets/icon.png" alt="" class="logo-icon"><span class="logo-text">DegenKit</span></a>
+    <nav class="site-nav">
+      <a class="navlink" href="/#features">Features</a>
+      <a class="navlink" href="/#roadmap">Roadmap</a>
+      <a class="navlink" href="/#faq">FAQ</a>
+    </nav>
+    <div class="header-actions">
+      <a class="social-icn" href="#" aria-label="Discord" title="Discord (coming soon)">◈</a>
+      <a class="social-icn" href="https://x.com/DegenKitApp" target="_blank" aria-label="X / Twitter" title="Follow on X">𝕏</a>
+    </div>
+  </div>
+</header>
+
+<section class="select-hero">
+  <div class="wrap">
+    <div class="eyebrow" style="display:inline-flex;"><span class="dot"></span> Step 1 of 2</div>
+    <h1>Choose your network</h1>
+    <p>Pick where your token lives. You can always come back and launch on another network later.</p>
+  </div>
+</section>
+
+<div class="chain-grid">
+  <a class="chain-card live" href="solana/">
+    <div class="chain-status live"><span class="dot"></span>Live</div>
+    <div class="chain-port">◎</div>
+    <h3>Solana</h3>
+    <p>SPL tokens, one signature. Mint &amp; freeze authority revoked and metadata locked automatically.</p>
+    <span class="btn-launch">Launch on Solana</span>
+  </a>
+  <div class="chain-card soon">
+    <div class="chain-status soon">Coming soon</div>
+    <div class="chain-port" style="font-family:'Space Grotesk',sans-serif; font-weight:700;">R</div>
+    <h3>Robinhood Chain</h3>
+    <p>The same one-signature flow, coming to Robinhood Chain next.</p>
+    <span class="btn-launch disabled">Notify me</span>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="logo"><img src="../assets/icon.png" alt="" class="logo-icon"><span class="logo-text">DegenKit</span></div>
+        <p>Token creation, without the guesswork. Launch on Solana today — Robinhood Chain is next.</p>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <h4>Site</h4>
+          <a href="/">Home</a>
+          <a href="/launch/">Launch</a>
+          <a href="/#faq">FAQ</a>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <a href="/terms/">Terms &amp; Conditions</a>
+          <a href="/privacy/">Privacy Policy</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 DegenKit. All rights reserved.</p>
+      <div class="footer-socials">
+        <a class="social-icn" href="#" aria-label="Discord">◈</a>
+        <a class="social-icn" href="https://x.com/DegenKitApp" target="_blank" aria-label="X / Twitter">𝕏</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

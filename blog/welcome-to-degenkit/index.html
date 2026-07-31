@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Welcome to DegenKit | DegenKit Blog</title>
+<meta name="description" content="Why we built a one-signature token creator for Solana, and what's coming next.">
+<link rel="icon" type="image/png" href="../../assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/styles.css">
+<style>
+  .post-wrap{max-width:700px; margin:0 auto; padding:56px clamp(20px,4vw,56px) 100px;}
+  .post-back{font-size:13px; color:var(--muted); font-family:'JetBrains Mono',monospace; display:inline-block; margin-bottom:24px;}
+  .post-wrap h1{font-family:'Space Grotesk',sans-serif; font-weight:800; font-size:clamp(28px,4.4vw,42px); margin:0 0 10px; line-height:1.1;}
+  .post-date{color:var(--muted); font-size:13px; font-family:'JetBrains Mono',monospace; margin-bottom:34px;}
+  .post-wrap h2{font-family:'Space Grotesk',sans-serif; font-size:21px; margin:34px 0 12px;}
+  .post-wrap p, .post-wrap li{color:#D8D3C7; font-size:15.5px; line-height:1.8;}
+  .post-wrap ul{padding-left:20px;}
+  .post-wrap a{color:var(--orange-bright);}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-row">
+    <a class="logo" href="/"><img src="../../assets/icon.png" alt="" class="logo-icon"><span class="logo-text">DegenKit</span></a>
+    <nav class="site-nav">
+      <a class="navlink" href="/#features">Features</a>
+      <a class="navlink" href="/#roadmap">Roadmap</a>
+      <a class="navlink" href="/#faq">FAQ</a>
+    </nav>
+    <div class="header-actions">
+      <a class="btn-launch" href="/launch/solana/">Launch App</a>
+    </div>
+  </div>
+</header>
+
+<div class="post-wrap">
+  <a class="post-back" href="/blog/">← Back to blog</a>
+  <h1>Welcome to DegenKit</h1>
+  <div class="post-date">July 2026</div>
+
+  <p>Launching a token on Solana usually means one of two things: writing and deploying your own program, or trusting a black-box launchpad and hoping the defaults are sane. DegenKit is our attempt at a third option — a tool that does the one-click thing without hiding what's actually happening on-chain.</p>
+
+  <h2>One signature, not one leap of faith</h2>
+  <p>When you create a token with DegenKit, everything happens in a single transaction that you sign: the mint account is created, your supply is minted to your wallet, metadata is written, and (if you choose) mint and freeze authority are revoked — all atomically. If any step fails, nothing is charged and nothing is half-done.</p>
+
+  <h2>Locked by default, not locked by trust</h2>
+  <p>"Mint and freeze authority revoked" isn't a promise we make about how we'll behave — it's a property of the token itself, verifiable by anyone on Solana's block explorers. Once those authorities are set to <code>null</code>, no one — not you, not us — can mint more supply or freeze a holder's account. That's the difference between a policy and a fact.</p>
+
+  <h2>What's live today</h2>
+  <ul>
+    <li>Token Creator — name, symbol, decimals, supply, image, one signature.</li>
+    <li>My Tokens, Authorities, Update Metadata, Burn Token — manage what you've already created.</li>
+    <li>Tax Token — a transfer-fee token built on Solana's Token-2022 program.</li>
+    <li>Airdrop and Multisender — distribute tokens to many wallets at once.</li>
+  </ul>
+
+  <h2>What's next</h2>
+  <p>Robinhood Chain support is next on our <a href="/#roadmap">roadmap</a>, bringing the same one-signature flow to a second network. Liquidity tools and swaps are further out — those touch real DEX integrations, so we're taking our time to get them right rather than shipping something half-tested.</p>
+
+  <p>If you build something with DegenKit, or run into a rough edge, we'd like to hear about it — see the <a href="/support/">Support page</a>.</p>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-bottom" style="border-top:none; padding-top:0;">
+      <p>© 2026 DegenKit. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

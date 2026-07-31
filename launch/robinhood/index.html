@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Robinhood Chain — Coming soon | DegenKit</title>
+<link rel="icon" type="image/png" href="../../assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/styles.css">
+<style>
+  .soon-hero{
+    min-height:64vh; display:flex; align-items:center; justify-content:center;
+    text-align:center; padding:60px clamp(20px,4vw,56px);
+  }
+  .soon-port{
+    width:120px; height:120px; margin:0 auto 30px; border-radius:50%;
+    background:var(--panel-2); border:2px solid var(--line);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:46px;
+    box-shadow:0 0 0 10px rgba(255,122,26,0.05), 0 0 0 11px var(--line);
+  }
+  .soon-hero h1{
+    font-family:'Space Grotesk',sans-serif; font-weight:800; font-size:clamp(28px,4vw,42px);
+    margin:0 0 14px; letter-spacing:-0.01em;
+  }
+  .soon-hero p{color:var(--muted); font-size:15.5px; max-width:440px; margin:0 auto 30px; line-height:1.6;}
+  .soon-actions{display:flex; gap:14px; justify-content:center; flex-wrap:wrap;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-row">
+    <a class="logo" href="/"><img src="../../assets/icon.png" alt="" class="logo-icon"><span class="logo-text">DegenKit</span></a>
+    <nav class="site-nav">
+      <a class="navlink" href="/#features">Features</a>
+      <a class="navlink" href="/#roadmap">Roadmap</a>
+      <a class="navlink" href="/#faq">FAQ</a>
+    </nav>
+    <div class="header-actions">
+      <div class="chain-select-wrap">
+        <button class="chain-select-btn" id="chainSelectBtn">
+          <img src="../../assets/robinhood-logo.png" alt="">
+          <span>Robinhood Chain</span>
+          <span class="chain-caret">▾</span>
+        </button>
+        <div class="chain-select-menu" id="chainSelectMenu">
+          <a href="/launch/solana/" class="chain-option">
+            <img src="../../assets/solana-logo.png" alt=""> <span>Solana</span> <span class="chain-tag live">Live</span>
+          </a>
+          <a href="/launch/robinhood/" class="chain-option">
+            <img src="../../assets/robinhood-logo.png" alt=""> <span>Robinhood Chain</span> <span class="chain-tag soon">Soon</span>
+          </a>
+        </div>
+      </div>
+      <a class="btn-launch" href="/launch/solana/">Launch on Solana</a>
+    </div>
+  </div>
+</header>
+
+<section class="soon-hero">
+  <div>
+    <div class="soon-port">R</div>
+    <h1>Robinhood Chain is next.</h1>
+    <p>The same one-signature token creation flow is coming to Robinhood Chain. Launch on Solana today while we build it.</p>
+    <div class="soon-actions">
+      <a class="btn-launch" href="/launch/solana/">Launch on Solana instead</a>
+      <a class="btn-ghost" href="/launch/">← Back to network select</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-bottom" style="border-top:none; padding-top:0;">
+      <p>© 2026 DegenKit. All rights reserved.</p>
+      <div class="footer-socials">
+        <a class="social-icn" href="#" aria-label="Discord">◈</a>
+        <a class="social-icn" href="https://x.com/DegenKitApp" target="_blank" aria-label="X / Twitter">𝕏</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById("chainSelectBtn").addEventListener("click", (e) => {
+    e.stopPropagation();
+    document.getElementById("chainSelectMenu").classList.toggle("open");
+  });
+  document.addEventListener("click", () => {
+    document.getElementById("chainSelectMenu").classList.remove("open");
+  });
+  document.getElementById("chainSelectMenu").addEventListener("click", (e) => e.stopPropagation());
+</script>
+
+</body>
+</html>

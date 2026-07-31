@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Support | DegenKit</title>
+<meta name="description" content="Get help with DegenKit — what to check before reaching out, and how to contact us.">
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/styles.css">
+<style>
+  .support-wrap{max-width:700px; margin:0 auto; padding:56px clamp(20px,4vw,56px) 100px;}
+  .support-wrap h1{font-family:'Space Grotesk',sans-serif; font-weight:800; font-size:clamp(28px,4.4vw,42px); margin:0 0 12px;}
+  .support-wrap > p.lead{color:var(--muted); font-size:15.5px; margin-bottom:36px;}
+  .support-panel{
+    border:1px solid var(--line); border-radius:16px; padding:28px 30px; background:var(--panel); margin-bottom:28px;
+  }
+  .support-panel h2{font-family:'Space Grotesk',sans-serif; font-size:19px; margin:0 0 14px;}
+  .support-panel ul{padding-left:20px; margin:0;}
+  .support-panel li{color:#D8D3C7; font-size:14.5px; line-height:1.85;}
+  .support-panel li strong{color:var(--ink);}
+  .email-box{
+    display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;
+    border:1px solid rgba(255,122,26,0.35); background:rgba(255,122,26,0.06); border-radius:12px;
+    padding:20px 24px; margin-bottom:30px;
+  }
+  .email-box .addr{font-family:'JetBrains Mono',monospace; font-size:16px; color:var(--orange-bright); font-weight:600;}
+  .email-box .label{color:var(--muted); font-size:12.5px; font-family:'JetBrains Mono',monospace; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:4px;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-row">
+    <a class="logo" href="/"><img src="../assets/icon.png" alt="" class="logo-icon"><span class="logo-text">DegenKit</span></a>
+    <nav class="site-nav">
+      <a class="navlink" href="/#features">Features</a>
+      <a class="navlink" href="/#roadmap">Roadmap</a>
+      <a class="navlink" href="/#faq">FAQ</a>
+    </nav>
+    <div class="header-actions">
+      <a class="btn-launch" href="/launch/solana/">Launch App</a>
+    </div>
+  </div>
+</header>
+
+<div class="support-wrap">
+  <div class="eyebrow" style="display:inline-flex;">Support</div>
+  <h1>Get help</h1>
+  <p class="lead">Most issues come down to network congestion, an unusual token setup, or a copy-paste mix-up on an address. A few checks below often resolve it faster than waiting on a reply.</p>
+
+  <div class="support-panel">
+    <h2>Before you reach out</h2>
+    <ul>
+      <li><strong>Check the transaction on Explorer.</strong> Paste your transaction signature into <a href="https://explorer.solana.com" target="_blank" style="color:var(--orange-bright);">explorer.solana.com</a> — it often shows exactly what happened, even if DegenKit's status message was unclear.</li>
+      <li><strong>Read the <a href="/#faq" style="color:var(--orange-bright);">FAQ</a>.</strong> Fees, supported wallets, and how authority revocation works are covered there.</li>
+      <li><strong>Try refreshing and reconnecting your wallet.</strong> This resolves a surprising number of "stuck" states.</li>
+      <li><strong>Confirm you're on the network you think you're on.</strong> The network is shown in the sidebar and in the token summary panel.</li>
+    </ul>
+  </div>
+
+  <div class="email-box">
+    <div>
+      <div class="label">Email us</div>
+      <div class="addr">support@degenkit.app</div>
+    </div>
+    <a class="btn-launch" href="mailto:support@degenkit.app">Send an email</a>
+  </div>
+
+  <div class="support-panel">
+    <h2>What to include</h2>
+    <ul>
+      <li>The <strong>tool</strong> you were using (Token Creator, Airdrop, Burn Token, etc.)</li>
+      <li>Your <strong>wallet address</strong> (public address only — never share your seed phrase or private key, with us or anyone)</li>
+      <li>The <strong>transaction signature</strong>, if one was generated</li>
+      <li>Which <strong>network</strong> you were on (Mainnet)</li>
+      <li>A short description of what you expected vs. what happened</li>
+    </ul>
+  </div>
+
+  <div class="support-panel" style="border-color:rgba(224,87,76,0.35); background:rgba(224,87,76,0.06);">
+    <h2 style="color:#f0a89f;">A note on security</h2>
+    <p style="color:#D8D3C7; font-size:14.5px; line-height:1.8; margin:0;">We will never ask for your seed phrase, private key, or to approve a transaction over email, Discord, or any messaging app. If someone claiming to be DegenKit support asks for either, it's a scam — please don't share it, and let us know.</p>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-bottom" style="border-top:none; padding-top:0;">
+      <p>© 2026 DegenKit. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
