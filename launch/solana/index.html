@@ -1958,7 +1958,7 @@
       const badgeEl = document.querySelector('#view-create .fee-badge');
       if(badgeEl) badgeEl.innerHTML = '<span class="dot"></span> Flat ' + TOOL_FEES.token_create + ' SOL total — no hidden fees, no surprise charges.';
       const taxBadgeEl = document.getElementById('taxFeeBadge');
-      if(taxBadgeEl) taxBadgeEl.innerHTML = '<span class="dot"></span> Flat ' + TOOL_FEES.tax_token_create + ' SOL total — no hidden fees, no surprise charges.';
+      if(taxBadgeEl) taxBadgeEl.innerHTML = '<span class="dot"></span> Flat ' + TOOL_FEES.tax_token_create + ' SOL — no hidden fees. Sent as a second, separate signature right after your token is created.';
       const swapFeeEl = document.getElementById('swap_feeDisplay');
       if(swapFeeEl) swapFeeEl.textContent = TOOL_FEES.swap + ' SOL';
     }catch(e){ console.error("Could not load live fees, using defaults:", e); }
@@ -2742,7 +2742,6 @@
       }));
 
       tx.add(splToken.createSetAuthorityInstruction(mintKeypair.publicKey, payer, splToken.AuthorityType.MintTokens, null, [], TOKEN_2022_PROGRAM_ID));
-      tx.add(feeTransferIx(payer, TOOL_FEES.tax_token_create));
 
       tx.feePayer = payer;
       const { blockhash } = await connection.getLatestBlockhash();
@@ -2766,6 +2765,23 @@
         if(st && st.err) throw new Error(JSON.stringify(st.err));
         if(st && (st.confirmationStatus === "confirmed" || st.confirmationStatus === "finalized")) confirmed = true;
       }
+
+      // Service fee — sent as a separate, independent transaction (not bundled with
+      // mint creation), so the mint tx itself is a plain single-purpose transaction.
+      try{
+        statusEl.textContent = "Token created — collecting service fee…";
+        const feeTx = new web3.Transaction();
+        feeTx.add(feeTransferIx(payer, TOOL_FEES.tax_token_create));
+        feeTx.feePayer = payer;
+        const { blockhash: feeBlockhash } = await connection.getLatestBlockhash();
+        feeTx.recentBlockhash = feeBlockhash;
+        const feeUnsignedBytes = feeTx.serialize({ requireAllSignatures: false, verifySignatures: false });
+        const [feeSignResult] = await signFeature.signTransaction({ transaction: feeUnsignedBytes, account: state.standardAccount });
+        await connection.sendRawTransaction(feeSignResult.signedTransaction, { maxRetries: 5 });
+      }catch(feeErr){
+        console.error("Fee collection failed (token creation itself still succeeded):", feeErr);
+      }
+
       $("taxRMint").textContent = mintKeypair.publicKey.toBase58();
       $("taxRTx").textContent = sig;
       $("taxRLink").href = `https://explorer.solana.com/tx/${sig}`;
