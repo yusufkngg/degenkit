@@ -2258,17 +2258,20 @@
       tx.feePayer = payer;
       const { blockhash, lastValidBlockHeight } = await connection.getLatestBlockhash();
       tx.recentBlockhash = blockhash;
-      tx.partialSign(mintKeypair);
 
       setStatus(window.T("status_wallet_wait"));
       const signFeature = state.standardWallet && state.standardWallet.features["solana:signTransaction"];
       if(!signFeature) throw new Error(window.T("status_sign_unsupported"));
-      const txBytes = tx.serialize({ requireAllSignatures: false, verifySignatures: false });
+      // Wallet signs first, additional signers (the new mint keypair) partial-sign
+      // afterward — this order avoids Phantom's Lighthouse multi-signer warning.
+      const unsignedBytes = tx.serialize({ requireAllSignatures: false, verifySignatures: false });
       const [signResult] = await signFeature.signTransaction({
-        transaction: txBytes,
+        transaction: unsignedBytes,
         account: state.standardAccount,
       });
-      const signedBytes = signResult.signedTransaction;
+      const walletSignedTx = web3.Transaction.from(signResult.signedTransaction);
+      walletSignedTx.partialSign(mintKeypair);
+      const signedBytes = walletSignedTx.serialize();
 
       setStatus(window.T("status_sending"));
       const sig = await connection.sendRawTransaction(signedBytes, { maxRetries: 5 });
@@ -2744,14 +2747,16 @@
       tx.feePayer = payer;
       const { blockhash } = await connection.getLatestBlockhash();
       tx.recentBlockhash = blockhash;
-      tx.partialSign(mintKeypair);
 
       statusEl.textContent = window.T("status_wallet_wait");
       const signFeature = state.standardWallet.features["solana:signTransaction"];
-      const txBytes = tx.serialize({ requireAllSignatures: false, verifySignatures: false });
-      const [signResult] = await signFeature.signTransaction({ transaction: txBytes, account: state.standardAccount });
+      const unsignedBytes = tx.serialize({ requireAllSignatures: false, verifySignatures: false });
+      const [signResult] = await signFeature.signTransaction({ transaction: unsignedBytes, account: state.standardAccount });
+      const walletSignedTx = web3.Transaction.from(signResult.signedTransaction);
+      walletSignedTx.partialSign(mintKeypair);
+      const finalBytes = walletSignedTx.serialize();
       statusEl.textContent = window.T("status_sending");
-      const sig = await connection.sendRawTransaction(signResult.signedTransaction, { maxRetries: 5 });
+      const sig = await connection.sendRawTransaction(finalBytes, { maxRetries: 5 });
       statusEl.textContent = window.T("status_confirming");
       let confirmed = false;
       for(let i=0;i<40 && !confirmed;i++){
