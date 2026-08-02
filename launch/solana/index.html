@@ -534,25 +534,42 @@
   .chain-option .chain-tag.live{color:var(--mint); border:1px solid rgba(28,227,155,0.4);}
   .chain-option .chain-tag.soon{color:var(--muted); border:1px solid var(--line);}
   .main-area{flex:1; min-width:0; padding:0 clamp(20px,3vw,40px);}
+
+  .sidebar-top-row{display:block;}
+  .mobile-tools-toggle{display:none;}
+  .all-networks-link{}
+
   @media (max-width:860px){
     .shell{flex-direction:column;}
+    .all-networks-link{display:none;}
     .sidebar{
       position:static; width:100%; min-height:0; border-right:none; border-bottom:1px solid var(--line);
-      display:flex; flex-direction:row; flex-wrap:nowrap; overflow-x:auto; -webkit-overflow-scrolling:touch;
-      gap:6px; padding:14px;
+      display:flex; flex-direction:column; padding:0;
     }
-    .chain-select-wrap{
-      flex-shrink:0; padding:0 8px 0 0; border-bottom:none; margin-bottom:0;
-      display:flex; align-items:center;
+    .sidebar-top-row{
+      display:flex; align-items:center; gap:8px; width:100%;
+      padding:12px 14px; border-bottom:1px solid var(--line);
     }
+    .chain-select-wrap{padding:0; border-bottom:none; margin-bottom:0; flex-shrink:0;}
+    .chain-select-btn{padding:9px 10px;}
+    .chain-select-btn #chainSelectLabel, .chain-select-btn .chain-caret{display:none;}
     .chain-select-menu{left:0; right:auto; width:240px;}
-    .sidebar-group{
-      margin-bottom:0; padding-bottom:0; display:flex; flex-direction:row; flex-wrap:nowrap;
-      flex-shrink:0; gap:4px; align-items:center;
+    .mobile-tools-toggle{
+      display:flex; align-items:center; justify-content:space-between; flex:1;
+      background:var(--panel-2); border:1px solid var(--line); border-radius:9px;
+      color:var(--ink); padding:10px 14px; font-size:14px; font-family:'Space Grotesk',sans-serif; font-weight:600;
+      cursor:pointer;
     }
-    .sidebar-label{display:none;}
-    .sidebar-item{white-space:nowrap; flex-shrink:0;}
-    .sidebar-bottom{margin-top:0; padding-top:0; border-top:none; flex-shrink:0;}
+    .mobile-tools-toggle .burger-ic{color:var(--brass-bright); font-size:15px;}
+    .sidebar-group, .sidebar-bottom{
+      display:none; flex-direction:column; width:100%; padding:6px 14px; margin-bottom:0;
+    }
+    .sidebar.mobile-open .sidebar-group, .sidebar.mobile-open .sidebar-bottom{
+      display:flex;
+    }
+    .sidebar.mobile-open .sidebar-bottom{padding-bottom:14px; border-top:1px solid var(--line); padding-top:10px; margin-top:4px;}
+    .sidebar-label{display:block;}
+    .sidebar-item{white-space:normal;}
   }
 
   .tool-view{display:none;}
@@ -669,7 +686,7 @@
     <a href="/" class="logo"><img src="../../assets/icon.png" alt="" class="logo-icon"><span class="logo-text">DegenKit</span></a>
   </div>
   <div style="display:flex; align-items:center; gap:18px;">
-    <a href="/launch/" style="font-size:13px; color:var(--muted); font-family:'JetBrains Mono',monospace;">← All networks</a>
+    <a href="/launch/" class="all-networks-link" style="font-size:13px; color:var(--muted); font-family:'JetBrains Mono',monospace;">← All networks</a>
     <select id="adminNetSelect" style="display:none;" class="admin-net-select">
       <option value="mainnet-beta">Mainnet</option>
       <option value="devnet">Devnet</option>
@@ -740,21 +757,27 @@
 </div>
 
 <div class="shell">
-  <aside class="sidebar">
-    <div class="chain-select-wrap">
-      <button class="chain-select-btn" id="chainSelectBtn">
-        <img src="../../assets/solana-logo.png" alt="" id="chainSelectIcon">
-        <span id="chainSelectLabel">Solana</span>
-        <span class="chain-caret">▾</span>
-      </button>
-      <div class="chain-select-menu" id="chainSelectMenu">
-        <a href="/launch/solana/" class="chain-option active">
-          <img src="../../assets/solana-logo.png" alt=""> <span>Solana</span> <span class="chain-tag live">Live</span>
-        </a>
-        <a href="/launch/robinhood/" class="chain-option">
-          <img src="../../assets/robinhood-logo.png" alt=""> <span>Robinhood Chain</span> <span class="chain-tag soon">Soon</span>
-        </a>
+  <aside class="sidebar" id="sidebarEl">
+    <div class="sidebar-top-row">
+      <div class="chain-select-wrap">
+        <button class="chain-select-btn" id="chainSelectBtn">
+          <img src="../../assets/solana-logo.png" alt="" id="chainSelectIcon">
+          <span id="chainSelectLabel">Solana</span>
+          <span class="chain-caret">▾</span>
+        </button>
+        <div class="chain-select-menu" id="chainSelectMenu">
+          <a href="/launch/solana/" class="chain-option active">
+            <img src="../../assets/solana-logo.png" alt=""> <span>Solana</span> <span class="chain-tag live">Live</span>
+          </a>
+          <a href="/launch/robinhood/" class="chain-option">
+            <img src="../../assets/robinhood-logo.png" alt=""> <span>Robinhood Chain</span> <span class="chain-tag soon">Soon</span>
+          </a>
+        </div>
       </div>
+      <button class="mobile-tools-toggle" id="mobileToolsToggle">
+        <span id="mobileToolsLabel">Token Creator</span>
+        <span class="burger-ic">☰</span>
+      </button>
     </div>
     <div class="sidebar-group">
       <div class="sidebar-label">Token</div>
@@ -1688,15 +1711,25 @@
     document.querySelectorAll(".tool-view").forEach(v => v.classList.remove("active"));
     const target = document.getElementById("view-" + viewKey);
     if(target) target.classList.add("active");
+    let activeLabel = "";
     document.querySelectorAll(".sidebar-item[data-view]").forEach(el => {
-      el.classList.toggle("active", el.dataset.view === viewKey);
+      const isActive = el.dataset.view === viewKey;
+      el.classList.toggle("active", isActive);
+      if(isActive) activeLabel = el.textContent.trim();
     });
+    const mobileLabel = document.getElementById("mobileToolsLabel");
+    if(mobileLabel && activeLabel) mobileLabel.textContent = activeLabel;
+    document.getElementById("sidebarEl") && document.getElementById("sidebarEl").classList.remove("mobile-open");
     window.scrollTo(0,0);
     if(viewKey === "manage" && window.__loadMyTokens) window.__loadMyTokens();
   }
   window.switchView = switchView;
   document.querySelectorAll(".sidebar-item[data-view]").forEach(item => {
     item.addEventListener("click", () => switchView(item.dataset.view));
+  });
+
+  document.getElementById("mobileToolsToggle").addEventListener("click", () => {
+    document.getElementById("sidebarEl").classList.toggle("mobile-open");
   });
 
   // ---------- admin tabs ----------
