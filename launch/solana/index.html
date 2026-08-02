@@ -1877,7 +1877,7 @@
     });
     if(!res.ok) throw new Error(window.T("err_pinata_image") + res.status + ")");
     const data = await res.json();
-    return `https://gateway.pinata.cloud/ipfs/${data.IpfsHash}`;
+    return `https://cyan-holy-guppy-895.mypinata.cloud/ipfs/${data.IpfsHash}`;
   }
 
   async function uploadMetadataJsonToPinata(json){
@@ -1888,7 +1888,7 @@
     });
     if(!res.ok) throw new Error(window.T("err_pinata_metadata") + res.status + ")");
     const data = await res.json();
-    return `https://gateway.pinata.cloud/ipfs/${data.IpfsHash}`;
+    return `https://cyan-holy-guppy-895.mypinata.cloud/ipfs/${data.IpfsHash}`;
   }
 
   // ---- Fee + admin config ----
