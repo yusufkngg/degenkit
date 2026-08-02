@@ -95,7 +95,8 @@
   .wallet-menu.open{display:block;}
   @media (max-width:520px){
     .wallet-menu{
-      position:fixed; left:12px; right:12px; top:64px; min-width:0; width:auto;
+      position:absolute; right:0; left:auto; top:calc(100% + 10px);
+      width:min(300px, calc(100vw - 24px)); min-width:0;
     }
   }
   .wallet-item{
