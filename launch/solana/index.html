@@ -538,11 +538,21 @@
     .shell{flex-direction:column;}
     .sidebar{
       position:static; width:100%; min-height:0; border-right:none; border-bottom:1px solid var(--line);
-      display:flex; overflow-x:auto; gap:6px; padding:14px;
+      display:flex; flex-direction:row; flex-wrap:nowrap; overflow-x:auto; -webkit-overflow-scrolling:touch;
+      gap:6px; padding:14px;
     }
-    .sidebar-group{margin-bottom:0; display:flex; gap:4px;}
+    .chain-select-wrap{
+      flex-shrink:0; padding:0 8px 0 0; border-bottom:none; margin-bottom:0;
+      display:flex; align-items:center;
+    }
+    .chain-select-menu{left:0; right:auto; width:240px;}
+    .sidebar-group{
+      margin-bottom:0; padding-bottom:0; display:flex; flex-direction:row; flex-wrap:nowrap;
+      flex-shrink:0; gap:4px; align-items:center;
+    }
     .sidebar-label{display:none;}
-    .sidebar-item{white-space:nowrap;}
+    .sidebar-item{white-space:nowrap; flex-shrink:0;}
+    .sidebar-bottom{margin-top:0; padding-top:0; border-top:none; flex-shrink:0;}
   }
 
   .tool-view{display:none;}
@@ -749,7 +759,6 @@
     <div class="sidebar-group">
       <div class="sidebar-label">Token</div>
       <div class="sidebar-item active" data-view="create"><span class="ic">◆</span> Token Creator</div>
-      <div class="sidebar-item" data-view="tax"><span class="ic">%</span> Tax Token</div>
       <div class="sidebar-item" data-view="manage"><span class="ic">▤</span> My Tokens</div>
     </div>
     <div class="sidebar-group">
@@ -1016,54 +1025,6 @@
             </div>
           </div>
           <button class="btn-launch" id="burn_btn" style="width:100%;">Burn tokens</button>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="view-tax" class="tool-view">
-    <div class="tool-header">
-      <h1>Tax Token</h1>
-      <p>A token that automatically collects a percentage fee on every transfer, sent to a wallet you control. Uses Solana's Token-2022 program.</p>
-    </div>
-    <div class="tool-panel">
-      <div class="panel">
-        <div class="fee-badge" id="taxFeeBadge"><span class="dot"></span> Flat fee — no hidden charges.</div>
-        <div class="row">
-          <div class="field">
-            <label>Token name</label>
-            <input type="text" id="tax_name" maxlength="32" placeholder="e.g. Anka Coin">
-          </div>
-          <div class="field">
-            <label>Symbol</label>
-            <input type="text" id="tax_symbol" maxlength="10" placeholder="e.g. ANKA">
-          </div>
-        </div>
-        <div class="row">
-          <div class="field">
-            <label>Decimals</label>
-            <input type="number" id="tax_decimals" value="6" min="0" max="9">
-          </div>
-          <div class="field">
-            <label>Total supply</label>
-            <input type="number" id="tax_supply" value="1000000000" min="1">
-          </div>
-        </div>
-        <div class="field">
-          <label>Transfer tax</label>
-          <input type="number" id="tax_rate" value="2" min="0" max="49.99" step="0.01">
-          <div class="note">Percentage taken from every transfer, sent to your wallet. Solana's transfer-fee extension caps this at 49.99%.</div>
-        </div>
-        <div class="warn-box" style="background:rgba(79,209,155,0.07); border-color:rgba(28,227,155,0.3); color:#a7e9d3;">
-          You (the creator) are set as the fee-withdraw authority — only you can pull the collected tax out of holders' accounts.
-        </div>
-        <button class="btn-launch" id="taxCreateBtn" style="width:100%;" disabled>Connect wallet first</button>
-        <div class="status-line" id="taxStatus"></div>
-        <div class="receipt" id="taxReceipt">
-          <div class="receipt-head"><span class="stamp-badge">✓ MINTED</span></div>
-          <div class="r-row"><span class="k">Contract address</span><span class="v-copy"><span class="v" id="taxRMint">—</span><button class="copy-btn" data-copy-target="taxRMint" aria-label="Copy">⧉</button></span></div>
-          <div class="r-row"><span class="k">tx</span><span class="v-copy"><span class="v" id="taxRTx">—</span><button class="copy-btn" data-copy-target="taxRTx" aria-label="Copy">⧉</button></span></div>
-          <a class="r-link" id="taxRLink" href="#" target="_blank">View on Explorer →</a>
         </div>
       </div>
     </div>
@@ -1829,7 +1790,7 @@
   // Heavy on-chain libraries load here, isolated from the wallet-connect script
   // above. If this whole block fails to import, the wallet button above still
   // works — only the actual minting is disabled, with a clear status message.
-  let web3, splToken, Buffer, TOKEN_METADATA_PROGRAM_ID, TOKEN_2022_PROGRAM_ID, libsReady = false;
+  let web3, splToken, Buffer, TOKEN_METADATA_PROGRAM_ID, libsReady = false;
 
   async function loadLibs(){
     const sources = [
@@ -1841,7 +1802,6 @@
         const [w3, spl, buf] = await Promise.all([import(src.w), import(src.s), import(src.b)]);
         web3 = w3; splToken = spl; Buffer = buf.Buffer; window.Buffer = Buffer;
         TOKEN_METADATA_PROGRAM_ID = new web3.PublicKey("metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s");
-        TOKEN_2022_PROGRAM_ID = new web3.PublicKey("TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb");
         libsReady = true;
         updatePressButtonState();
         return;
@@ -1940,7 +1900,6 @@
     manage_revoke_freeze: 0.05,
     update_metadata: 0.05,
     burn_token: 0.02,
-    tax_token_create: 0.3,
     airdrop: 0.02,
     multisender: 0.02,
     swap: 0.01,
@@ -1957,8 +1916,6 @@
       if(feeEl) feeEl.textContent = TOOL_FEES.token_create + " SOL";
       const badgeEl = document.querySelector('#view-create .fee-badge');
       if(badgeEl) badgeEl.innerHTML = '<span class="dot"></span> Flat ' + TOOL_FEES.token_create + ' SOL total — no hidden fees, no surprise charges.';
-      const taxBadgeEl = document.getElementById('taxFeeBadge');
-      if(taxBadgeEl) taxBadgeEl.innerHTML = '<span class="dot"></span> Flat ' + TOOL_FEES.tax_token_create + ' SOL total — no hidden fees, no surprise charges.';
       const swapFeeEl = document.getElementById('swap_feeDisplay');
       if(swapFeeEl) swapFeeEl.textContent = TOOL_FEES.swap + ' SOL';
     }catch(e){ console.error("Could not load live fees, using defaults:", e); }
@@ -2092,21 +2049,8 @@
         btn.textContent = window.T("press_ready");
       }
     }
-
-    const taxBtn = $("taxCreateBtn");
-    if(taxBtn){
-      if(!state.walletAddress){ taxBtn.disabled = true; taxBtn.textContent = "Connect wallet first"; }
-      else if(!libsReady){ taxBtn.disabled = true; taxBtn.textContent = "Loading libraries…"; }
-      else{
-        const tName = $("tax_name").value.trim();
-        const tSymbol = $("tax_symbol").value.trim();
-        if(!tName || !tSymbol){ taxBtn.disabled = true; taxBtn.textContent = "Name and symbol required"; }
-        else{ taxBtn.disabled = false; taxBtn.textContent = "Create tax token"; }
-      }
-    }
   }
   ["f_name","f_symbol"].forEach(id => $(id).addEventListener("input", updatePressButtonState));
-  ["tax_name","tax_symbol"].forEach(id => $(id) && $(id).addEventListener("input", updatePressButtonState));
   window.__updatePressButtonState = updatePressButtonState;
 
   // ---------- Borsh-lite helpers for metadata instruction ----------
@@ -2679,107 +2623,6 @@
     }finally{
       btn.disabled = false;
       btn.textContent = "Burn tokens";
-    }
-  });
-
-  // ================= TAX TOKEN (Token-2022 transfer-fee extension) =================
-
-  $("taxCreateBtn").addEventListener("click", async () => {
-    const btn = $("taxCreateBtn");
-    const statusEl = $("taxStatus");
-    $("taxReceipt").classList.remove("show");
-    statusEl.classList.remove("error");
-
-    const name = $("tax_name").value.trim();
-    const symbol = $("tax_symbol").value.trim().toUpperCase();
-    const decimals = parseInt($("tax_decimals").value, 10);
-    const supply = Number($("tax_supply").value);
-    const taxPercent = Number($("tax_rate").value);
-
-    if(!libsReady){ statusEl.textContent = window.T("status_libs_not_ready"); statusEl.classList.add("error"); return; }
-    if(!state.walletAddress){ statusEl.textContent = "Connect your wallet first."; statusEl.classList.add("error"); return; }
-    if(!name || !symbol){ statusEl.textContent = window.T("status_name_symbol_required"); statusEl.classList.add("error"); return; }
-    if(decimals < 0 || decimals > 9){ statusEl.textContent = window.T("status_decimals_range"); statusEl.classList.add("error"); return; }
-    if(!supply || supply <= 0){ statusEl.textContent = window.T("status_supply_invalid"); statusEl.classList.add("error"); return; }
-    if(isNaN(taxPercent) || taxPercent < 0 || taxPercent > 49.99){ statusEl.textContent = "Tax rate must be between 0 and 49.99%."; statusEl.classList.add("error"); return; }
-
-    btn.disabled = true; btn.textContent = "Working…";
-    try{
-      const connection = new web3.Connection(RPC[state.network], "confirmed");
-      const payer = new web3.PublicKey(state.walletAddress);
-
-      statusEl.textContent = window.T("status_preparing_mint");
-      const mintKeypair = web3.Keypair.generate();
-      const extensions = [splToken.ExtensionType.TransferFeeConfig];
-      const mintLen = splToken.getMintLen(extensions);
-      const lamports = await connection.getMinimumBalanceForRentExemption(mintLen);
-      const feeBasisPoints = Math.round(taxPercent * 100);
-      const maxFee = BigInt("18446744073709551615"); // u64 max — effectively no cap on the per-transfer fee
-
-      const tx = new web3.Transaction();
-      tx.add(web3.SystemProgram.createAccount({
-        fromPubkey: payer, newAccountPubkey: mintKeypair.publicKey,
-        space: mintLen, lamports, programId: TOKEN_2022_PROGRAM_ID,
-      }));
-      tx.add(splToken.createInitializeTransferFeeConfigInstruction(
-        mintKeypair.publicKey, payer, payer, feeBasisPoints, maxFee, TOKEN_2022_PROGRAM_ID
-      ));
-      tx.add(splToken.createInitializeMintInstruction(
-        mintKeypair.publicKey, decimals, payer, payer, TOKEN_2022_PROGRAM_ID
-      ));
-
-      const ata = await splToken.getAssociatedTokenAddress(mintKeypair.publicKey, payer, false, TOKEN_2022_PROGRAM_ID);
-      tx.add(splToken.createAssociatedTokenAccountInstruction(payer, ata, payer, mintKeypair.publicKey, TOKEN_2022_PROGRAM_ID));
-
-      const rawAmount = BigInt(supply) * (10n ** BigInt(decimals));
-      tx.add(splToken.createMintToInstruction(mintKeypair.publicKey, ata, payer, rawAmount, [], TOKEN_2022_PROGRAM_ID));
-
-      const metadataPDA = deriveMetadataPDA(mintKeypair.publicKey);
-      tx.add(buildCreateMetadataIx({
-        metadataPDA, mint: mintKeypair.publicKey,
-        mintAuthority: payer, payer, updateAuthority: payer,
-        name, symbol, uri: "", isMutable: false
-      }));
-
-      tx.add(splToken.createSetAuthorityInstruction(mintKeypair.publicKey, payer, splToken.AuthorityType.MintTokens, null, [], TOKEN_2022_PROGRAM_ID));
-      tx.add(feeTransferIx(payer, TOOL_FEES.tax_token_create));
-
-      tx.feePayer = payer;
-      const { blockhash } = await connection.getLatestBlockhash();
-      tx.recentBlockhash = blockhash;
-      tx.partialSign(mintKeypair);
-
-      statusEl.textContent = window.T("status_wallet_wait");
-      const signFeature = state.standardWallet.features["solana:signTransaction"];
-      const txBytes = tx.serialize({ requireAllSignatures: false, verifySignatures: false });
-      const [signResult] = await signFeature.signTransaction({ transaction: txBytes, account: state.standardAccount });
-      const finalBytes = signResult.signedTransaction;
-      statusEl.textContent = window.T("status_sending");
-      const sig = await connection.sendRawTransaction(finalBytes, { maxRetries: 5 });
-      statusEl.textContent = window.T("status_confirming");
-      let confirmed = false;
-      for(let i=0;i<40 && !confirmed;i++){
-        await new Promise(r => setTimeout(r, 1500));
-        const { value } = await connection.getSignatureStatuses([sig]);
-        const st = value && value[0];
-        if(st && st.err) throw new Error(JSON.stringify(st.err));
-        if(st && (st.confirmationStatus === "confirmed" || st.confirmationStatus === "finalized")) confirmed = true;
-      }
-
-      $("taxRMint").textContent = mintKeypair.publicKey.toBase58();
-      $("taxRTx").textContent = sig;
-      $("taxRLink").href = `https://explorer.solana.com/tx/${sig}`;
-      $("taxReceipt").classList.add("show");
-      if(window.playLaunchAnimation) window.playLaunchAnimation();
-      statusEl.textContent = confirmed ? "Tax token created." : window.T("status_confirm_timeout");
-      logAction({ wallet_address: state.walletAddress, tool: "tax_token_create", network: state.network, mint_address: mintKeypair.publicKey.toBase58(), tx_signature: sig, status: "success", details: { name, symbol, decimals, supply, taxPercent } });
-    }catch(e){
-      console.error(e);
-      statusEl.textContent = "Error: " + friendlyError(e);
-      statusEl.classList.add("error");
-      logAction({ wallet_address: state.walletAddress, tool: "tax_token_create", network: state.network, status: "failed", error_message: String(e.message||e).slice(0,500) });
-    }finally{
-      updatePressButtonState();
     }
   });
 
