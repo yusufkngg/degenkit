@@ -93,6 +93,11 @@
     box-shadow:0 14px 34px rgba(0,0,0,0.45);
   }
   .wallet-menu.open{display:block;}
+  @media (max-width:520px){
+    .wallet-menu{
+      position:fixed; left:12px; right:12px; top:64px; min-width:0; width:auto;
+    }
+  }
   .wallet-item{
     width:100%; display:flex; align-items:center; gap:10px; padding:10px 12px;
     background:transparent; border:none; border-radius:8px; color:var(--ink);
