@@ -1863,37 +1863,89 @@
     "mainnet-beta": "https://solana-mainnet.g.alchemy.com/v2/V7dL-P2T8qpYqIvYimDXB"
   };
 
-  // Pinata JWT — scoped to pin-only, used for uploading token image + metadata JSON to IPFS.
-  // NOTE: this is visible to anyone viewing the page source since the site has no backend.
+  // Cloudflare R2 (S3-compatible) storage config for token images/metadata.
+  // NOTE: this secret key is visible to anyone viewing the page source since
+  // the site has no backend — set a storage/usage alert on this bucket.
+  const R2_ACCOUNT_ID = "5560e072b53e211b3efe6d743704883d";
+  const R2_BUCKET = "degenkit-images";
+  const R2_ENDPOINT = `https://${R2_ACCOUNT_ID}.r2.cloudflarestorage.com`;
+  const R2_PUBLIC_URL = "https://pub-e413fcfff712459782b260fe2eb74c2c.r2.dev";
+  const R2_ACCESS_KEY_ID = "9ddb6d0e0b0d885c46084b93d591f468";
+  const R2_SECRET_ACCESS_KEY = "b9b5eedd6b15aa6ee5fcfdecdd377d34961e6d9102464f20d6c1bc189847acbc";
+  const R2_REGION = "auto";
+  const R2_SERVICE = "s3";
+
+  async function sha256Hex(data){
+    const buf = typeof data === "string" ? new TextEncoder().encode(data) : data;
+    const hashBuf = await crypto.subtle.digest("SHA-256", buf);
+    return Array.from(new Uint8Array(hashBuf)).map(b => b.toString(16).padStart(2, "0")).join("");
+  }
+
+  async function hmacSha256Raw(keyBytes, msg){
+    const key = await crypto.subtle.importKey("raw", keyBytes, { name: "HMAC", hash: "SHA-256" }, false, ["sign"]);
+    const msgBytes = typeof msg === "string" ? new TextEncoder().encode(msg) : msg;
+    return new Uint8Array(await crypto.subtle.sign("HMAC", key, msgBytes));
+  }
+
+  function toHex(bytes){
+    return Array.from(bytes).map(b => b.toString(16).padStart(2, "0")).join("");
+  }
+
+  async function r2PutObject(key, bodyBytes, contentType){
+    const now = new Date();
+    const amzdate = now.toISOString().replace(/[:-]|\.\d{3}/g, "");
+    const datestamp = amzdate.slice(0, 8);
+    const host = `${R2_ACCOUNT_ID}.r2.cloudflarestorage.com`;
+    const canonicalUri = `/${R2_BUCKET}/${key.split("/").map(encodeURIComponent).join("/")}`;
+    const payloadHash = await sha256Hex(bodyBytes);
+
+    const canonicalHeaders =
+      `content-type:${contentType}\n` +
+      `host:${host}\n` +
+      `x-amz-content-sha256:${payloadHash}\n` +
+      `x-amz-date:${amzdate}\n`;
+    const signedHeaders = "content-type;host;x-amz-content-sha256;x-amz-date";
+
+    const canonicalRequest = `PUT\n${canonicalUri}\n\n${canonicalHeaders}\n${signedHeaders}\n${payloadHash}`;
+    const credentialScope = `${datestamp}/${R2_REGION}/${R2_SERVICE}/aws4_request`;
+    const stringToSign = `AWS4-HMAC-SHA256\n${amzdate}\n${credentialScope}\n${await sha256Hex(canonicalRequest)}`;
+
+    const kDate = await hmacSha256Raw(new TextEncoder().encode("AWS4" + R2_SECRET_ACCESS_KEY), datestamp);
+    const kRegion = await hmacSha256Raw(kDate, R2_REGION);
+    const kService = await hmacSha256Raw(kRegion, R2_SERVICE);
+    const kSigning = await hmacSha256Raw(kService, "aws4_request");
+    const signature = toHex(await hmacSha256Raw(kSigning, stringToSign));
+
+    const authHeader = `AWS4-HMAC-SHA256 Credential=${R2_ACCESS_KEY_ID}/${credentialScope}, SignedHeaders=${signedHeaders}, Signature=${signature}`;
+
+    const res = await fetch(`${R2_ENDPOINT}${canonicalUri}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": contentType,
+        "x-amz-content-sha256": payloadHash,
+        "x-amz-date": amzdate,
+        "Authorization": authHeader,
+      },
+      body: bodyBytes,
+    });
+    if(!res.ok){
+      const text = await res.text().catch(() => "");
+      throw new Error(`R2 upload failed (${res.status}): ${text.slice(0, 300)}`);
+    }
+    return `${R2_PUBLIC_URL}/${key}`;
+  }
+
   async function uploadImageToPinata(file){
     const ext = (file.name.split(".").pop() || "png").toLowerCase().replace(/[^a-z0-9]/g, "") || "png";
-    const path = `images/${crypto.randomUUID()}.${ext}`;
-    const res = await fetch(`${SUPABASE_URL}/storage/v1/object/token-images/${path}`, {
-      method: "POST",
-      headers: {
-        "apikey": SUPABASE_ANON_KEY,
-        "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
-        "Content-Type": file.type || "application/octet-stream",
-      },
-      body: file,
-    });
-    if(!res.ok) throw new Error(window.T("err_pinata_image") + res.status + ")");
-    return `${SUPABASE_URL}/storage/v1/object/public/token-images/${path}`;
+    const key = `images/${crypto.randomUUID()}.${ext}`;
+    const bytes = new Uint8Array(await file.arrayBuffer());
+    return r2PutObject(key, bytes, file.type || "application/octet-stream");
   }
 
   async function uploadMetadataJsonToPinata(json){
-    const path = `metadata/${crypto.randomUUID()}.json`;
-    const res = await fetch(`${SUPABASE_URL}/storage/v1/object/token-images/${path}`, {
-      method: "POST",
-      headers: {
-        "apikey": SUPABASE_ANON_KEY,
-        "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(json),
-    });
-    if(!res.ok) throw new Error(window.T("err_pinata_metadata") + res.status + ")");
-    return `${SUPABASE_URL}/storage/v1/object/public/token-images/${path}`;
+    const key = `metadata/${crypto.randomUUID()}.json`;
+    const bytes = new TextEncoder().encode(JSON.stringify(json));
+    return r2PutObject(key, bytes, "application/json");
   }
 
   // ---- Fee + admin config ----
