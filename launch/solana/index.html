@@ -1865,30 +1865,35 @@
 
   // Pinata JWT — scoped to pin-only, used for uploading token image + metadata JSON to IPFS.
   // NOTE: this is visible to anyone viewing the page source since the site has no backend.
-  const PINATA_JWT = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mb3JtYXRpb24iOnsiaWQiOiIwYjMyNWM5My1jMTk3LTQxNGItYmViZi1lNGM4MjQxNzBmODQiLCJlbWFpbCI6Im1ldGFncmFwaGljaW9AZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsInBpbl9wb2xpY3kiOnsicmVnaW9ucyI6W3siZGVzaXJlZFJlcGxpY2F0aW9uQ291bnQiOjEsImlkIjoiRlJBMSJ9LHsiZGVzaXJlZFJlcGxpY2F0aW9uQ291bnQiOjEsImlkIjoiTllDMSJ9XSwidmVyc2lvbiI6MX0sIm1mYV9lbmFibGVkIjpmYWxzZSwic3RhdHVzIjoiQUNUSVZFIn0sImF1dGhlbnRpY2F0aW9uVHlwZSI6InNjb3BlZEtleSIsInNjb3BlZEtleUtleSI6IjQ3ZTE1ODU0MTg3OWE2NzAzZmVlIiwic2NvcGVkS2V5U2VjcmV0IjoiNmQxNWRmMDMzZjVlZTRkYTQxNmYyYWY1MTU4MTEwZjg4ODRjMjA1NmIzZmE2OTk0MjllNjljZWQ4MjczNjNiYSIsImV4cCI6MTgxNTc0ODI0N30.24GG8HfX99DXtS-aRJAGO7LOOcsCEwI8HW4ChdLoufo";
-
   async function uploadImageToPinata(file){
-    const form = new FormData();
-    form.append("file", file);
-    const res = await fetch("https://api.pinata.cloud/pinning/pinFileToIPFS", {
+    const ext = (file.name.split(".").pop() || "png").toLowerCase().replace(/[^a-z0-9]/g, "") || "png";
+    const path = `images/${crypto.randomUUID()}.${ext}`;
+    const res = await fetch(`${SUPABASE_URL}/storage/v1/object/token-images/${path}`, {
       method: "POST",
-      headers: { Authorization: `Bearer ${PINATA_JWT}` },
-      body: form
+      headers: {
+        "apikey": SUPABASE_ANON_KEY,
+        "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
+        "Content-Type": file.type || "application/octet-stream",
+      },
+      body: file,
     });
     if(!res.ok) throw new Error(window.T("err_pinata_image") + res.status + ")");
-    const data = await res.json();
-    return `https://cyan-holy-guppy-895.mypinata.cloud/ipfs/${data.IpfsHash}`;
+    return `${SUPABASE_URL}/storage/v1/object/public/token-images/${path}`;
   }
 
   async function uploadMetadataJsonToPinata(json){
-    const res = await fetch("https://api.pinata.cloud/pinning/pinJSONToIPFS", {
+    const path = `metadata/${crypto.randomUUID()}.json`;
+    const res = await fetch(`${SUPABASE_URL}/storage/v1/object/token-images/${path}`, {
       method: "POST",
-      headers: { "Content-Type": "application/json", Authorization: `Bearer ${PINATA_JWT}` },
-      body: JSON.stringify({ pinataContent: json })
+      headers: {
+        "apikey": SUPABASE_ANON_KEY,
+        "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(json),
     });
     if(!res.ok) throw new Error(window.T("err_pinata_metadata") + res.status + ")");
-    const data = await res.json();
-    return `https://cyan-holy-guppy-895.mypinata.cloud/ipfs/${data.IpfsHash}`;
+    return `${SUPABASE_URL}/storage/v1/object/public/token-images/${path}`;
   }
 
   // ---- Fee + admin config ----
