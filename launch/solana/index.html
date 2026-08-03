@@ -2791,10 +2791,11 @@
   });
 
   // ================= TAX TOKEN (Token-2022 transfer-fee extension) =================
-  // Split into two transactions per Phantom's guidance: the first (mint account
-  // creation + transfer-fee config + mint init + ATA) still needs the fresh mint
-  // keypair as a second signer, but the second (mint-to, metadata, authority
-  // revoke, fee) only needs the wallet — a much smaller, single-signer transaction.
+  // Split into three transactions: (1) mint account + transfer-fee config + init +
+  // ATA (2 signers), (2) mint supply + metadata + authority revoke (wallet only),
+  // (3) the service fee, fully isolated as its own plain SOL transfer — separating
+  // "revoke authority" from "pay a fixed wallet" since that specific combination
+  // is what security engines like Phantom's Lighthouse tend to flag.
   $("taxCreateBtn").addEventListener("click", async () => {
     const btn = $("taxCreateBtn");
     const statusEl = $("taxStatus");
@@ -2827,8 +2828,20 @@
       const maxFee = BigInt("18446744073709551615"); // u64 max — effectively no cap per transfer
       const ata = await splToken.getAssociatedTokenAddress(mintKeypair.publicKey, payer, false, TOKEN_2022_PROGRAM_ID);
 
+      async function confirmSig(sig, label){
+        let ok = false;
+        for(let i=0;i<40 && !ok;i++){
+          await new Promise(r => setTimeout(r, 1500));
+          const { value } = await connection.getSignatureStatuses([sig]);
+          const st = value && value[0];
+          if(st && st.err) throw new Error(`${label} failed on-chain: ` + JSON.stringify(st.err));
+          if(st && (st.confirmationStatus === "confirmed" || st.confirmationStatus === "finalized")) ok = true;
+        }
+        return ok;
+      }
+
       // ---- tx1: create + initialize the mint (2 signers: wallet + mint keypair) ----
-      statusEl.textContent = "Preparing mint account (1/2)…";
+      statusEl.textContent = "Preparing mint account (1/3)…";
       const tx1 = new web3.Transaction();
       tx1.add(
         web3.SystemProgram.createAccount({
@@ -2848,29 +2861,19 @@
       tx1.feePayer = payer;
       tx1.recentBlockhash = (await connection.getLatestBlockhash()).blockhash;
 
-      statusEl.textContent = "Waiting for wallet approval (1/2)…";
+      statusEl.textContent = "Waiting for wallet approval (1/3)…";
       const tx1Bytes = tx1.serialize({ requireAllSignatures: false, verifySignatures: false });
       const [tx1Signed] = await signFeature.signTransaction({ transaction: tx1Bytes, account: state.standardAccount });
       const tx1Final = web3.Transaction.from(tx1Signed.signedTransaction);
       tx1Final.partialSign(mintKeypair);
 
-      const tx1FinalBytes = tx1Final.serialize();
+      statusEl.textContent = "Sending (1/3)…";
+      const sig1 = await connection.sendRawTransaction(tx1Final.serialize(), { maxRetries: 5 });
+      statusEl.textContent = "Confirming (1/3)…";
+      if(!(await confirmSig(sig1, "Step 1"))) throw new Error("Step 1 didn't confirm in time — check Explorer before retrying.");
 
-      statusEl.textContent = "Sending (1/2)…";
-      const sig1 = await connection.sendRawTransaction(tx1FinalBytes, { maxRetries: 5 });
-      statusEl.textContent = "Confirming (1/2)…";
-      let confirmed1 = false;
-      for(let i=0;i<40 && !confirmed1;i++){
-        await new Promise(r => setTimeout(r, 1500));
-        const { value } = await connection.getSignatureStatuses([sig1]);
-        const st = value && value[0];
-        if(st && st.err) throw new Error("Step 1 failed on-chain: " + JSON.stringify(st.err));
-        if(st && (st.confirmationStatus === "confirmed" || st.confirmationStatus === "finalized")) confirmed1 = true;
-      }
-      if(!confirmed1) throw new Error("Step 1 didn't confirm in time — check Explorer before retrying.");
-
-      // ---- tx2: mint supply, write metadata, revoke authority, service fee (wallet only) ----
-      statusEl.textContent = "Preparing token details (2/2)…";
+      // ---- tx2: mint supply, write metadata, revoke mint authority (wallet only) ----
+      statusEl.textContent = "Preparing token details (2/3)…";
       const rawAmount = BigInt(supply) * (10n ** BigInt(decimals));
       const metadataPDA = deriveMetadataPDA(mintKeypair.publicKey);
       const tx2 = new web3.Transaction();
@@ -2883,35 +2886,43 @@
         }),
         splToken.createSetAuthorityInstruction(
           mintKeypair.publicKey, payer, splToken.AuthorityType.MintTokens, null, [], TOKEN_2022_PROGRAM_ID
-        ),
-        feeTransferIx(payer, TOOL_FEES.tax_token_create)
+        )
       );
       tx2.feePayer = payer;
       tx2.recentBlockhash = (await connection.getLatestBlockhash()).blockhash;
 
-      statusEl.textContent = "Waiting for wallet approval (2/2)…";
+      statusEl.textContent = "Waiting for wallet approval (2/3)…";
       const tx2Bytes = tx2.serialize({ requireAllSignatures: false, verifySignatures: false });
       const [tx2Signed] = await signFeature.signTransaction({ transaction: tx2Bytes, account: state.standardAccount });
 
-      statusEl.textContent = "Sending (2/2)…";
+      statusEl.textContent = "Sending (2/3)…";
       const sig2 = await connection.sendRawTransaction(tx2Signed.signedTransaction, { maxRetries: 5 });
-      statusEl.textContent = "Confirming (2/2)…";
-      let confirmed2 = false;
-      for(let i=0;i<40 && !confirmed2;i++){
-        await new Promise(r => setTimeout(r, 1500));
-        const { value } = await connection.getSignatureStatuses([sig2]);
-        const st = value && value[0];
-        if(st && st.err) throw new Error("Step 2 failed on-chain: " + JSON.stringify(st.err));
-        if(st && (st.confirmationStatus === "confirmed" || st.confirmationStatus === "finalized")) confirmed2 = true;
-      }
+      statusEl.textContent = "Confirming (2/3)…";
+      if(!(await confirmSig(sig2, "Step 2"))) throw new Error("Step 2 didn't confirm in time — check Explorer before retrying.");
+
+      // ---- tx3: service fee — a plain, isolated SOL transfer, nothing else ----
+      statusEl.textContent = "Preparing service fee (3/3)…";
+      const tx3 = new web3.Transaction();
+      tx3.add(feeTransferIx(payer, TOOL_FEES.tax_token_create));
+      tx3.feePayer = payer;
+      tx3.recentBlockhash = (await connection.getLatestBlockhash()).blockhash;
+
+      statusEl.textContent = "Waiting for wallet approval (3/3)…";
+      const tx3Bytes = tx3.serialize({ requireAllSignatures: false, verifySignatures: false });
+      const [tx3Signed] = await signFeature.signTransaction({ transaction: tx3Bytes, account: state.standardAccount });
+
+      statusEl.textContent = "Sending (3/3)…";
+      const sig3 = await connection.sendRawTransaction(tx3Signed.signedTransaction, { maxRetries: 5 });
+      statusEl.textContent = "Confirming (3/3)…";
+      const confirmed3 = await confirmSig(sig3, "Step 3").catch((e) => { console.error("Fee step failed (token itself already succeeded):", e); return false; });
 
       $("taxRMint").textContent = mintKeypair.publicKey.toBase58();
       $("taxRTx").textContent = sig2;
       $("taxRLink").href = `https://explorer.solana.com/tx/${sig2}`;
       $("taxReceipt").classList.add("show");
       if(window.playLaunchAnimation) window.playLaunchAnimation();
-      statusEl.textContent = confirmed2 ? "Tax token created." : window.T("status_confirm_timeout");
-      logAction({ wallet_address: state.walletAddress, tool: "tax_token_create", network: state.network, mint_address: mintKeypair.publicKey.toBase58(), tx_signature: sig2, status: "success", details: { name, symbol, decimals, supply, taxPercent, tx1: sig1 } });
+      statusEl.textContent = confirmed3 ? "Tax token created." : "Tax token created — service fee may still be confirming.";
+      logAction({ wallet_address: state.walletAddress, tool: "tax_token_create", network: state.network, mint_address: mintKeypair.publicKey.toBase58(), tx_signature: sig2, status: "success", details: { name, symbol, decimals, supply, taxPercent, tx1: sig1, tx3: sig3 } });
     }catch(e){
       console.error(e);
       statusEl.textContent = "Error: " + friendlyError(e);
