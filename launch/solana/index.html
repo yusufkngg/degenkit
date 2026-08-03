@@ -2855,8 +2855,6 @@
       tx1Final.partialSign(mintKeypair);
 
       const tx1FinalBytes = tx1Final.serialize();
-      const sim1 = await connection.simulateTransaction(tx1Final, { sigVerify: false });
-      if(sim1.value.err) throw new Error("Simulation failed (step 1): " + JSON.stringify(sim1.value.err));
 
       statusEl.textContent = "Sending (1/2)…";
       const sig1 = await connection.sendRawTransaction(tx1FinalBytes, { maxRetries: 5 });
@@ -2894,9 +2892,6 @@
       statusEl.textContent = "Waiting for wallet approval (2/2)…";
       const tx2Bytes = tx2.serialize({ requireAllSignatures: false, verifySignatures: false });
       const [tx2Signed] = await signFeature.signTransaction({ transaction: tx2Bytes, account: state.standardAccount });
-
-      const sim2 = await connection.simulateTransaction(web3.Transaction.from(tx2Signed.signedTransaction), { sigVerify: false });
-      if(sim2.value.err) throw new Error("Simulation failed (step 2): " + JSON.stringify(sim2.value.err));
 
       statusEl.textContent = "Sending (2/2)…";
       const sig2 = await connection.sendRawTransaction(tx2Signed.signedTransaction, { maxRetries: 5 });
