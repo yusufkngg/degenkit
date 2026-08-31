@@ -2344,6 +2344,27 @@
           break;
         }
       }
+
+      // Don't trust getSignatureStatuses alone — some RPC responses have reported
+      // "confirmed" for transactions that never actually landed. Verify the mint
+      // account genuinely exists on-chain before declaring success.
+      let mintExists = false;
+      for(let i=0; i<6 && !mintExists; i++){
+        const acctInfo = await connection.getAccountInfo(mintKeypair.publicKey).catch(() => null);
+        if(acctInfo && acctInfo.owner && acctInfo.owner.equals(splToken.TOKEN_PROGRAM_ID)){
+          mintExists = true;
+          break;
+        }
+        await new Promise(r => setTimeout(r, 1500));
+      }
+      if(!mintExists){
+        const cluster0 = state.network === "mainnet-beta" ? "" : `?cluster=${state.network}`;
+        throw new Error(
+          `The RPC reported this as confirmed, but the token doesn't appear on-chain yet. ` +
+          `Check the transaction on Explorer before retrying: https://explorer.solana.com/tx/${sig}${cluster0}`
+        );
+      }
+
       const cluster = state.network === "mainnet-beta" ? "" : `?cluster=${state.network}`;
       $("rMint").textContent = mintKeypair.publicKey.toBase58();
       $("rTx").textContent = sig;
@@ -2353,7 +2374,7 @@
       if(typeof window.gtag === "function"){
         window.gtag("event", "conversion", { send_to: "AW-18369032243/wZKTCMDuhtwcELPghLdE" });
       }
-      setStatus(confirmed ? window.T("status_minted") : window.T("status_confirm_timeout"));
+      setStatus(window.T("status_minted"));
 
       logMintAttempt({
         wallet_address: state.walletAddress, network: state.network,
