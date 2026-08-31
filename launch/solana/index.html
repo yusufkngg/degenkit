@@ -919,7 +919,7 @@
         </div>
         <div class="field" style="margin-top:16px;">
           <label data-i18n="label_rpc">Custom RPC (optional)</label>
-          <input type="text" id="f_rpc" placeholder="Default: your own Alchemy RPC is used" data-i18n-placeholder="ph_rpc">
+          <input type="text" id="f_rpc" placeholder="Default: our Helius RPC is used" data-i18n-placeholder="ph_rpc">
         </div>
       </div>
     </details>
@@ -1375,7 +1375,7 @@
       advanced: "Advanced",
       label_uri: "Manual metadata URI (optional)", ph_uri: "Leave empty to auto-build from image/description",
       uri_note: "If filled, the image upload step is skipped and this URI is used directly.",
-      label_rpc: "Custom RPC (optional)", ph_rpc: "Default: your own Alchemy RPC is used",
+      label_rpc: "Custom RPC (optional)", ph_rpc: "Default: our Helius RPC is used",
       coin_name_default: "Token name", coin_symbol_default: "SYMBOL",
       sum_network: "Network", sum_decimals: "Decimals", sum_supply: "Supply", sum_wallet: "Wallet", sum_fee: "Service fee",
       wallet_not_connected: "Not connected",
@@ -1868,8 +1868,8 @@
   const state = window.__state;
 
   const RPC = {
-    "devnet": "https://solana-devnet.g.alchemy.com/v2/V7dL-P2T8qpYqIvYimDXB",
-    "mainnet-beta": "https://solana-mainnet.g.alchemy.com/v2/V7dL-P2T8qpYqIvYimDXB"
+    "devnet": "https://devnet.helius-rpc.com/?api-key=74c953b1-4f9b-4f58-91b8-d59aa59a7a89",
+    "mainnet-beta": "https://mainnet.helius-rpc.com/?api-key=74c953b1-4f9b-4f58-91b8-d59aa59a7a89"
   };
 
   // Cloudflare R2 (S3-compatible) storage config for token images/metadata.
@@ -2327,7 +2327,7 @@
       const sig = await connection.sendRawTransaction(signedBytes, { maxRetries: 5 });
 
       // Poll plain HTTP status instead of connection.confirmTransaction(), which relies
-      // on a websocket `signatureSubscribe` call that Alchemy's endpoint doesn't reliably
+      // on a websocket `signatureSubscribe` call that some RPC endpoints don't reliably
       // support here — that was causing false "expired" errors on transactions that had
       // actually already landed.
       setStatus(window.T("status_confirming"));
