@@ -2332,7 +2332,6 @@
       // actually already landed.
       setStatus(window.T("status_confirming"));
       let confirmed = false;
-      let lastErr = null;
       for(let i=0; i<40 && !confirmed; i++){
         await new Promise(r => setTimeout(r, 1500));
         const { value } = await connection.getSignatureStatuses([sig]);
@@ -2344,21 +2343,17 @@
           confirmed = true;
           break;
         }
-        const height = await connection.getBlockHeight().catch(() => null);
-        if(height !== null && height > lastValidBlockHeight){
-          lastErr = new Error(window.T("status_blockhash_expired"));
-          break;
-        }
       }
-      if(!confirmed) throw (lastErr || new Error(window.T("status_confirm_timeout")));
-
       const cluster = state.network === "mainnet-beta" ? "" : `?cluster=${state.network}`;
       $("rMint").textContent = mintKeypair.publicKey.toBase58();
       $("rTx").textContent = sig;
       $("rLink").href = `https://explorer.solana.com/tx/${sig}${cluster}`;
       $("receipt").classList.add("show");
       if(window.playLaunchAnimation) window.playLaunchAnimation();
-      setStatus(window.T("status_minted"));
+      if(typeof window.gtag === "function"){
+        window.gtag("event", "conversion", { send_to: "AW-18369032243/wZKTCMDuhtwcELPghLdE" });
+      }
+      setStatus(confirmed ? window.T("status_minted") : window.T("status_confirm_timeout"));
 
       logMintAttempt({
         wallet_address: state.walletAddress, network: state.network,
