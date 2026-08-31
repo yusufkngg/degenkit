@@ -2334,7 +2334,7 @@
       let confirmed = false;
       for(let i=0; i<40 && !confirmed; i++){
         await new Promise(r => setTimeout(r, 1500));
-        const { value } = await connection.getSignatureStatuses([sig]);
+        const { value } = await connection.getSignatureStatuses([sig], { searchTransactionHistory: true });
         const st = value && value[0];
         if(st && st.err){
           throw new Error(window.T("status_chain_failed") + JSON.stringify(st.err));
@@ -2538,7 +2538,7 @@
       let confirmed = false;
       for(let i=0;i<40 && !confirmed;i++){
         await new Promise(r => setTimeout(r, 1500));
-        const { value } = await info.connection.getSignatureStatuses([sig]);
+        const { value } = await info.connection.getSignatureStatuses([sig], { searchTransactionHistory: true });
         const st = value && value[0];
         if(st && st.err) throw new Error(JSON.stringify(st.err));
         if(st && (st.confirmationStatus === "confirmed" || st.confirmationStatus === "finalized")) confirmed = true;
@@ -2648,7 +2648,7 @@
       let confirmed = false;
       for(let i=0;i<40 && !confirmed;i++){
         await new Promise(r => setTimeout(r, 1500));
-        const { value } = await info.connection.getSignatureStatuses([sig]);
+        const { value } = await info.connection.getSignatureStatuses([sig], { searchTransactionHistory: true });
         const st = value && value[0];
         if(st && st.err) throw new Error(JSON.stringify(st.err));
         if(st && (st.confirmationStatus === "confirmed" || st.confirmationStatus === "finalized")) confirmed = true;
@@ -2729,7 +2729,7 @@
       let confirmed = false;
       for(let i=0;i<40 && !confirmed;i++){
         await new Promise(r => setTimeout(r, 1500));
-        const { value } = await info.connection.getSignatureStatuses([sig]);
+        const { value } = await info.connection.getSignatureStatuses([sig], { searchTransactionHistory: true });
         const st = value && value[0];
         if(st && st.err) throw new Error(JSON.stringify(st.err));
         if(st && (st.confirmationStatus === "confirmed" || st.confirmationStatus === "finalized")) confirmed = true;
@@ -2816,7 +2816,7 @@
         let confirmed = false;
         for(let i=0;i<40 && !confirmed;i++){
           await new Promise(r => setTimeout(r, 1500));
-          const { value } = await connection.getSignatureStatuses([sig]);
+          const { value } = await connection.getSignatureStatuses([sig], { searchTransactionHistory: true });
           const st = value && value[0];
           if(st && st.err) throw new Error(`Batch ${b+1} failed: ` + JSON.stringify(st.err));
           if(st && (st.confirmationStatus === "confirmed" || st.confirmationStatus === "finalized")) confirmed = true;
@@ -3238,7 +3238,7 @@
       let confirmed = false;
       for(let i=0;i<40 && !confirmed;i++){
         await new Promise(r => setTimeout(r, 1500));
-        const { value } = await connection.getSignatureStatuses([sig]);
+        const { value } = await connection.getSignatureStatuses([sig], { searchTransactionHistory: true });
         const st = value && value[0];
         if(st && st.err) throw new Error("Swap failed on-chain: " + JSON.stringify(st.err));
         if(st && (st.confirmationStatus === "confirmed" || st.confirmationStatus === "finalized")) confirmed = true;
