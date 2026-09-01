@@ -63,6 +63,23 @@
     opacity:0.5;
   }
   .hero, .workshop, footer{position:relative; z-index:1;}
+
+  .bg-decor{
+    position:fixed; top:8%; right:-6%; width:520px; max-width:42vw; height:auto;
+    opacity:0.22; pointer-events:none; z-index:0; user-select:none;
+    animation:bgDecorFloat 12s ease-in-out infinite;
+    filter:blur(0.3px);
+  }
+  @keyframes bgDecorFloat{
+    0%,100%{ transform:translateY(0) rotate(0deg); }
+    50%{ transform:translateY(-22px) rotate(3deg); }
+  }
+  @media (max-width:860px){
+    .bg-decor{ width:260px; max-width:60vw; top:4%; right:-14%; opacity:0.14; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .bg-decor{ animation:none; }
+  }
   header{position:relative; z-index:40;}
   .mono{font-family:'JetBrains Mono', monospace;}
   .display{font-family:'Space Grotesk', sans-serif;}
@@ -732,6 +749,7 @@
   </div>
 </div>
 
+<img src="../../assets/solana-bg-decor.png" alt="" class="bg-decor" aria-hidden="true">
 
 <header>
   <div class="brand">
