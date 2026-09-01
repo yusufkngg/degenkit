@@ -1308,7 +1308,7 @@
         </div>`;
       }).join("");
       listEl.innerHTML = rows;
-      statusEl.textContent = stoppedEarly ? "Search was rate-limited partway through — older tokens may be missing." : "";
+      statusEl.textContent = "";
     }catch(e){
       console.error(e);
       statusEl.textContent = "Error: " + friendlyEthError(e);
