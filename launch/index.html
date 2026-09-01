@@ -58,6 +58,7 @@
   }
   .chain-status.live{color:var(--mint); border:1px solid rgba(28,227,155,0.4); background:rgba(28,227,155,0.08);}
   .chain-status.soon{color:var(--muted); border:1px solid var(--line);}
+  .chain-status.new{color:#8fa1f5; border:1px solid rgba(98,126,234,0.45); background:rgba(98,126,234,0.08);}
   .chain-status .dot{width:6px; height:6px; border-radius:50%; background:currentColor;}
 </style>
 </head>
@@ -94,7 +95,7 @@
     <span class="btn-launch">Launch on Solana</span>
   </a>
   <a class="chain-card live" href="ethereum/">
-    <div class="chain-status live"><span class="dot"></span>Live</div>
+    <div class="chain-status new"><span class="dot"></span>New</div>
     <div class="chain-port" style="font-family:'Space Grotesk',sans-serif; font-weight:700;">Ξ</div>
     <h3>Ethereum</h3>
     <p>Fixed-supply ERC-20 tokens. No mint function, ever — the whole supply is locked in at creation.</p>
