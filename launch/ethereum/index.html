@@ -181,7 +181,7 @@
       </div>
       <div class="eth-field">
         <label>Total supply</label>
-        <input type="number" id="eth_supply" min="1" placeholder="1000000">
+        <input type="number" id="eth_supply" min="1" value="1000000000" placeholder="1000000000">
       </div>
     </div>
 
@@ -381,7 +381,7 @@
       updateCreateButtonState();
     });
     p.on("chainChanged", (chainId) => {
-      currentChainId = chainId;
+      currentChainId = String(chainId).toLowerCase();
       updateNetworkBadge();
       updateCreateButtonState();
     });
@@ -397,8 +397,7 @@
       const accounts = await provider.send("eth_requestAccounts", []);
       userAddress = accounts[0];
       signer = await provider.getSigner();
-      const network = await provider.getNetwork();
-      currentChainId = "0x" + network.chainId.toString(16);
+      currentChainId = (await activeEip1193Provider.request({ method: "eth_chainId" })).toLowerCase();
       $("connectLabel").textContent = shortAddr(userAddress);
       $("connectDot").classList.add("connected");
       updateNetworkBadge();
