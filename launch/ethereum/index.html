@@ -310,9 +310,44 @@
   }
   renderWalletMenu();
 
+  function renderConnectedMenu(){
+    const menu = $("ethWalletMenu");
+    menu.innerHTML = `
+      <div style="padding:10px 12px; font-size:11px; color:var(--muted); font-family:'JetBrains Mono',monospace; word-break:break-all;">${userAddress}</div>
+      <button class="eth-wallet-item" id="disconnectBtn"><span class="eth-wallet-badge" style="background:#8a4b4b;">×</span><span>Disconnect</span></button>
+    `;
+    $("disconnectBtn").addEventListener("click", disconnectWallet);
+  }
+
+  async function disconnectWallet(){
+    const p = activeEip1193Provider;
+    userAddress = null;
+    signer = null;
+    provider = null;
+    activeEip1193Provider = null;
+    currentChainId = null;
+    $("connectLabel").textContent = "Connect wallet";
+    $("connectDot").classList.remove("connected");
+    $("ethWalletMenu").classList.remove("open");
+    updateNetworkBadge();
+    updateCreateButtonState();
+    renderWalletMenu();
+    // Best-effort: some wallets support actually revoking the connection
+    // (EIP-2255). Most don't yet — if not, this just resets our own UI state,
+    // and the wallet itself may still remember the site until you disconnect
+    // from within the wallet's own settings.
+    if(p && p.request){
+      try{ await p.request({ method: "wallet_revokePermissions", params: [{ eth_accounts: {} }] }); }catch(e){ /* not supported, fine */ }
+    }
+  }
+
   $("connectBtn").addEventListener("click", (e) => {
     e.stopPropagation();
-    if(userAddress) return; // already connected, nothing to do
+    if(userAddress){
+      renderConnectedMenu();
+      $("ethWalletMenu").classList.toggle("open");
+      return;
+    }
     $("ethWalletMenu").classList.toggle("open");
   });
   document.addEventListener("click", () => $("ethWalletMenu").classList.remove("open"));
@@ -323,6 +358,12 @@
     if(/insufficient funds/i.test(raw)) return "Not enough ETH in your wallet to cover the fee and gas.";
     if(/user rejected|user denied/i.test(raw)) return "Transaction rejected in wallet.";
     if(/could not detect network/i.test(raw)) return "Couldn't reach the network. Check your connection and try again.";
+    if(/missing revert data/i.test(raw)){
+      const code = e?.code || e?.info?.error?.code || "?";
+      return `The wallet/RPC couldn't simulate this call (code ${code}) and didn't say why. ` +
+        `This can happen with a stale RPC cache — try refreshing the page and reconnecting. ` +
+        `Raw: ${JSON.stringify(e?.info || e?.error || {}).slice(0, 200)}`;
+    }
     return raw.slice(0, 300);
   }
 
@@ -432,7 +473,7 @@
       const rawSupply = BigInt(supply) * (10n ** 18n);
 
       statusEl.textContent = "Waiting for wallet approval…";
-      const tx = await contract.createToken(name, symbol, rawSupply, { value: fee });
+      const tx = await contract.createToken(name, symbol, rawSupply, { value: fee, gasLimit: 350000n });
 
       statusEl.textContent = "Confirming — this can take a moment…";
       const receipt = await tx.wait();
