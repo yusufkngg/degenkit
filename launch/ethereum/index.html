@@ -973,7 +973,7 @@
 </script>
 
 <script type="module">
-  import { BrowserProvider, Contract, formatEther } from "https://esm.sh/ethers@6.13.4";
+  import { BrowserProvider, Contract, formatEther, AbiCoder } from "https://esm.sh/ethers@6.13.4";
 
   const FACTORY_ADDRESS = "0x9dF9EF48C2973B8136fF9d537a8bca58544A1906";
   const FACTORY_ABI = [
@@ -1262,41 +1262,30 @@
     statusEl.textContent = "Reading your token creations…";
     listEl.innerHTML = "";
     try{
-      const contract = new Contract(FACTORY_ADDRESS, FACTORY_ABI, provider);
-      const filter = contract.filters.TokenCreated(null, userAddress);
-      // Query in bounded chunks rather than "from block 0" — many RPC
-      // providers reject (or mangle the error for) overly large block
-      // ranges. Our factory is brand new, so a generous recent window
-      // comfortably covers its entire history either way.
-      const latestBlock = await provider.getBlockNumber();
-      const CHUNK = 9000; // MetaMask's default RPC caps eth_getLogs ranges at 10,000 blocks
-      const LOOKBACK = 100000; // ~2 weeks on Ethereum — our factory is only days old
-      let events = [];
-      let toBlock = latestBlock;
-      const stopAt = Math.max(0, latestBlock - LOOKBACK);
-      let chunkIndex = 0;
-      const totalChunks = Math.ceil(LOOKBACK / CHUNK);
-      let stoppedEarly = false;
-      while(toBlock > stopAt){
-        chunkIndex++;
-        statusEl.textContent = `Reading your token creations… (${chunkIndex}/${totalChunks})`;
-        const fromBlock = Math.max(stopAt, toBlock - CHUNK + 1);
-        try{
-          const chunkEvents = await contract.queryFilter(filter, fromBlock, toBlock);
-          events = events.concat(chunkEvents);
-        }catch(chunkErr){
-          console.error("Log query chunk failed, stopping lookback:", fromBlock, toBlock, chunkErr);
-          stoppedEarly = true;
-          break;
-        }
-        toBlock = fromBlock - 1;
-        if(toBlock > stopAt) await new Promise(r => setTimeout(r, 150));
-      }
+      // Use Etherscan's own indexed API (V2, single unified endpoint) instead
+      // of raw RPC eth_getLogs — no block-range limit, one request, and it
+      // never goes stale as the chain grows (unlike a "recent blocks" scan).
+      const ETHERSCAN_API_KEY = "2HECWBMT2ME82JNMXU3E74YRHZVCWZGW61";
+      const TOKEN_CREATED_TOPIC0 = "0x6e6ae68e7d7d45fbd855c40d1eaafa8de46c5fbec3ee26f1af88730e400bc92c";
+      const paddedCreator = "0x" + "0".repeat(24) + userAddress.slice(2).toLowerCase();
+      const apiUrl = `https://api.etherscan.io/v2/api?chainid=1&module=logs&action=getLogs` +
+        `&fromBlock=0&toBlock=latest&address=${FACTORY_ADDRESS}` +
+        `&topic0=${TOKEN_CREATED_TOPIC0}&topic0_2_opr=and&topic2=${paddedCreator}` +
+        `&apikey=${ETHERSCAN_API_KEY}`;
+      const res = await fetch(apiUrl);
+      if(!res.ok) throw new Error("Etherscan API request failed (HTTP " + res.status + ")");
+      const data = await res.json();
+      const rawLogs = (data && data.status === "1" && Array.isArray(data.result)) ? data.result : [];
+
+      const abiCoder = AbiCoder.defaultAbiCoder();
+      const events = rawLogs.map(log => {
+        const tokenAddress = "0x" + log.topics[1].slice(-40);
+        const [name, symbol, supply] = abiCoder.decode(["string","string","uint256"], log.data);
+        return { args: { token: tokenAddress, name, symbol, supply } };
+      });
 
       if(events.length === 0){
-        listEl.innerHTML = stoppedEarly
-          ? '<div class="empty-note">Search was rate-limited before finishing — results may be incomplete. Try again in a moment.</div>'
-          : '<div class="empty-note">No tokens created from this wallet yet.</div>';
+        listEl.innerHTML = '<div class="empty-note">No tokens created from this wallet yet.</div>';
         statusEl.textContent = "";
         return;
       }
