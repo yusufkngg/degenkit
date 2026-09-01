@@ -41,6 +41,22 @@
     --pink:#FF8FA8;
     --radius:18px;
   }
+  html[data-theme="light"]{
+    --void:#FAF7F2;
+    --panel:#FFFFFF;
+    --panel-2:#F1ECE2;
+    --line:#E2DBCB;
+    --cream:#231F19;
+    --muted:#77705E;
+    --orange:#E8650A;
+    --orange-bright:#FF7A1A;
+    --orange-deep:#B8480A;
+    --pink:#D94F73;
+  }
+  html[data-theme="light"] body::before{opacity:0.12;}
+  html[data-theme="light"] .panel, html[data-theme="light"] .feature-card, html[data-theme="light"] .faq-item{
+    box-shadow:0 1px 3px rgba(35,31,25,0.06);
+  }
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
   body{
@@ -88,6 +104,12 @@
   }
   nav.site-nav a.navlink:hover{color:var(--cream);}
   .header-actions{display:flex; align-items:center; gap:14px;}
+  .theme-toggle{
+    width:36px; height:36px; border-radius:50%; border:1px solid var(--line); background:var(--panel-2);
+    color:var(--cream); font-size:15px; cursor:pointer; display:flex; align-items:center; justify-content:center;
+    transition:border-color .15s, transform .15s;
+  }
+  .theme-toggle:hover{border-color:var(--orange); transform:rotate(20deg);}
   .social-icn{
     width:34px; height:34px; border-radius:50%; border:1px solid var(--line);
     display:flex; align-items:center; justify-content:center; color:var(--muted);
@@ -298,6 +320,13 @@
   .footer-bottom p{color:var(--muted); font-size:12.5px; margin:0;}
   .footer-socials{display:flex; gap:10px;}
 </style>
+<script>
+  (function(){
+    var saved = localStorage.getItem("degenkit-theme");
+    var theme = saved || (window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+    if(theme === "light") document.documentElement.setAttribute("data-theme", "light");
+  })();
+</script>
 </head>
 <body>
 
@@ -310,6 +339,7 @@
       <a class="navlink" href="#faq">FAQ</a>
     </nav>
     <div class="header-actions">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme" title="Toggle theme">◐</button>
       <a class="social-icn" href="https://x.com/DegenKitApp" target="_blank" aria-label="X / Twitter" title="Follow on X">𝕏</a>
       <a class="btn-launch" href="/launch/solana/">Launch App</a>
     </div>
@@ -529,6 +559,21 @@
 </footer>
 
 <script>
+  // ---------- theme toggle ----------
+  const themeToggleBtn = document.getElementById("themeToggle");
+  if(themeToggleBtn){
+    themeToggleBtn.addEventListener("click", () => {
+      const isLight = document.documentElement.getAttribute("data-theme") === "light";
+      if(isLight){
+        document.documentElement.removeAttribute("data-theme");
+        localStorage.setItem("degenkit-theme", "dark");
+      }else{
+        document.documentElement.setAttribute("data-theme", "light");
+        localStorage.setItem("degenkit-theme", "light");
+      }
+    });
+  }
+
   // ---------- rotating headline accent ----------
   const HEADLINE_PHRASES = ["one signature.", "no hidden fees."];
   let headlineIdx = 0;

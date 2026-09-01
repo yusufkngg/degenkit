@@ -31,6 +31,16 @@
     --danger: #E0574C;
     --radius: 14px;
   }
+  html[data-theme="light"]{
+    --bg: #FAF7F2;
+    --bg-2: #F1ECE2;
+    --panel: #FFFFFF;
+    --panel-2: #F1ECE2;
+    --line: #E2DBCB;
+    --ink: #1F1B15;
+    --muted: #726B5A;
+  }
+  html[data-theme="light"] body::before{opacity:0.12;}
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
   body{
@@ -96,6 +106,12 @@
   #walletBtn.connected .dot, #connectDot.connected{background:var(--mint);}
 
   .wallet-wrap{position:relative;}
+  .theme-toggle{
+    width:34px; height:34px; border-radius:50%; border:1px solid var(--line); background:var(--panel-2);
+    color:var(--ink); font-size:14px; cursor:pointer; display:flex; align-items:center; justify-content:center;
+    transition:border-color .15s, transform .15s; flex-shrink:0;
+  }
+  .theme-toggle:hover{border-color:var(--brass); transform:rotate(20deg);}
   .wallet-menu{
     display:none; position:absolute; right:0; top:calc(100% + 10px);
     min-width:260px; max-height:70vh; overflow-y:auto; background:var(--panel-2); border:1px solid var(--line);
@@ -687,6 +703,13 @@
   }
 </style>
 
+<script>
+  (function(){
+    var saved = localStorage.getItem("degenkit-theme");
+    var theme = saved || (window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+    if(theme === "light") document.documentElement.setAttribute("data-theme", "light");
+  })();
+</script>
 </head>
 <body>
 
@@ -705,6 +728,7 @@
     <a href="/" class="logo"><img src="../../assets/icon.png" alt="" class="logo-icon"><span class="logo-text">DegenKit</span></a>
   </div>
   <div style="display:flex; align-items:center; gap:18px;">
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme" title="Toggle theme">◐</button>
     <a href="/launch/" class="all-networks-link" style="font-size:13px; color:var(--muted); font-family:'JetBrains Mono',monospace;">← All networks</a>
     <div class="wallet-wrap">
       <button id="connectBtn"><span class="dot" id="connectDot"></span><span id="connectLabel">Connect wallet</span></button>
@@ -742,10 +766,10 @@
     <div class="sidebar-group">
       <div class="sidebar-label">Token</div>
       <div class="sidebar-item active" data-view="create"><span class="ic">◆</span> Token Creator</div>
+      <div class="sidebar-item" data-view="manage"><span class="ic">▤</span> My Tokens</div>
     </div>
     <div class="sidebar-group">
       <div class="sidebar-label">Coming soon</div>
-      <div class="sidebar-item disabled"><span class="ic">▤</span> My Tokens<span class="soon-tag">soon</span></div>
       <div class="sidebar-item disabled"><span class="ic">⚷</span> Authorities<span class="soon-tag">soon</span></div>
       <div class="sidebar-item disabled"><span class="ic">🔥</span> Burn Token<span class="soon-tag">soon</span></div>
       <div class="sidebar-item disabled"><span class="ic">✈</span> Airdrop<span class="soon-tag">soon</span></div>
@@ -825,12 +849,42 @@
 
 </div>
   </section>
+
+  <section id="view-manage" class="tool-view">
+    <div class="tool-header">
+      <h1>My Tokens</h1>
+      <p>Tokens you've created with DegenKit on Robinhood Chain, straight from this wallet's on-chain history — not a third-party balance scan.</p>
+    </div>
+    <div class="tool-panel" style="max-width:760px;">
+      <div style="display:flex; justify-content:center; margin-bottom:6px;">
+        <button class="btn-launch" id="manageRefreshBtn">Load my tokens</button>
+      </div>
+      <div class="status-line" id="manageStatus"></div>
+      <div class="token-list" id="tokenList"></div>
+    </div>
+  </section>
+
   </div>
   </main>
 </div>
 
 <script>
   const $ = (id) => document.getElementById(id);
+
+  // ---------- theme toggle ----------
+  const themeToggleBtn = document.getElementById("themeToggle");
+  if(themeToggleBtn){
+    themeToggleBtn.addEventListener("click", () => {
+      const isLight = document.documentElement.getAttribute("data-theme") === "light";
+      if(isLight){
+        document.documentElement.removeAttribute("data-theme");
+        localStorage.setItem("degenkit-theme", "dark");
+      }else{
+        document.documentElement.setAttribute("data-theme", "light");
+        localStorage.setItem("degenkit-theme", "light");
+      }
+    });
+  }
 
   // ---------- chain-select dropdown ----------
   document.getElementById("chainSelectBtn").addEventListener("click", (e) => {
@@ -842,9 +896,29 @@
   });
   document.getElementById("chainSelectMenu").addEventListener("click", (e) => e.stopPropagation());
 
-  // ---------- sidebar / mobile hamburger (only one real view for now) ----------
+  // ---------- sidebar / mobile hamburger ----------
   document.getElementById("mobileToolsToggle").addEventListener("click", () => {
     document.getElementById("sidebarEl").classList.toggle("mobile-open");
+  });
+
+  function switchView(viewKey){
+    document.querySelectorAll(".tool-view").forEach(v => v.classList.remove("active"));
+    const target = document.getElementById("view-" + viewKey);
+    if(target) target.classList.add("active");
+    let activeLabel = "";
+    document.querySelectorAll(".sidebar-item[data-view]").forEach(el => {
+      const isActive = el.dataset.view === viewKey;
+      el.classList.toggle("active", isActive);
+      if(isActive) activeLabel = el.textContent.trim();
+    });
+    const mobileLabel = document.getElementById("mobileToolsLabel");
+    if(mobileLabel && activeLabel) mobileLabel.textContent = activeLabel;
+    document.getElementById("sidebarEl").classList.remove("mobile-open");
+    window.scrollTo(0,0);
+    if(viewKey === "manage" && window.__loadMyTokens) window.__loadMyTokens();
+  }
+  document.querySelectorAll(".sidebar-item[data-view]").forEach(item => {
+    item.addEventListener("click", () => switchView(item.dataset.view));
   });
 
   // ---------- copy-to-clipboard ----------
@@ -908,6 +982,7 @@
     "event TokenCreated(address indexed token, address indexed creator, string name, string symbol, uint256 supply)"
   ];
   const MAINNET_CHAIN_ID = "0x1237"; // Robinhood Chain mainnet, chain ID 4663
+  const EXPLORER_ADDRESS_BASE = "https://robinhoodchain.blockscout.com/address/";
 
   const $ = (id) => document.getElementById(id);
   let provider = null, signer = null, userAddress = null, currentChainId = null;
@@ -1192,6 +1267,59 @@
   });
 
   updateSummary();
+
+  // ================= MY TOKENS (from our factory's own event log — no third-party API) =================
+  async function loadMyTokens(){
+    const statusEl = $("manageStatus");
+    const listEl = $("tokenList");
+    statusEl.classList.remove("error");
+    if(!userAddress){ statusEl.textContent = "Connect your wallet first."; statusEl.classList.add("error"); return; }
+    if(currentChainId !== MAINNET_CHAIN_ID){ statusEl.textContent = "Switch to the right network first."; statusEl.classList.add("error"); return; }
+
+    const btn = $("manageRefreshBtn");
+    btn.disabled = true; btn.textContent = "Loading…";
+    statusEl.textContent = "Reading your token creations…";
+    listEl.innerHTML = "";
+    try{
+      const contract = new Contract(FACTORY_ADDRESS, FACTORY_ABI, provider);
+      const filter = contract.filters.TokenCreated(null, userAddress);
+      const events = await contract.queryFilter(filter, 0, "latest");
+
+      if(events.length === 0){
+        listEl.innerHTML = '<div class="empty-note">No tokens created from this wallet yet.</div>';
+        statusEl.textContent = "";
+        return;
+      }
+
+      const explorerBase = EXPLORER_ADDRESS_BASE;
+      const rows = events.slice().reverse().map(ev => {
+        const { token, name, symbol, supply } = ev.args;
+        const letter = (symbol || name || "?").slice(0,1).toUpperCase();
+        const supplyDisplay = (Number(supply) / 1e18).toLocaleString("en-US", { maximumFractionDigits: 0 });
+        return `<div class="token-row">
+          <div class="t-icon">${letter}</div>
+          <div class="t-main">
+            <div class="t-name">${name} <span style="color:var(--muted); font-weight:400;">(${symbol})</span></div>
+            <div class="t-mint-row"><span class="t-mint">${token}</span><button class="copy-btn" data-copy-value="${token}" aria-label="Copy">⧉</button></div>
+            <div class="t-badges"><span class="soon-tag" style="border-color:var(--line); color:var(--muted);">Supply: ${supplyDisplay}</span></div>
+          </div>
+          <div class="t-actions">
+            <a href="${explorerBase}${token}" target="_blank">Explorer</a>
+          </div>
+        </div>`;
+      }).join("");
+      listEl.innerHTML = rows;
+      statusEl.textContent = "";
+    }catch(e){
+      console.error(e);
+      statusEl.textContent = "Error: " + friendlyEthError(e);
+      statusEl.classList.add("error");
+    }finally{
+      btn.disabled = false; btn.textContent = "Load my tokens";
+    }
+  }
+  $("manageRefreshBtn").addEventListener("click", loadMyTokens);
+  window.__loadMyTokens = loadMyTokens;
 </script>
 
 </body>
