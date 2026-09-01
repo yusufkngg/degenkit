@@ -26,10 +26,11 @@
   .select-hero p{color:var(--muted); font-size:16px; max-width:480px; margin:0 auto;}
 
   .chain-grid{
-    max-width:900px; margin:56px auto 120px; padding:0 clamp(20px,4vw,56px);
-    display:grid; grid-template-columns:1fr 1fr; gap:22px;
+    max-width:1100px; margin:56px auto 120px; padding:0 clamp(20px,4vw,56px);
+    display:grid; grid-template-columns:1fr 1fr 1fr; gap:22px;
   }
-  @media (max-width:700px){ .chain-grid{grid-template-columns:1fr;} }
+  @media (max-width:900px){ .chain-grid{grid-template-columns:1fr 1fr;} }
+  @media (max-width:600px){ .chain-grid{grid-template-columns:1fr;} }
 
   .chain-card{
     background:var(--panel); border:1px solid var(--line); border-radius:22px;
@@ -91,6 +92,13 @@
     <h3>Solana</h3>
     <p>SPL tokens, one signature. Mint &amp; freeze authority revoked and metadata locked automatically.</p>
     <span class="btn-launch">Launch on Solana</span>
+  </a>
+  <a class="chain-card live" href="ethereum/">
+    <div class="chain-status live"><span class="dot"></span>Live</div>
+    <div class="chain-port" style="font-family:'Space Grotesk',sans-serif; font-weight:700;">Ξ</div>
+    <h3>Ethereum</h3>
+    <p>Fixed-supply ERC-20 tokens. No mint function, ever — the whole supply is locked in at creation.</p>
+    <span class="btn-launch">Launch on Ethereum</span>
   </a>
   <div class="chain-card soon">
     <div class="chain-status soon">Coming soon</div>

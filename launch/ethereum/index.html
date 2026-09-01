@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18369032243"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-18369032243');
+</script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ethereum Token Creator | DegenKit</title>
+<meta name="description" content="Create a fixed-supply ERC-20 token on Ethereum. No mint function, ever — the whole supply is locked in at creation.">
+<link rel="icon" type="image/png" href="../../assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/styles.css">
+<style>
+  .eth-hero{max-width:640px; margin:0 auto; text-align:center; padding:52px clamp(20px,4vw,56px) 10px;}
+  .eth-hero h1{font-family:'Space Grotesk',sans-serif; font-weight:800; font-size:clamp(28px,4vw,40px); margin:0 0 12px;}
+  .eth-hero p{color:var(--muted); font-size:15.5px; line-height:1.6;}
+  .eth-panel-wrap{max-width:560px; margin:20px auto 100px; padding:0 clamp(20px,4vw,56px);}
+  .eth-panel{border:1px solid var(--line); border-radius:16px; padding:28px 30px; background:var(--panel);}
+  .eth-field{margin-bottom:18px;}
+  .eth-field label{display:block; font-size:12.5px; color:var(--muted); font-family:'JetBrains Mono',monospace; margin-bottom:7px; text-transform:uppercase; letter-spacing:0.04em;}
+  .eth-field input{
+    width:100%; box-sizing:border-box; background:var(--panel-2); border:1px solid var(--line); border-radius:9px;
+    padding:12px 14px; color:var(--ink); font-size:14.5px; font-family:'Inter',sans-serif;
+  }
+  .eth-field input:focus{outline:none; border-color:var(--brass);}
+  .eth-row{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  @media (max-width:480px){ .eth-row{grid-template-columns:1fr;} }
+  .eth-fee-badge{
+    display:flex; align-items:center; gap:8px; background:rgba(255,122,26,0.08); border:1px solid rgba(255,122,26,0.3);
+    border-radius:9px; padding:11px 14px; font-size:12.5px; color:#e8dcc8; margin-bottom:20px;
+  }
+  .eth-fee-badge .dot{width:6px; height:6px; border-radius:50%; background:var(--orange-bright); flex-shrink:0;}
+  .eth-warn{
+    background:rgba(79,209,155,0.07); border:1px solid rgba(28,227,155,0.3); color:#a7e9d3;
+    border-radius:9px; padding:12px 14px; font-size:12.5px; line-height:1.6; margin-bottom:20px;
+  }
+  .eth-status{min-height:20px; font-size:13px; color:var(--muted); margin-top:14px; text-align:center;}
+  .eth-status.error{color:var(--danger);}
+  .eth-receipt{
+    display:none; margin-top:20px; border:1px solid var(--line); border-radius:10px; padding:20px; background:var(--bg-2);
+  }
+  .eth-receipt.show{display:block;}
+  .eth-receipt-head{display:flex; justify-content:flex-end; margin-bottom:10px;}
+  .eth-stamp{
+    display:inline-flex; align-items:center; gap:6px; border:1.5px solid var(--mint); color:var(--mint);
+    font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:11.5px; letter-spacing:0.08em;
+    padding:4px 12px; border-radius:100px;
+  }
+  .eth-r-row{display:flex; justify-content:space-between; align-items:center; gap:12px; padding:7px 0; font-size:12.5px; border-top:1px dashed var(--line);}
+  .eth-r-row:first-child{border-top:none;}
+  .eth-r-row .k{color:var(--muted); font-family:'JetBrains Mono',monospace; flex-shrink:0;}
+  .eth-r-row .v-copy{display:flex; align-items:center; gap:8px; min-width:0;}
+  .eth-r-row .v{font-family:'JetBrains Mono',monospace; word-break:break-all; text-align:right; font-size:12px;}
+  .eth-copy-btn{
+    flex-shrink:0; width:24px; height:24px; border-radius:6px; border:1px solid var(--line);
+    background:var(--panel-2); color:var(--muted); cursor:pointer; font-size:12px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .eth-copy-btn:hover{border-color:var(--brass); color:var(--brass-bright);}
+  .eth-copy-btn.copied{border-color:var(--mint); color:var(--mint);}
+  .eth-r-link{display:inline-block; margin-top:12px; font-size:12.5px; font-family:'JetBrains Mono',monospace;}
+  .eth-network-badge{
+    display:flex; align-items:center; gap:8px; justify-content:center; margin-bottom:18px;
+    font-size:12px; color:var(--muted); font-family:'JetBrains Mono',monospace;
+  }
+  .eth-network-badge .dot{width:6px; height:6px; border-radius:50%; background:var(--mint);}
+  .eth-network-badge.wrong .dot{background:var(--danger);}
+  #connectDot{width:7px; height:7px; border-radius:50%; background:var(--muted); display:inline-block; margin-right:7px;}
+  #connectDot.connected{background:var(--mint);}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-row">
+    <a class="logo" href="/"><img src="../../assets/icon.png" alt="" class="logo-icon"><span class="logo-text">DegenKit</span></a>
+    <nav class="site-nav">
+      <a class="navlink" href="/#features">Features</a>
+      <a class="navlink" href="/#roadmap">Roadmap</a>
+      <a class="navlink" href="/#faq">FAQ</a>
+    </nav>
+    <div class="header-actions">
+      <div class="chain-select-wrap">
+        <button class="chain-select-btn" id="chainSelectBtn">
+          <img src="../../assets/ethereum-logo.png" alt="">
+          <span>Ethereum</span>
+          <span class="chain-caret">▾</span>
+        </button>
+        <div class="chain-select-menu" id="chainSelectMenu">
+          <a href="/launch/solana/" class="chain-option">
+            <img src="../../assets/solana-logo.png" alt=""> <span>Solana</span> <span class="chain-tag live">Live</span>
+          </a>
+          <a href="/launch/ethereum/" class="chain-option active">
+            <img src="../../assets/ethereum-logo.png" alt=""> <span>Ethereum</span> <span class="chain-tag live">Live</span>
+          </a>
+          <a href="/launch/robinhood/" class="chain-option">
+            <img src="../../assets/robinhood-logo.png" alt=""> <span>Robinhood Chain</span> <span class="chain-tag soon">Soon</span>
+          </a>
+        </div>
+      </div>
+      <button class="btn-launch" id="connectBtn"><span class="dot" id="connectDot"></span><span id="connectLabel">Connect wallet</span></button>
+    </div>
+  </div>
+</header>
+
+<div class="eth-hero">
+  <div class="eyebrow" style="display:inline-flex;">Ethereum</div>
+  <h1>Create a fixed-supply ERC-20 token</h1>
+  <p>No mint function, ever. The entire supply is created once, in this one transaction, straight to your wallet — there is no way for anyone (including DegenKit) to issue more later.</p>
+</div>
+
+<div class="eth-panel-wrap">
+  <div class="eth-panel">
+    <div class="eth-network-badge" id="networkBadge"><span class="dot"></span><span id="networkBadgeText">Not connected</span></div>
+
+    <div class="eth-fee-badge"><span class="dot"></span><span id="feeBadgeText">Loading fee…</span></div>
+
+    <div class="eth-field">
+      <label>Token name</label>
+      <input type="text" id="eth_name" maxlength="40" placeholder="e.g. Anka Coin">
+    </div>
+    <div class="eth-row">
+      <div class="eth-field">
+        <label>Symbol</label>
+        <input type="text" id="eth_symbol" maxlength="10" placeholder="e.g. ANKA">
+      </div>
+      <div class="eth-field">
+        <label>Total supply</label>
+        <input type="number" id="eth_supply" min="1" placeholder="1000000">
+      </div>
+    </div>
+
+    <div class="eth-warn">
+      This token uses 18 decimals (the ERC-20 standard). Fixed supply forever — there's no mint function on this contract, so nothing can increase it later, by anyone.
+    </div>
+
+    <button class="btn-launch" id="createBtn" style="width:100%;" disabled>Connect wallet first</button>
+    <div class="eth-status" id="ethStatus"></div>
+
+    <div class="eth-receipt" id="ethReceipt">
+      <div class="eth-receipt-head"><span class="eth-stamp">✓ CREATED</span></div>
+      <div class="eth-r-row"><span class="k">Contract address</span><span class="v-copy"><span class="v" id="eth_rAddress">—</span><button class="eth-copy-btn" data-copy-target="eth_rAddress" aria-label="Copy">⧉</button></span></div>
+      <div class="eth-r-row"><span class="k">tx</span><span class="v-copy"><span class="v" id="eth_rTx">—</span><button class="eth-copy-btn" data-copy-target="eth_rTx" aria-label="Copy">⧉</button></span></div>
+      <a class="eth-r-link" id="eth_rLink" href="#" target="_blank">View on Etherscan →</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-bottom" style="border-top:none; padding-top:0;">
+      <p>© 2026 DegenKit. All rights reserved.</p>
+      <div class="footer-socials">
+        <a class="social-icn" href="https://x.com/DegenKitApp" target="_blank" aria-label="X / Twitter">𝕏</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById("chainSelectBtn").addEventListener("click", (e) => {
+    e.stopPropagation();
+    document.getElementById("chainSelectMenu").classList.toggle("open");
+  });
+  document.addEventListener("click", () => {
+    document.getElementById("chainSelectMenu").classList.remove("open");
+  });
+  document.getElementById("chainSelectMenu").addEventListener("click", (e) => e.stopPropagation());
+
+  document.addEventListener("click", async (e) => {
+    const btn = e.target.closest(".eth-copy-btn");
+    if(!btn) return;
+    const el = document.getElementById(btn.dataset.copyTarget);
+    const text = el ? el.textContent : "";
+    if(!text) return;
+    try{ await navigator.clipboard.writeText(text); }catch(err){}
+    const original = btn.textContent;
+    btn.textContent = "✓"; btn.classList.add("copied");
+    setTimeout(() => { btn.textContent = original; btn.classList.remove("copied"); }, 1200);
+  });
+</script>
+
+<script type="module">
+  import { BrowserProvider, Contract, formatEther } from "https://esm.sh/ethers@6.13.4";
+
+  const FACTORY_ADDRESS = "0x9dF9EF48C2973B8136fF9d537a8bca58544A1906";
+  const FACTORY_ABI = [
+    "function createToken(string name_, string symbol_, uint256 initialSupply_) external payable returns (address)",
+    "function feeAmount() view returns (uint256)",
+    "event TokenCreated(address indexed token, address indexed creator, string name, string symbol, uint256 supply)"
+  ];
+  const MAINNET_CHAIN_ID = "0x1";
+
+  const $ = (id) => document.getElementById(id);
+  let provider = null, signer = null, userAddress = null, currentChainId = null;
+
+  function friendlyEthError(e){
+    const raw = String(e?.shortMessage || e?.reason || e?.message || e || "");
+    if(/insufficient funds/i.test(raw)) return "Not enough ETH in your wallet to cover the fee and gas.";
+    if(/user rejected|user denied/i.test(raw)) return "Transaction rejected in wallet.";
+    if(/could not detect network/i.test(raw)) return "Couldn't reach the network. Check your connection and try again.";
+    return raw.slice(0, 300);
+  }
+
+  function shortAddr(a){ return a ? a.slice(0,6) + "…" + a.slice(-4) : "—"; }
+
+  async function updateNetworkBadge(){
+    const badge = $("networkBadge");
+    const text = $("networkBadgeText");
+    if(!userAddress){
+      badge.classList.remove("wrong");
+      text.textContent = "Not connected";
+      return;
+    }
+    if(currentChainId === MAINNET_CHAIN_ID){
+      badge.classList.remove("wrong");
+      text.textContent = `${shortAddr(userAddress)} · Ethereum Mainnet`;
+    }else{
+      badge.classList.add("wrong");
+      text.textContent = `Wrong network — switch to Ethereum Mainnet`;
+    }
+  }
+
+  function updateCreateButtonState(){
+    const btn = $("createBtn");
+    if(!userAddress){ btn.disabled = true; btn.textContent = "Connect wallet first"; return; }
+    if(currentChainId !== MAINNET_CHAIN_ID){ btn.disabled = true; btn.textContent = "Switch to Ethereum Mainnet"; return; }
+    const name = $("eth_name").value.trim();
+    const symbol = $("eth_symbol").value.trim();
+    const supply = Number($("eth_supply").value);
+    if(!name || !symbol || !supply || supply <= 0){ btn.disabled = true; btn.textContent = "Fill in the details above"; return; }
+    btn.disabled = false; btn.textContent = "Create token";
+  }
+  ["eth_name","eth_symbol","eth_supply"].forEach(id => $(id).addEventListener("input", updateCreateButtonState));
+
+  async function loadFee(){
+    try{
+      const roProvider = window.ethereum ? new BrowserProvider(window.ethereum) : null;
+      if(!roProvider){ $("feeBadgeText").textContent = "Connect a wallet to see the fee"; return; }
+      const contract = new Contract(FACTORY_ADDRESS, FACTORY_ABI, roProvider);
+      const fee = await contract.feeAmount();
+      $("feeBadgeText").textContent = Number(fee) === 0
+        ? "No service fee right now — just network gas."
+        : `Flat ${formatEther(fee)} ETH service fee — no hidden costs.`;
+    }catch(e){
+      console.error("Could not load fee:", e);
+      $("feeBadgeText").textContent = "Service fee shown before you sign.";
+    }
+  }
+
+  async function connectWallet(){
+    if(!window.ethereum){
+      $("ethStatus").textContent = "No Ethereum wallet found — install MetaMask or a similar wallet.";
+      $("ethStatus").classList.add("error");
+      return;
+    }
+    try{
+      provider = new BrowserProvider(window.ethereum);
+      const accounts = await provider.send("eth_requestAccounts", []);
+      userAddress = accounts[0];
+      signer = await provider.getSigner();
+      const network = await provider.getNetwork();
+      currentChainId = "0x" + network.chainId.toString(16);
+      $("connectLabel").textContent = shortAddr(userAddress);
+      $("connectDot").classList.add("connected");
+      updateNetworkBadge();
+      updateCreateButtonState();
+      loadFee();
+    }catch(e){
+      console.error(e);
+      $("ethStatus").textContent = "Error: " + friendlyEthError(e);
+      $("ethStatus").classList.add("error");
+    }
+  }
+  $("connectBtn").addEventListener("click", connectWallet);
+
+  if(window.ethereum){
+    window.ethereum.on && window.ethereum.on("accountsChanged", (accounts) => {
+      userAddress = accounts[0] || null;
+      $("connectLabel").textContent = userAddress ? shortAddr(userAddress) : "Connect wallet";
+      updateNetworkBadge();
+      updateCreateButtonState();
+    });
+    window.ethereum.on && window.ethereum.on("chainChanged", (chainId) => {
+      currentChainId = chainId;
+      updateNetworkBadge();
+      updateCreateButtonState();
+    });
+  }
+
+  $("createBtn").addEventListener("click", async () => {
+    const statusEl = $("ethStatus");
+    const btn = $("createBtn");
+    $("ethReceipt").classList.remove("show");
+    statusEl.classList.remove("error");
+
+    const name = $("eth_name").value.trim();
+    const symbol = $("eth_symbol").value.trim();
+    const supply = $("eth_supply").value.trim();
+
+    if(!signer){ statusEl.textContent = "Connect your wallet first."; statusEl.classList.add("error"); return; }
+    if(currentChainId !== MAINNET_CHAIN_ID){ statusEl.textContent = "Switch your wallet to Ethereum Mainnet first."; statusEl.classList.add("error"); return; }
+    if(!name || !symbol || !supply){ statusEl.textContent = "Fill in name, symbol, and supply."; statusEl.classList.add("error"); return; }
+
+    btn.disabled = true; btn.textContent = "Working…";
+    try{
+      const contract = new Contract(FACTORY_ADDRESS, FACTORY_ABI, signer);
+      const fee = await contract.feeAmount();
+      const rawSupply = BigInt(supply) * (10n ** 18n);
+
+      statusEl.textContent = "Waiting for wallet approval…";
+      const tx = await contract.createToken(name, symbol, rawSupply, { value: fee });
+
+      statusEl.textContent = "Confirming — this can take a moment…";
+      const receipt = await tx.wait();
+
+      let tokenAddress = null;
+      for(const log of receipt.logs){
+        try{
+          const parsed = contract.interface.parseLog(log);
+          if(parsed && parsed.name === "TokenCreated"){
+            tokenAddress = parsed.args.token;
+            break;
+          }
+        }catch(e){ /* not our event, skip */ }
+      }
+
+      $("eth_rAddress").textContent = tokenAddress || "(check tx logs)";
+      $("eth_rTx").textContent = receipt.hash;
+      $("eth_rLink").href = `https://etherscan.io/tx/${receipt.hash}`;
+      $("ethReceipt").classList.add("show");
+      statusEl.textContent = "Token created.";
+
+      if(typeof window.gtag === "function"){
+        window.gtag("event", "conversion", { send_to: "AW-18369032243/wZKTCMDuhtwcELPghLdE" });
+      }
+    }catch(e){
+      console.error(e);
+      statusEl.textContent = "Error: " + friendlyEthError(e);
+      statusEl.classList.add("error");
+    }finally{
+      updateCreateButtonState();
+    }
+  });
+
+  loadFee();
+</script>
+
+</body>
+</html>
