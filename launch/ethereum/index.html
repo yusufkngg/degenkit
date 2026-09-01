@@ -1270,24 +1270,33 @@
       // comfortably covers its entire history either way.
       const latestBlock = await provider.getBlockNumber();
       const CHUNK = 9000; // MetaMask's default RPC caps eth_getLogs ranges at 10,000 blocks
-      const LOOKBACK = 300000;
+      const LOOKBACK = 100000; // ~2 weeks on Ethereum — our factory is only days old
       let events = [];
       let toBlock = latestBlock;
       const stopAt = Math.max(0, latestBlock - LOOKBACK);
+      let chunkIndex = 0;
+      const totalChunks = Math.ceil(LOOKBACK / CHUNK);
+      let stoppedEarly = false;
       while(toBlock > stopAt){
+        chunkIndex++;
+        statusEl.textContent = `Reading your token creations… (${chunkIndex}/${totalChunks})`;
         const fromBlock = Math.max(stopAt, toBlock - CHUNK + 1);
         try{
           const chunkEvents = await contract.queryFilter(filter, fromBlock, toBlock);
           events = events.concat(chunkEvents);
         }catch(chunkErr){
           console.error("Log query chunk failed, stopping lookback:", fromBlock, toBlock, chunkErr);
+          stoppedEarly = true;
           break;
         }
         toBlock = fromBlock - 1;
+        if(toBlock > stopAt) await new Promise(r => setTimeout(r, 150));
       }
 
       if(events.length === 0){
-        listEl.innerHTML = '<div class="empty-note">No tokens created from this wallet yet.</div>';
+        listEl.innerHTML = stoppedEarly
+          ? '<div class="empty-note">Search was rate-limited before finishing — results may be incomplete. Try again in a moment.</div>'
+          : '<div class="empty-note">No tokens created from this wallet yet.</div>';
         statusEl.textContent = "";
         return;
       }
@@ -1310,7 +1319,7 @@
         </div>`;
       }).join("");
       listEl.innerHTML = rows;
-      statusEl.textContent = "";
+      statusEl.textContent = stoppedEarly ? "Search was rate-limited partway through — older tokens may be missing." : "";
     }catch(e){
       console.error(e);
       statusEl.textContent = "Error: " + friendlyEthError(e);
