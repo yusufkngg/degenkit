@@ -11,90 +11,828 @@
 </script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Robinhood Chain — Coming soon | DegenKit</title>
+<title>DegenKit — Launch on Robinhood Chain</title>
+<meta name="description" content="Create a fixed-supply ERC-20 token on Robinhood Chain. No mint function, ever — the whole supply is locked in at creation.">
 <link rel="icon" type="image/png" href="../../assets/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../assets/styles.css">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-  .soon-hero{
-    min-height:64vh; display:flex; align-items:center; justify-content:center;
-    text-align:center; padding:60px clamp(20px,4vw,56px);
+  :root{
+    --bg: #0E0D10;
+    --bg-2: #131114;
+    --panel: #17151A;
+    --panel-2: #1E1B21;
+    --line: #2C282E;
+    --ink: #EDEAE3;
+    --muted: #8F887C;
+    --brass: #00C805;
+    --brass-bright: #4ADE80;
+    --mint: #1CE39B;
+    --danger: #E0574C;
+    --radius: 14px;
   }
-  .soon-port{
-    width:120px; height:120px; margin:0 auto 30px; border-radius:50%;
-    background:var(--panel-2); border:2px solid var(--line);
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(circle at 15% 0%, rgba(0,200,5,0.14), transparent 45%),
+      radial-gradient(circle at 85% 20%, rgba(92,230,216,0.07), transparent 40%),
+      var(--bg);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+    position:relative;
+  }
+  body::before{
+    content:''; position:fixed; inset:0; z-index:0; pointer-events:none;
+    background-image:
+      radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+      radial-gradient(rgba(255,255,255,0.035) 1px, transparent 1px);
+    background-size:60px 60px, 34px 34px;
+    background-position:0 0, 17px 23px;
+    opacity:0.5;
+  }
+  .hero, .workshop, footer{position:relative; z-index:1;}
+  header{position:relative; z-index:40;}
+  .mono{font-family:'JetBrains Mono', monospace;}
+  .display{font-family:'Space Grotesk', sans-serif;}
+
+  a{color:var(--brass-bright);}
+
+  /* ---------- Header ---------- */
+  header{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:22px clamp(20px,4vw,56px);
+    border-bottom:1px solid var(--line);
+  }
+  .brand{display:flex; align-items:center; gap:12px;}
+  .stamp-mark{
+    width:34px;height:34px;border-radius:50%;
+    border:2px solid var(--brass);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:14px;
+    color:var(--brass-bright);
+    flex-shrink:0;
+  }
+  .logo{display:flex; align-items:center; gap:10px;}
+  .logo-icon{height:34px; width:34px; border-radius:9px;}
+  .logo-text{font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:18px; letter-spacing:-0.01em; color:var(--ink);}
+
+  #walletBtn, #connectBtn{
+    background:var(--panel-2);
+    border:1px solid var(--line);
+    color:var(--ink);
+    padding:10px 18px;
+    border-radius:100px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:13px;
+    cursor:pointer;
+    transition:border-color .15s ease, background .15s ease;
+    display:flex; align-items:center; gap:8px;
+  }
+  #walletBtn:hover, #connectBtn:hover{border-color:var(--brass);}
+  #walletBtn .dot, #connectBtn .dot{width:7px;height:7px;border-radius:50%;background:var(--muted);}
+  #walletBtn.connected .dot, #connectDot.connected{background:var(--mint);}
+
+  .wallet-wrap{position:relative;}
+  .wallet-menu{
+    display:none; position:absolute; right:0; top:calc(100% + 10px);
+    min-width:260px; max-height:70vh; overflow-y:auto; background:var(--panel-2); border:1px solid var(--line);
+    border-radius:12px; padding:6px; z-index:20;
+    box-shadow:0 14px 34px rgba(0,0,0,0.45);
+  }
+  .wallet-menu.open{display:block;}
+  @media (max-width:520px){
+    .wallet-menu{
+      position:absolute; right:0; left:auto; top:calc(100% + 10px);
+      width:min(300px, calc(100vw - 24px)); min-width:0;
+    }
+  }
+  .wallet-item{
+    width:100%; display:flex; align-items:center; gap:10px; padding:10px 12px;
+    background:transparent; border:none; border-radius:8px; color:var(--ink);
+    font-family:'Inter',sans-serif; font-size:13.5px; cursor:pointer; text-align:left;
+    text-decoration:none; box-sizing:border-box;
+  }
+  .wallet-item:hover{background:var(--panel);}
+  .wallet-item img{width:20px; height:20px; border-radius:6px; flex-shrink:0;}
+  .wallet-badge{
+    width:20px; height:20px; border-radius:6px; flex-shrink:0; display:flex; align-items:center;
+    justify-content:center; font-size:11px; font-weight:700; color:#fff; font-family:'Space Grotesk',sans-serif;
+  }
+  .wallet-status{margin-left:auto; font-family:'JetBrains Mono',monospace; font-size:11px; flex-shrink:0;}
+  .wallet-status.detected{color:var(--mint);}
+  .wallet-status.install{color:var(--muted);}
+  .wallet-empty{padding:14px 12px; font-size:12.5px; color:var(--muted); line-height:1.6; text-align:center;}
+  .wallet-empty a{color:var(--brass-bright);}
+
+  #adminBtn{
+    background:var(--panel-2); border:1px solid var(--brass); color:var(--brass-bright);
+    padding:10px 16px; border-radius:100px; font-family:'JetBrains Mono',monospace;
+    font-size:12.5px; cursor:pointer;
+  }
+
+  .lang-select{
+    background:var(--panel-2); border:1px solid var(--line); color:var(--ink);
+    padding:9px 10px; border-radius:100px; font-family:'JetBrains Mono',monospace;
+    font-size:12.5px; cursor:pointer;
+  }
+
+  .admin-overlay{
+    display:none; position:fixed; inset:0; background:rgba(6,5,8,0.82); backdrop-filter:blur(3px);
+    z-index:100; align-items:center; justify-content:center; padding:24px;
+  }
+  .admin-overlay.open{display:flex;}
+  .admin-panel{
+    width:100%; max-width:980px; max-height:84vh; background:var(--panel);
+    border:1px solid var(--line); border-radius:18px; padding:26px 28px;
+    display:flex; flex-direction:column; gap:16px;
+    box-shadow:0 30px 80px rgba(0,0,0,0.5);
+  }
+  .admin-head{display:flex; align-items:center; justify-content:space-between; padding-bottom:2px;}
+  .admin-head h2{font-family:'Space Grotesk',sans-serif; font-size:20px; margin:0; display:flex; align-items:center; gap:10px;}
+  .admin-head h2::before{content:''; width:8px; height:8px; border-radius:50%; background:var(--brass); display:inline-block;}
+  #adminClose{
+    background:var(--panel-2); border:1px solid var(--line); color:var(--muted); font-size:15px;
+    cursor:pointer; width:30px; height:30px; border-radius:8px;
+  }
+  #adminClose:hover{color:var(--ink); border-color:var(--brass);}
+  .admin-tabs{display:flex; gap:4px; border-bottom:1px solid var(--line); margin-bottom:2px;}
+  .admin-tab{
+    background:none; border:none; color:var(--muted); font-size:13px; padding:10px 16px;
+    cursor:pointer; border-bottom:2px solid transparent; font-family:'JetBrains Mono',monospace;
+    border-radius:8px 8px 0 0; transition:.15s;
+  }
+  .admin-tab:hover{color:var(--ink); background:var(--panel-2);}
+  .admin-tab.active{color:var(--brass-bright); border-bottom-color:var(--brass); background:var(--panel-2);}
+  .admin-toolbar{display:flex; align-items:center; gap:14px;}
+  #adminRefresh, #adminActionsRefresh, #adminFeesRefresh{
+    background:var(--panel-2); border:1px solid var(--line); color:var(--ink);
+    padding:9px 16px; border-radius:8px; font-size:13px; cursor:pointer; transition:.15s;
+  }
+  #adminRefresh:hover, #adminActionsRefresh:hover, #adminFeesRefresh:hover{border-color:var(--brass); color:var(--brass-bright);}
+  .admin-status{font-size:12.5px; color:var(--muted); font-family:'JetBrains Mono',monospace;}
+  .admin-table-wrap{overflow:auto; border:1px solid var(--line); border-radius:12px; max-height:52vh;}
+  .admin-data-table{width:100%; border-collapse:collapse; font-size:12.5px;}
+  .admin-data-table th{
+    text-align:left; background:var(--panel-2); color:var(--muted); font-weight:500;
+    padding:11px 14px; position:sticky; top:0; font-family:'JetBrains Mono',monospace;
+    text-transform:uppercase; font-size:10.5px; letter-spacing:0.05em;
+  }
+  .admin-data-table td{padding:11px 14px; border-top:1px solid var(--line); font-family:'JetBrains Mono',monospace; vertical-align:top;}
+  .admin-data-table tr:hover td{background:rgba(255,255,255,0.02);}
+  .admin-data-table tr.status-success td:nth-child(6){color:var(--mint);}
+  .admin-data-table tr.status-failed td:nth-child(6){color:var(--danger);}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    padding:clamp(48px,8vw,84px) clamp(20px,4vw,56px) clamp(28px,5vw,48px);
+    max-width:1180px; margin:0 auto;
+  }
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.14em;
+    color:var(--brass-bright); text-transform:uppercase; margin-bottom:18px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{content:''; width:22px; height:1px; background:var(--brass);}
+  h1.headline{
+    font-family:'Space Grotesk',sans-serif; font-weight:700;
+    font-size:clamp(38px, 6vw, 68px);
+    line-height:0.98; letter-spacing:-0.02em; margin:0 0 20px;
+  }
+  h1.headline .accent{
+    background:linear-gradient(90deg, #7CFFB2, #00C805, #00C805);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    filter:drop-shadow(0 0 22px rgba(0,200,5,0.35));
+  }
+  .hero p.sub{
+    color:var(--muted); font-size:16px; line-height:1.6; max-width:540px; margin:0;
+  }
+
+  /* ---------- Layout ---------- */
+  .workshop{
+    max-width:1180px; margin:0 auto; padding:0 clamp(20px,4vw,56px) 100px;
+    display:grid; grid-template-columns:1.15fr 0.85fr; gap:28px;
+  }
+  @media (max-width:900px){ .workshop{grid-template-columns:1fr;} }
+
+  .panel{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:clamp(20px,3vw,32px);
+  }
+  .panel h2{
+    font-family:'Space Grotesk',sans-serif; font-size:19px; font-weight:600; margin:0 0 6px;
+  }
+  .panel .hint{color:var(--muted); font-size:13px; margin:0 0 24px; line-height:1.5;}
+
+  .field{margin-bottom:18px;}
+  .field label{
+    display:block; font-size:12px; font-family:'JetBrains Mono',monospace;
+    letter-spacing:0.04em; color:var(--muted); text-transform:uppercase; margin-bottom:8px;
+  }
+  .row{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  @media (max-width:480px){ .row{grid-template-columns:1fr;} }
+  input[type=text], input[type=number], textarea, select{
+    width:100%; background:var(--bg-2); border:1px solid var(--line); color:var(--ink);
+    border-radius:8px; padding:12px 14px; font-family:'Inter',sans-serif; font-size:14px;
+    outline:none; transition:border-color .15s ease;
+  }
+  input:focus, textarea:focus, select:focus{border-color:var(--brass);}
+  textarea{resize:vertical; min-height:70px;}
+  .field .note{font-size:12px; color:var(--muted); margin-top:6px; line-height:1.4;}
+  .note{font-size:12px; color:var(--muted); line-height:1.4;}
+
+  .toggle-row{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:12px 0; border-top:1px solid var(--line);
+  }
+  .toggle-row:first-of-type{border-top:none;}
+  .toggle-row .t-label{font-size:14px;}
+  .toggle-row .t-desc{font-size:12px; color:var(--muted); margin-top:2px;}
+  .switch{position:relative; width:42px; height:24px; flex-shrink:0;}
+  .switch input{opacity:0; width:0; height:0;}
+  .slider{position:absolute; inset:0; background:var(--panel-2); border:1px solid var(--line); border-radius:100px; cursor:pointer; transition:.15s;}
+  .slider::before{content:''; position:absolute; width:16px; height:16px; left:3px; top:3px; background:var(--muted); border-radius:50%; transition:.15s;}
+  input:checked + .slider{background:rgba(0,200,5,0.28); border-color:var(--brass);}
+  input:checked + .slider::before{transform:translateX(18px); background:var(--brass-bright);}
+
+  details.advanced{margin-top:6px; border-top:1px solid var(--line); padding-top:14px;}
+  details.advanced summary{
+    cursor:pointer; font-size:13px; color:var(--muted); font-family:'JetBrains Mono',monospace;
+    list-style:none; display:flex; align-items:center; gap:8px;
+  }
+  details.advanced summary::-webkit-details-marker{display:none;}
+  details.advanced summary::before{content:'▸'; transition:transform .15s;}
+  details.advanced[open] summary::before{transform:rotate(90deg);}
+  details.advanced .adv-body{padding-top:16px;}
+
+  /* network pills */
+  .net-pills{display:flex; gap:8px; margin-bottom:18px;}
+  .net-pill{
+    flex:1; text-align:center; padding:10px; border-radius:8px; border:1px solid var(--line);
+    background:var(--bg-2); cursor:pointer; font-size:13px; font-family:'JetBrains Mono',monospace;
+    color:var(--muted); transition:.15s;
+  }
+  .net-pill.active{border-color:var(--brass); color:var(--brass-bright); background:rgba(0,200,5,0.10);}
+
+  /* ---------- Coin preview ---------- */
+  .coin-stage{
+    display:flex; flex-direction:column; align-items:center; text-align:center;
+    padding:8px 0 26px;
+  }
+  .coin{
+    width:132px; height:132px; border-radius:50%;
+    background: conic-gradient(from 180deg, #241708, #3a2410, #241708 60%, #2f1c0d);
+    border:1px solid var(--line);
     display:flex; align-items:center; justify-content:center;
-    font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:46px;
-    box-shadow:0 0 0 10px rgba(255,122,26,0.05), 0 0 0 11px var(--line);
+    position:relative; box-shadow: inset 0 0 0 6px rgba(0,0,0,0.25), 0 10px 30px rgba(0,0,0,0.4);
+    margin-bottom:18px;
   }
-  .soon-hero h1{
-    font-family:'Space Grotesk',sans-serif; font-weight:800; font-size:clamp(28px,4vw,42px);
-    margin:0 0 14px; letter-spacing:-0.01em;
+  .coin::before{
+    content:''; position:absolute; top:10px; left:10px; right:10px; bottom:10px; border-radius:50%;
+    border:1px dashed rgba(74,222,128,0.35); z-index:2; pointer-events:none;
   }
-  .soon-hero p{color:var(--muted); font-size:15.5px; max-width:440px; margin:0 auto 30px; line-height:1.6;}
-  .soon-actions{display:flex; gap:14px; justify-content:center; flex-wrap:wrap;}
+  .coin.has-photo{background-size:cover; background-position:center;}
+  .coin span{
+    font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:30px; color:var(--brass-bright);
+    text-transform:uppercase; position:relative; z-index:1;
+  }
+  .coin-name{font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:18px;}
+  .coin-symbol{color:var(--muted); font-family:'JetBrains Mono',monospace; font-size:13px; margin-top:2px;}
+
+  .image-drop{
+    border:1.5px dashed var(--line); border-radius:10px; cursor:pointer; position:relative;
+    transition:border-color .15s, background .15s; background:var(--bg-2);
+  }
+  .image-drop:hover{border-color:var(--brass);}
+  .image-drop-inner{
+    display:flex; align-items:center; justify-content:center; gap:10px;
+    padding:22px 14px; color:var(--muted); font-size:14px;
+  }
+  .image-drop-inner .plus-ic{
+    width:26px; height:26px; border-radius:50%; border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center; font-size:15px; flex-shrink:0;
+  }
+  .image-drop.has-image .image-drop-inner{padding:10px 14px;}
+  .image-drop-thumb{width:40px; height:40px; border-radius:8px; object-fit:cover; flex-shrink:0;}
+  .image-remove-btn{
+    position:absolute; top:8px; right:8px; width:24px; height:24px; border-radius:50%;
+    background:var(--panel-2); border:1px solid var(--line); color:var(--muted);
+    cursor:pointer; font-size:12px; display:flex; align-items:center; justify-content:center;
+  }
+  .image-remove-btn:hover{border-color:var(--danger); color:var(--danger);}
+
+  .csv-import-btn{
+    display:inline-flex; align-items:center; gap:6px; margin-top:8px; cursor:pointer;
+    font-size:12.5px; padding:8px 14px;
+  }
+
+  .pct-shortcut-row{display:flex; gap:8px; margin-top:8px;}
+  .pct-btn{
+    flex:1; background:var(--panel-2); border:1px solid var(--line); color:var(--ink);
+    border-radius:8px; padding:8px 0; font-size:12.5px; font-family:'JetBrains Mono',monospace;
+    cursor:pointer; transition:.15s;
+  }
+  .pct-btn:hover{border-color:var(--brass); color:var(--brass-bright);}
+  .pct-btn.active{border-color:var(--brass); color:var(--brass-bright); background:rgba(0,200,5,0.1);}
+
+  .swap-token-row{display:flex; gap:10px;}
+  .swap-token-row select{width:110px; flex-shrink:0;}
+  .swap-token-row input{flex:1;}
+  .swap-flip-row{display:flex; justify-content:center; margin:6px 0 14px;}
+  .swap-flip-row .btn-ghost{padding:6px 14px; font-size:12px;}
+
+  /* ---------- Scanner ---------- */
+  .scan-result{display:none; margin-top:22px;}
+  .scan-result.show{display:block;}
+  .score-ring-wrap{display:flex; justify-content:center; margin-bottom:26px;}
+  .score-ring{
+    width:150px; height:150px; border-radius:50%; display:flex; flex-direction:column;
+    align-items:center; justify-content:center; position:relative;
+    background:conic-gradient(var(--score-color, var(--mint)) calc(var(--score, 0) * 1%), var(--panel-2) 0);
+  }
+  .score-ring::before{
+    content:''; position:absolute; inset:9px; border-radius:50%; background:var(--bg);
+  }
+  .score-num{font-family:'Space Grotesk',sans-serif; font-weight:800; font-size:34px; position:relative; z-index:1;}
+  .score-label{font-family:'JetBrains Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:0.05em; position:relative; z-index:1; margin-top:2px;}
+  .scan-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:20px;}
+  @media (max-width:520px){ .scan-grid{grid-template-columns:1fr;} }
+  .scan-fact{border:1px solid var(--line); border-radius:10px; padding:12px 14px; background:var(--panel-2);}
+  .sf-k{font-size:11px; color:var(--muted); font-family:'JetBrains Mono',monospace; text-transform:uppercase; margin-bottom:4px;}
+  .sf-v{font-size:14px; font-family:'Space Grotesk',sans-serif; font-weight:600;}
+  .sf-v.ok{color:var(--mint);}
+  .sf-v.bad{color:var(--danger);}
+  .bubble-title{font-family:'Space Grotesk',sans-serif; font-size:15px; margin:26px 0 14px;}
+  .bubble-map{
+    display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:10px;
+    min-height:160px; padding:20px; border:1px solid var(--line); border-radius:12px; background:var(--bg-2);
+  }
+  .bubble{
+    border-radius:50%; display:flex; align-items:center; justify-content:center; flex-direction:column;
+    background:radial-gradient(circle at 35% 30%, rgba(74,222,128,0.5), rgba(0,200,5,0.15));
+    border:1px solid rgba(0,200,5,0.4); color:var(--ink); text-align:center; flex-shrink:0;
+  }
+  .bubble .bb-pct{font-family:'Space Grotesk',sans-serif; font-weight:700;}
+  .bubble .bb-addr{font-family:'JetBrains Mono',monospace; font-size:9px; color:var(--muted);}
+
+  .summary-list{width:100%; margin-top:22px;}
+  .summary-list .s-row{
+    display:flex; justify-content:space-between; padding:9px 0; border-top:1px solid var(--line);
+    font-size:13px;
+  }
+  .summary-list .s-row .k{color:var(--muted);}
+  .summary-list .s-row .v{font-family:'JetBrains Mono',monospace;}
+
+  /* press button */
+  .press-wrap{margin-top:24px; display:flex; justify-content:center;}
+  .press-btn{
+    width:100%; padding:18px; border-radius:100px; border:none; cursor:pointer;
+    background:linear-gradient(90deg, var(--brass), var(--mint));
+    color:#1A0D02; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:15px;
+    letter-spacing:0.04em; text-transform:uppercase;
+    box-shadow:0 6px 0 #0D7A2E, 0 10px 24px rgba(0,200,5,0.35);
+    transition:transform .08s ease, box-shadow .08s ease;
+  }
+  .press-btn:active{transform:translateY(5px); box-shadow:0 1px 0 #0D7A2E, 0 4px 10px rgba(0,200,5,0.3);}
+  .press-btn:disabled{opacity:0.5; cursor:not-allowed; transform:none; box-shadow:0 6px 0 #0D7A2E;}
+  .press-btn.working{animation:pulse 1.1s infinite ease-in-out;}
+  @keyframes pulse{0%,100%{filter:brightness(1);} 50%{filter:brightness(1.15);}}
+
+  .status-line{margin-top:14px; font-size:13px; color:var(--muted); text-align:center; min-height:18px;}
+  .status-line.error{color:var(--danger);}
+
+  /* receipt */
+  .receipt{
+    margin-top:20px; border:1px solid var(--line); border-radius:10px; padding:20px;
+    background:var(--bg-2); position:relative; display:none;
+  }
+  .receipt.show{display:block;}
+  .receipt-head{display:flex; justify-content:flex-end; margin-bottom:10px;}
+  .stamp-badge{
+    display:inline-flex; align-items:center; gap:6px; border:1.5px solid var(--mint); color:var(--mint);
+    font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:11.5px; letter-spacing:0.08em;
+    padding:4px 12px; border-radius:100px; opacity:0; animation:stampIn .35s ease .1s forwards;
+  }
+  @keyframes stampIn{from{opacity:0; transform:scale(0.8);} to{opacity:1; transform:scale(1);}}
+  .receipt .r-row{display:flex; justify-content:space-between; align-items:center; gap:12px; padding:7px 0; font-size:12.5px; border-top:1px dashed var(--line);}
+  .receipt .r-row:first-child{border-top:none;}
+  .receipt .r-row .k{color:var(--muted); font-family:'JetBrains Mono',monospace; flex-shrink:0;}
+  .receipt .r-row .v-copy{display:flex; align-items:center; gap:8px; min-width:0;}
+  .receipt .r-row .v{font-family:'JetBrains Mono',monospace; word-break:break-all; text-align:right;}
+  .receipt .r-link{display:inline-block; margin-top:12px; font-size:12.5px; font-family:'JetBrains Mono',monospace;}
+  .copy-btn{
+    flex-shrink:0; width:24px; height:24px; border-radius:6px; border:1px solid var(--line);
+    background:var(--panel-2); color:var(--muted); cursor:pointer; font-size:12px;
+    display:flex; align-items:center; justify-content:center; transition:.15s;
+  }
+  .copy-btn:hover{border-color:var(--brass); color:var(--brass-bright);}
+  .copy-btn.copied{border-color:var(--mint); color:var(--mint);}
+
+  /* ---------- mint success animation ---------- */
+  .launch-overlay{
+    position:fixed; inset:0; z-index:200; display:none;
+    align-items:flex-end; justify-content:center; pointer-events:none;
+    background:radial-gradient(circle at 50% 100%, rgba(0,200,5,0.12), transparent 60%);
+  }
+  .launch-overlay.show{display:flex;}
+  .launch-stage{position:relative; width:100%; max-width:420px; height:70vh; max-height:560px; overflow:hidden;}
+  .launch-rocket{
+    position:absolute; left:50%; bottom:-140px; width:96px; height:96px;
+    transform:translateX(-50%); filter:drop-shadow(0 10px 26px rgba(0,200,5,0.5));
+    opacity:0;
+  }
+  .launch-rocket.go{ animation:rocketGo 1.7s cubic-bezier(.3,.7,.4,1) forwards; }
+  @keyframes rocketGo{
+    0%{ bottom:-140px; opacity:0; transform:translateX(-50%) rotate(0deg) scale(0.9); }
+    8%{ opacity:1; }
+    55%{ transform:translateX(-50%) rotate(-4deg) scale(1); }
+    100%{ bottom:104%; opacity:0; transform:translateX(-50%) rotate(-8deg) scale(0.7); }
+  }
+  .launch-clouds{
+    position:absolute; left:50%; bottom:0; transform:translateX(-50%);
+    width:220px; height:60px; opacity:0;
+  }
+  .launch-overlay.show .launch-clouds{ animation:cloudsPuff 1.7s ease-out forwards; }
+  .launch-clouds .cloud{
+    position:absolute; bottom:0; font-size:34px; color:rgba(255,255,255,0.5);
+    filter:blur(1px);
+  }
+  .cloud.c1{left:10px;} .cloud.c2{left:70px; font-size:44px;} .cloud.c3{left:130px;} .cloud.c4{left:170px; font-size:28px;}
+  @keyframes cloudsPuff{
+    0%{opacity:0; transform:translateX(-50%) scale(0.6);}
+    12%{opacity:0.9; transform:translateX(-50%) scale(1);}
+    60%{opacity:0.5;}
+    100%{opacity:0; transform:translateX(-50%) scale(1.5);}
+  }
+  .launch-caption{
+    position:absolute; left:50%; bottom:14%; transform:translateX(-50%); white-space:nowrap;
+    font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:15px; color:var(--ink);
+    opacity:0; text-shadow:0 2px 12px rgba(0,0,0,0.6);
+  }
+  .launch-overlay.show .launch-caption{ animation:captionFade 1.7s ease forwards; }
+  @keyframes captionFade{
+    0%{opacity:0;} 15%{opacity:1;} 75%{opacity:1;} 100%{opacity:0;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .launch-rocket, .launch-clouds, .launch-caption{ animation:none !important; opacity:0 !important; }
+  }
+
+  footer{
+    text-align:center; padding:30px 20px 50px; color:var(--muted); font-size:12px;
+    border-top:1px solid var(--line);
+  }
+  footer a{color:var(--muted); text-decoration:underline;}
+
+  .warn-box{
+    background:rgba(224,87,76,0.08); border:1px solid rgba(224,87,76,0.35); color:#f0a89f;
+    border-radius:8px; padding:12px 14px; font-size:12.5px; line-height:1.5; margin-bottom:20px;
+  }
+
+  /* ---------- sidebar shell ---------- */
+  .shell{display:flex; align-items:flex-start; width:100%;}
+  .main-inner{max-width:1040px; margin:0 auto;}
+  .sidebar{
+    width:236px; flex-shrink:0; padding:28px 14px; position:sticky; top:73px;
+    border-right:1px solid var(--line); min-height:calc(100vh - 73px);
+    display:flex; flex-direction:column;
+  }
+  .sidebar-bottom{margin-top:auto; padding-top:14px; border-top:1px solid var(--line);}
+  .sidebar-group{margin-bottom:22px;}
+  .sidebar-label{
+    font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.1em;
+    text-transform:uppercase; color:var(--muted); padding:0 12px; margin-bottom:9px;
+  }
+  .sidebar-item{
+    display:flex; align-items:center; gap:10px; padding:11px 12px; border-radius:9px;
+    font-size:14.5px; color:#C9C3B6; cursor:pointer; transition:.15s; margin-bottom:2px;
+  }
+  .sidebar-item:hover{background:var(--panel-2); color:var(--ink);}
+  .sidebar-item.active{background:rgba(0,200,5,0.12); color:var(--brass-bright); font-weight:600;}
+  .sidebar-item.disabled{opacity:0.5; cursor:default;}
+  .sidebar-item.disabled:hover{background:none; color:#C9C3B6;}
+  .sidebar-item .ic{width:16px; text-align:center; flex-shrink:0;}
+  .sidebar-item .soon-tag{
+    margin-left:auto; font-family:'JetBrains Mono',monospace; font-size:9.5px;
+    color:var(--muted); border:1px solid var(--line); border-radius:100px; padding:2px 6px;
+  }
+
+  .chain-select-wrap{position:relative; padding:0 12px 18px; border-bottom:1px solid var(--line); margin-bottom:18px;}
+  .chain-select-btn{
+    width:100%; display:flex; align-items:center; gap:10px; padding:10px 12px;
+    background:linear-gradient(180deg, var(--panel-2), var(--bg-2));
+    border:1px solid rgba(0,200,5,0.25); border-radius:9px;
+    color:var(--ink); cursor:pointer; font-size:14px; font-family:'Space Grotesk',sans-serif; font-weight:600;
+    transition:border-color .15s, background .15s;
+  }
+  .chain-select-btn:hover{border-color:var(--brass); background:linear-gradient(180deg, var(--panel-2), rgba(0,200,5,0.06));}
+  .chain-select-btn img{
+    width:22px; height:22px; border-radius:50%; flex-shrink:0;
+    box-shadow:0 0 0 2px var(--bg-2), 0 0 0 3px rgba(0,200,5,0.3);
+  }
+  .chain-select-btn .chain-caret{margin-left:auto; color:var(--brass-bright); font-size:11px;}
+  .chain-select-menu{
+    display:none; position:absolute; top:calc(100% + 6px); left:12px; right:12px; z-index:30;
+    background:var(--panel-2); border:1px solid var(--line); border-radius:10px; padding:6px;
+    box-shadow:0 14px 34px rgba(0,0,0,0.45);
+  }
+  .chain-select-menu.open{display:block;}
+  .chain-option{
+    display:flex; align-items:center; gap:10px; padding:9px 10px; border-radius:8px;
+    color:var(--ink); font-size:13.5px;
+  }
+  .chain-option:hover{background:var(--panel);}
+  .chain-option img{width:20px; height:20px; border-radius:50%; flex-shrink:0;}
+  .chain-option .chain-tag{
+    margin-left:auto; font-family:'JetBrains Mono',monospace; font-size:9.5px; padding:2px 7px; border-radius:100px;
+  }
+  .chain-option .chain-tag.live{color:var(--mint); border:1px solid rgba(28,227,155,0.4);}
+  .chain-option .chain-tag.soon{color:var(--muted); border:1px solid var(--line);}
+  .chain-option .chain-tag.new{color:#4ADE80; border:1px solid rgba(0,200,5,0.45); background:rgba(0,200,5,0.08);}
+  .main-area{flex:1; min-width:0; padding:0 clamp(20px,3vw,40px);}
+
+  .sidebar-top-row{display:block;}
+  .mobile-tools-toggle{display:none;}
+  .all-networks-link{}
+
+  @media (max-width:860px){
+    .shell{flex-direction:column;}
+    .all-networks-link{display:none;}
+    .sidebar{
+      position:static; width:100%; min-height:0; border-right:none; border-bottom:1px solid var(--line);
+      display:flex; flex-direction:column; padding:0;
+    }
+    .sidebar-top-row{
+      display:flex; align-items:center; gap:8px; width:100%;
+      padding:12px 14px; border-bottom:1px solid var(--line);
+    }
+    .chain-select-wrap{padding:0; border-bottom:none; margin-bottom:0; flex-shrink:0;}
+    .chain-select-btn{padding:9px 10px;}
+    .chain-select-btn #chainSelectLabel, .chain-select-btn .chain-caret{display:none;}
+    .chain-select-menu{left:0; right:auto; width:240px;}
+    .mobile-tools-toggle{
+      display:flex; align-items:center; justify-content:space-between; flex:1;
+      background:var(--panel-2); border:1px solid var(--line); border-radius:9px;
+      color:var(--ink); padding:10px 14px; font-size:14px; font-family:'Space Grotesk',sans-serif; font-weight:600;
+      cursor:pointer;
+    }
+    .mobile-tools-toggle .burger-ic{color:var(--brass-bright); font-size:15px;}
+    .sidebar-group, .sidebar-bottom{
+      display:none; flex-direction:column; width:100%; padding:6px 14px; margin-bottom:0;
+    }
+    .sidebar.mobile-open .sidebar-group, .sidebar.mobile-open .sidebar-bottom{
+      display:flex;
+    }
+    .sidebar.mobile-open .sidebar-bottom{padding-bottom:14px; border-top:1px solid var(--line); padding-top:10px; margin-top:4px;}
+    .sidebar-label{display:block;}
+    .sidebar-item{white-space:normal;}
+  }
+
+  .tool-view{display:none;}
+  .tool-view.active{display:block;}
+
+  .tool-header{max-width:640px; margin:0 auto 8px; text-align:center; padding-top:clamp(30px,4vw,48px);}
+  .tool-header h1{
+    font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:clamp(24px,3vw,32px);
+    margin:0 0 10px;
+  }
+  .tool-header p{color:var(--muted); font-size:14.5px; line-height:1.6; margin:0;}
+
+  .tool-panel{max-width:640px; margin:32px auto 90px;}
+
+  /* ---------- mint selector (shared by Authorities/Metadata/Burn) ---------- */
+  .mint-select-row{display:flex; gap:10px; margin-bottom:8px;}
+  .mint-select-row input{flex:1;}
+  .mint-info-card{
+    display:none; margin-top:18px; padding:20px; border:1px solid var(--line);
+    border-radius:12px; background:var(--panel);
+  }
+  .mint-info-card.show{display:block;}
+  .mint-info-row{display:flex; justify-content:space-between; padding:8px 0; border-top:1px dashed var(--line); font-size:13px;}
+  .mint-info-row:first-child{border-top:none;}
+  .mint-info-row .k{color:var(--muted);}
+  .mint-info-row .v{font-family:'JetBrains Mono',monospace; text-align:right;}
+  .status-pill{
+    display:inline-flex; align-items:center; gap:6px; font-size:11.5px; padding:3px 10px;
+    border-radius:100px; font-family:'JetBrains Mono',monospace;
+  }
+  .status-pill.revoked{color:var(--mint); border:1px solid rgba(28,227,155,0.4); background:rgba(28,227,155,0.08);}
+  .status-pill.active{color:var(--danger); border:1px solid rgba(224,87,76,0.4); background:rgba(224,87,76,0.08);}
+
+  /* ---------- my tokens list ---------- */
+  .token-list{margin-top:24px; display:flex; flex-direction:column; gap:12px;}
+  .token-row{
+    display:flex; align-items:center; gap:14px; padding:16px 18px; border:1px solid var(--line);
+    border-radius:12px; background:var(--panel);
+  }
+  .token-row .t-icon{
+    width:38px; height:38px; border-radius:50%; background:var(--panel-2); border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center; font-family:'Space Grotesk',sans-serif;
+    font-weight:700; flex-shrink:0; color:var(--brass-bright);
+  }
+  .token-row .t-main{flex:1; min-width:0;}
+  .token-row .t-name{font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:14.5px;}
+  .token-row .t-mint{font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--muted); word-break:break-all;}
+  .token-row .t-mint-row{display:flex; align-items:center; gap:8px;}
+  .token-row .t-badges{display:flex; gap:6px; margin-top:6px; flex-wrap:wrap;}
+  .token-row .t-actions{display:flex; gap:8px; flex-shrink:0;}
+  .token-row .t-actions a{
+    font-size:12px; border:1px solid var(--line); border-radius:8px; padding:7px 11px; color:var(--ink);
+  }
+  .token-row .t-actions a:hover{border-color:var(--brass);}
+  .empty-note{color:var(--muted); font-size:13.5px; text-align:center; padding:50px 0;}
+
+  /* ---------- admin panes/fees (tabs themselves styled near the top) ---------- */
+  .admin-pane{display:none;}
+  .admin-pane.active{display:block;}
+  .fee-row{
+    display:flex; align-items:center; justify-content:space-between; gap:14px;
+    padding:12px 0; border-top:1px solid var(--line); font-size:13.5px;
+  }
+  .fee-row:first-child{border-top:none;}
+  .fee-row input{width:100px; text-align:right;}
+  .fee-row button{
+    background:var(--panel-2); border:1px solid var(--line); color:var(--ink); border-radius:8px;
+    padding:8px 12px; font-size:12.5px; cursor:pointer;
+  }
+  .fee-row button:hover{border-color:var(--brass);}
+
+  .btn-launch{
+    background:linear-gradient(90deg, var(--brass), var(--mint));
+    color:#160C04; font-family:'Space Grotesk',sans-serif; font-weight:700;
+    font-size:14px; padding:12px 22px; border-radius:100px; border:none; cursor:pointer;
+    display:inline-block; text-align:center; transition:transform .08s ease;
+  }
+  .btn-launch:active{transform:translateY(2px);}
+  .btn-launch:disabled{opacity:0.4; cursor:not-allowed;}
+  .btn-ghost{
+    border:1px solid var(--line); color:var(--ink); font-size:13.5px; font-weight:500;
+    padding:11px 18px; border-radius:10px; background:var(--panel-2); cursor:pointer;
+  }
+  .btn-ghost:hover{border-color:var(--brass);}
+
+  .fee-badge{
+    display:flex; align-items:center; gap:8px; font-size:12.5px; color:var(--mint);
+    background:rgba(28,227,155,0.08); border:1px solid rgba(28,227,155,0.3);
+    border-radius:8px; padding:10px 14px; margin-bottom:20px;
+  }
+  .fee-badge .dot{width:6px; height:6px; border-radius:50%; background:var(--mint); flex-shrink:0;}
+
+  .admin-net-select{
+    background:var(--panel-2); border:1px solid rgba(0,200,5,0.4); color:var(--brass-bright);
+    padding:8px 10px; border-radius:8px; font-family:'JetBrains Mono',monospace; font-size:12px; cursor:pointer;
+  }
 </style>
+
 </head>
 <body>
 
+<div class="launch-overlay" id="launchOverlay">
+  <div class="launch-stage">
+    <img src="../../assets/icon.png" class="launch-rocket" id="launchRocket" alt="">
+    <div class="launch-clouds">
+      <span class="cloud c1">☁</span><span class="cloud c2">☁</span><span class="cloud c3">☁</span><span class="cloud c4">☁</span>
+    </div>
+    <div class="launch-caption">Token created — liftoff! 🚀</div>
+  </div>
+</div>
+
 <header>
-  <div class="header-row">
-    <a class="logo" href="/"><img src="../../assets/icon.png" alt="" class="logo-icon"><span class="logo-text">DegenKit</span></a>
-    <nav class="site-nav">
-      <a class="navlink" href="/#features">Features</a>
-      <a class="navlink" href="/#roadmap">Roadmap</a>
-      <a class="navlink" href="/#faq">FAQ</a>
-    </nav>
-    <div class="header-actions">
+  <div class="brand">
+    <a href="/" class="logo"><img src="../../assets/icon.png" alt="" class="logo-icon"><span class="logo-text">DegenKit</span></a>
+  </div>
+  <div style="display:flex; align-items:center; gap:18px;">
+    <a href="/launch/" class="all-networks-link" style="font-size:13px; color:var(--muted); font-family:'JetBrains Mono',monospace;">← All networks</a>
+    <div class="wallet-wrap">
+      <button id="connectBtn"><span class="dot" id="connectDot"></span><span id="connectLabel">Connect wallet</span></button>
+      <div id="ethWalletMenu" class="wallet-menu"></div>
+    </div>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar" id="sidebarEl">
+    <div class="sidebar-top-row">
       <div class="chain-select-wrap">
         <button class="chain-select-btn" id="chainSelectBtn">
-          <img src="../../assets/robinhood-logo.png" alt="">
-          <span>Robinhood Chain</span>
+          <img src="../../assets/robinhood-logo.png" alt="" id="chainSelectIcon">
+          <span id="chainSelectLabel">Robinhood Chain</span>
           <span class="chain-caret">▾</span>
-          <span class="new-ping" title="Ethereum is now live"></span>
         </button>
         <div class="chain-select-menu" id="chainSelectMenu">
           <a href="/launch/solana/" class="chain-option">
             <img src="../../assets/solana-logo.png" alt=""> <span>Solana</span> <span class="chain-tag live">Live</span>
           </a>
           <a href="/launch/ethereum/" class="chain-option">
-            <img src="../../assets/ethereum-logo.png" alt=""> <span>Ethereum</span> <span class="chain-tag new">New</span>
+            <img src="../../assets/ethereum-logo.png" alt=""> <span>Ethereum</span> <span class="chain-tag live">Live</span>
           </a>
           <a href="/launch/robinhood/" class="chain-option active">
-            <img src="../../assets/robinhood-logo.png" alt=""> <span>Robinhood Chain</span> <span class="chain-tag soon">Soon</span>
+            <img src="../../assets/robinhood-logo.png" alt=""> <span>Robinhood Chain</span> <span class="chain-tag new">New</span>
           </a>
         </div>
       </div>
-      <a class="btn-launch" href="/launch/solana/">Launch on Solana</a>
+      <button class="mobile-tools-toggle" id="mobileToolsToggle">
+        <span id="mobileToolsLabel">Token Creator</span>
+        <span class="burger-ic">☰</span>
+      </button>
     </div>
-  </div>
-</header>
+    <div class="sidebar-group">
+      <div class="sidebar-label">Token</div>
+      <div class="sidebar-item active" data-view="create"><span class="ic">◆</span> Token Creator</div>
+    </div>
+    <div class="sidebar-group">
+      <div class="sidebar-label">Coming soon</div>
+      <div class="sidebar-item disabled"><span class="ic">▤</span> My Tokens<span class="soon-tag">soon</span></div>
+      <div class="sidebar-item disabled"><span class="ic">⚷</span> Authorities<span class="soon-tag">soon</span></div>
+      <div class="sidebar-item disabled"><span class="ic">🔥</span> Burn Token<span class="soon-tag">soon</span></div>
+      <div class="sidebar-item disabled"><span class="ic">✈</span> Airdrop<span class="soon-tag">soon</span></div>
+      <div class="sidebar-item disabled"><span class="ic">⇄</span> Swap<span class="soon-tag">soon</span></div>
+    </div>
+    <div class="sidebar-bottom">
+      <a href="/support/" class="sidebar-item" target="_blank"><span class="ic">✉</span> Support</a>
+    </div>
+  </aside>
 
-<section class="soon-hero">
-  <div>
-    <div class="soon-port">R</div>
-    <h1>Robinhood Chain is next.</h1>
-    <p>The same one-signature token creation flow is coming to Robinhood Chain. Launch on Solana today while we build it.</p>
-    <div class="soon-actions">
-      <a class="btn-launch" href="/launch/solana/">Launch on Solana instead</a>
-      <a class="btn-ghost" href="/launch/">← Back to network select</a>
-    </div>
-  </div>
+  <main class="main-area">
+  <div class="main-inner">
+  <section id="view-create" class="tool-view active">
+
+<section class="hero">
+  <div class="eyebrow">Robinhood Chain · ERC-20</div>
+  <h1 class="headline"><span>Mint your own token,</span><br><span class="accent">locked from day one.</span></h1>
+  <p class="sub">No mint function, ever. The entire supply is created once, in this one transaction, straight to your wallet — there is no way for anyone (including DegenKit) to issue more later. Robinhood Chain is a low-fee Ethereum Layer 2, so gas costs a fraction of mainnet.</p>
 </section>
 
-<footer>
-  <div class="wrap">
-    <div class="footer-bottom" style="border-top:none; padding-top:0;">
-      <p>© 2026 DegenKit. All rights reserved.</p>
-      <div class="footer-socials">
-        <a class="social-icn" href="https://x.com/DegenKitApp" target="_blank" aria-label="X / Twitter">𝕏</a>
+<div class="workshop">
+
+  <div class="panel">
+    <h2>Token details</h2>
+    <p class="hint">This information becomes your token contract's on-chain name and symbol — permanent once created.</p>
+
+    <div class="fee-badge" id="feeBadgeWrap">
+      <span class="dot"></span> <span id="feeBadgeText">Loading fee…</span>
+    </div>
+
+    <div class="row">
+      <div class="field">
+        <label>Token name</label>
+        <input type="text" id="eth_name" maxlength="40" placeholder="e.g. Anka Coin">
+      </div>
+      <div class="field">
+        <label>Symbol</label>
+        <input type="text" id="eth_symbol" maxlength="10" placeholder="e.g. ANKA">
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Total supply</label>
+      <input type="number" id="eth_supply" value="1000000000" min="1">
+    </div>
+
+    <div class="note" style="margin-top:2px;">Fixed at 18 decimals (the ERC-20 standard). There's no mint function on this contract — the supply above is final, forever, for everyone including us.</div>
+  </div>
+
+  <div class="panel">
+    <div class="coin-stage">
+      <div class="coin" id="coinCircle"><span id="coinLetter">?</span></div>
+      <div class="coin-name" id="coinName">Token name</div>
+      <div class="coin-symbol" id="coinSymbol">SYMBOL</div>
+
+      <div class="summary-list">
+        <div class="s-row"><span class="k">Network</span><span class="v" id="sumNet">Robinhood Chain</span></div>
+        <div class="s-row"><span class="k">Decimals</span><span class="v">18</span></div>
+        <div class="s-row"><span class="k">Supply</span><span class="v" id="sumSupply">1,000,000,000</span></div>
+        <div class="s-row"><span class="k">Wallet</span><span class="v" id="sumWallet">Not connected</span></div>
+        <div class="s-row"><span class="k">Service fee</span><span class="v" id="sumFee">—</span></div>
+      </div>
+
+      <div class="press-wrap">
+        <button class="press-btn" id="createBtn" disabled>Connect wallet first</button>
+      </div>
+      <div class="status-line" id="ethStatus"></div>
+
+      <div class="receipt" id="ethReceipt">
+        <div class="receipt-head"><span class="stamp-badge">✓ CREATED</span></div>
+        <div class="r-row"><span class="k">Contract address</span><span class="v-copy"><span class="v" id="eth_rAddress">—</span><button class="copy-btn" data-copy-target="eth_rAddress" aria-label="Copy">⧉</button></span></div>
+        <div class="r-row"><span class="k">tx</span><span class="v-copy"><span class="v" id="eth_rTx">—</span><button class="copy-btn" data-copy-target="eth_rTx" aria-label="Copy">⧉</button></span></div>
+        <a class="r-link" id="eth_rLink" href="#" target="_blank">View on Blockscout →</a>
       </div>
     </div>
   </div>
-</footer>
+
+</div>
+  </section>
+  </div>
+  </main>
+</div>
 
 <script>
+  const $ = (id) => document.getElementById(id);
+
+  // ---------- chain-select dropdown ----------
   document.getElementById("chainSelectBtn").addEventListener("click", (e) => {
     e.stopPropagation();
     document.getElementById("chainSelectMenu").classList.toggle("open");
@@ -103,6 +841,357 @@
     document.getElementById("chainSelectMenu").classList.remove("open");
   });
   document.getElementById("chainSelectMenu").addEventListener("click", (e) => e.stopPropagation());
+
+  // ---------- sidebar / mobile hamburger (only one real view for now) ----------
+  document.getElementById("mobileToolsToggle").addEventListener("click", () => {
+    document.getElementById("sidebarEl").classList.toggle("mobile-open");
+  });
+
+  // ---------- copy-to-clipboard ----------
+  document.addEventListener("click", async (e) => {
+    const btn = e.target.closest(".copy-btn");
+    if(!btn) return;
+    let text = btn.dataset.copyValue;
+    if(text == null && btn.dataset.copyTarget){
+      const el = document.getElementById(btn.dataset.copyTarget);
+      text = el ? el.textContent : "";
+    }
+    if(!text) return;
+    try{
+      await navigator.clipboard.writeText(text);
+    }catch(err){
+      const ta = document.createElement("textarea");
+      ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+      document.body.appendChild(ta); ta.select();
+      try{ document.execCommand("copy"); }catch(e2){}
+      document.body.removeChild(ta);
+    }
+    const original = btn.textContent;
+    btn.textContent = "✓";
+    btn.classList.add("copied");
+    setTimeout(() => { btn.textContent = original; btn.classList.remove("copied"); }, 1200);
+  });
+
+  // ---------- mint success animation ----------
+  window.playLaunchAnimation = function(){
+    const overlay = document.getElementById("launchOverlay");
+    const rocket = document.getElementById("launchRocket");
+    overlay.classList.remove("show");
+    rocket.classList.remove("go");
+    void overlay.offsetWidth;
+    overlay.classList.add("show");
+    rocket.classList.add("go");
+    setTimeout(() => { overlay.classList.remove("show"); rocket.classList.remove("go"); }, 1900);
+  };
+
+  // ---------- live coin preview (letter avatar, name, symbol, supply) ----------
+  function refreshPreview(){
+    const name = $("eth_name").value.trim();
+    const symbol = $("eth_symbol").value.trim();
+    const supply = Number($("eth_supply").value || 0);
+    $("coinLetter").textContent = (symbol || name || "?").slice(0,1).toUpperCase();
+    $("coinName").textContent = name || "Token name";
+    $("coinSymbol").textContent = symbol ? symbol.toUpperCase() : "SYMBOL";
+    $("sumSupply").textContent = supply.toLocaleString("en-US");
+  }
+  ["eth_name","eth_symbol","eth_supply"].forEach(id => $(id).addEventListener("input", refreshPreview));
+  refreshPreview();
+</script>
+
+<script type="module">
+  import { BrowserProvider, Contract, formatEther } from "https://esm.sh/ethers@6.13.4";
+
+  const FACTORY_ADDRESS = "0x9dF9EF48C2973B8136fF9d537a8bca58544A1906";
+  const FACTORY_ABI = [
+    "function createToken(string name_, string symbol_, uint256 initialSupply_) external payable returns (address)",
+    "function feeAmount() view returns (uint256)",
+    "event TokenCreated(address indexed token, address indexed creator, string name, string symbol, uint256 supply)"
+  ];
+  const MAINNET_CHAIN_ID = "0x1237"; // Robinhood Chain mainnet, chain ID 4663
+
+  const $ = (id) => document.getElementById(id);
+  let provider = null, signer = null, userAddress = null, currentChainId = null;
+  let activeEip1193Provider = null;
+  let currentFeeWei = null;
+
+  function friendlyEthError(e){
+    const raw = String(e?.shortMessage || e?.reason || e?.message || e || "");
+    if(/insufficient funds/i.test(raw)) return "Not enough ETH in your wallet to cover the fee and gas.";
+    if(/user rejected|user denied/i.test(raw)) return "Transaction rejected in wallet.";
+    if(/could not detect network/i.test(raw)) return "Couldn't reach the network. Check your connection and try again.";
+    if(/missing revert data/i.test(raw)){
+      const code = e?.code || e?.info?.error?.code || "?";
+      return `The wallet/RPC couldn't simulate this call (code ${code}) and didn't say why. ` +
+        `Try refreshing the page and reconnecting. Raw: ${JSON.stringify(e?.info || e?.error || {}).slice(0, 200)}`;
+    }
+    return raw.slice(0, 300);
+  }
+
+  function shortAddr(a){ return a ? a.slice(0,6) + "…" + a.slice(-4) : "—"; }
+
+  // ---------- EIP-6963 multi-wallet discovery (the EVM equivalent of Solana's Wallet Standard) ----------
+  const discoveredProviders = new Map(); // uuid -> { info, provider }
+  const KNOWN_EVM_WALLETS = [
+    { name: "MetaMask", match: "metamask", color: "#F6851B", initial: "🦊", install: "https://metamask.io/" },
+    { name: "Coinbase Wallet", match: "coinbase", color: "#0052FF", initial: "C", install: "https://www.coinbase.com/wallet" },
+    { name: "Rabby Wallet", match: "rabby", color: "#7084FF", initial: "R", install: "https://rabby.io/" },
+    { name: "Trust Wallet", match: "trust", color: "#3375BB", initial: "T", install: "https://trustwallet.com/" },
+    { name: "Phantom", match: "phantom", color: "#AB9FF2", initial: "P", install: "https://phantom.app/" },
+    { name: "Rainbow", match: "rainbow", color: "#001E59", initial: "R", install: "https://rainbow.me/" },
+    { name: "Bitget Wallet", match: "bitget", color: "#00F0C0", initial: "B", install: "https://web3.bitget.com/wallet-download" },
+    { name: "OKX Wallet", match: "okx", color: "#000000", initial: "O", install: "https://www.okx.com/web3" },
+  ];
+
+  window.addEventListener("eip6963:announceProvider", (event) => {
+    const { info, provider: p } = event.detail;
+    discoveredProviders.set(info.uuid, { info, provider: p });
+    renderWalletMenu();
+  });
+  window.dispatchEvent(new Event("eip6963:requestProvider"));
+
+  function findDiscovered(matchStr){
+    for(const [uuid, entry] of discoveredProviders){
+      if(entry.info.name && entry.info.name.toLowerCase().includes(matchStr)) return uuid;
+    }
+    return null;
+  }
+
+  function renderWalletMenu(){
+    const menu = $("ethWalletMenu");
+    const matchedUuids = new Set();
+
+    const knownRows = KNOWN_EVM_WALLETS.map(w => {
+      const uuid = findDiscovered(w.match);
+      if(uuid){
+        matchedUuids.add(uuid);
+        const entry = discoveredProviders.get(uuid);
+        const icon = entry.info.icon
+          ? `<img src="${entry.info.icon}" alt="">`
+          : `<span class="wallet-badge" style="background:${w.color}">${w.initial}</span>`;
+        return `<button class="wallet-item" data-uuid="${uuid}">${icon}<span>${w.name}</span><span class="wallet-status detected">Detected</span></button>`;
+      }
+      return `<a class="wallet-item" href="${w.install}" target="_blank" rel="noopener">
+        <span class="wallet-badge" style="background:${w.color}">${w.initial}</span><span>${w.name}</span><span class="wallet-status install">Install →</span>
+      </a>`;
+    });
+
+    const extraRows = [...discoveredProviders.entries()]
+      .filter(([uuid]) => !matchedUuids.has(uuid))
+      .map(([uuid, entry]) => {
+        const icon = entry.info.icon ? `<img src="${entry.info.icon}" alt="">` : `<span class="wallet-badge" style="background:#888">${entry.info.name.slice(0,1)}</span>`;
+        return `<button class="wallet-item" data-uuid="${uuid}">${icon}<span>${entry.info.name}</span><span class="wallet-status detected">Detected</span></button>`;
+      });
+
+    menu.innerHTML = knownRows.concat(extraRows).join("") || '<div class="wallet-empty">No wallet detected.</div>';
+    menu.querySelectorAll("button.wallet-item").forEach(btn => {
+      btn.addEventListener("click", () => connectWithUuid(btn.dataset.uuid));
+    });
+  }
+  renderWalletMenu();
+
+  function renderConnectedMenu(){
+    const menu = $("ethWalletMenu");
+    menu.innerHTML = `
+      <div style="padding:10px 12px; font-size:11px; color:var(--muted); font-family:'JetBrains Mono',monospace; word-break:break-all;">${userAddress}</div>
+      <button class="wallet-item" id="disconnectBtn"><span class="wallet-badge" style="background:#8a4b4b;">×</span><span>Disconnect</span></button>
+    `;
+    $("disconnectBtn").addEventListener("click", disconnectWallet);
+  }
+
+  async function disconnectWallet(){
+    const p = activeEip1193Provider;
+    userAddress = null;
+    signer = null;
+    provider = null;
+    activeEip1193Provider = null;
+    currentChainId = null;
+    $("connectLabel").textContent = "Connect wallet";
+    $("connectDot").classList.remove("connected");
+    $("ethWalletMenu").classList.remove("open");
+    updateSummary();
+    updateCreateButtonState();
+    renderWalletMenu();
+    if(p && p.request){
+      try{ await p.request({ method: "wallet_revokePermissions", params: [{ eth_accounts: {} }] }); }catch(e){ /* not supported, fine */ }
+    }
+  }
+
+  $("connectBtn").addEventListener("click", (e) => {
+    e.stopPropagation();
+    if(userAddress){
+      renderConnectedMenu();
+      $("ethWalletMenu").classList.toggle("open");
+      return;
+    }
+    $("ethWalletMenu").classList.toggle("open");
+  });
+  document.addEventListener("click", () => $("ethWalletMenu").classList.remove("open"));
+  $("ethWalletMenu").addEventListener("click", (e) => e.stopPropagation());
+
+  function wireProviderEvents(p){
+    if(!p || !p.on) return;
+    p.on("accountsChanged", (accounts) => {
+      userAddress = accounts[0] || null;
+      $("connectLabel").textContent = userAddress ? shortAddr(userAddress) : "Connect wallet";
+      updateSummary();
+      updateCreateButtonState();
+    });
+    p.on("chainChanged", (chainId) => {
+      currentChainId = String(chainId).toLowerCase();
+      updateSummary();
+      updateCreateButtonState();
+    });
+  }
+
+  function updateSummary(){
+    if(!userAddress){
+      $("sumWallet").textContent = "Not connected";
+      $("sumNet").textContent = "Robinhood Chain";
+    }else if(currentChainId !== MAINNET_CHAIN_ID){
+      $("sumWallet").textContent = shortAddr(userAddress);
+      $("sumNet").textContent = "⚠ Wrong network — switch to Robinhood Chain";
+    }else{
+      $("sumWallet").textContent = shortAddr(userAddress);
+      $("sumNet").textContent = "Robinhood Chain";
+    }
+  }
+
+  const ROBINHOOD_CHAIN_PARAMS = {
+    chainId: "0x1237",
+    chainName: "Robinhood Chain",
+    nativeCurrency: { name: "Ether", symbol: "ETH", decimals: 18 },
+    rpcUrls: ["https://rpc.mainnet.chain.robinhood.com"],
+    blockExplorerUrls: ["https://robinhoodchain.blockscout.com"],
+  };
+
+  async function switchToRobinhoodChain(){
+    if(!activeEip1193Provider) return;
+    try{
+      await activeEip1193Provider.request({
+        method: "wallet_addEthereumChain",
+        params: [ROBINHOOD_CHAIN_PARAMS],
+      });
+    }catch(e){
+      console.error("Could not add/switch network:", e);
+    }
+  }
+
+  function updateCreateButtonState(){
+    const btn = $("createBtn");
+    if(!userAddress){ btn.disabled = true; btn.textContent = "Connect wallet first"; return; }
+    if(currentChainId !== MAINNET_CHAIN_ID){ btn.disabled = false; btn.textContent = "Switch to Robinhood Chain"; return; }
+    const name = $("eth_name").value.trim();
+    const symbol = $("eth_symbol").value.trim();
+    const supply = Number($("eth_supply").value);
+    if(!name || !symbol || !supply || supply <= 0){ btn.disabled = true; btn.textContent = "Fill in the details above"; return; }
+    btn.disabled = false; btn.textContent = "Create token";
+  }
+  ["eth_name","eth_symbol","eth_supply"].forEach(id => $(id).addEventListener("input", updateCreateButtonState));
+
+  async function loadFee(){
+    try{
+      const roProvider = activeEip1193Provider ? new BrowserProvider(activeEip1193Provider) : null;
+      if(!roProvider){
+        $("feeBadgeText").textContent = "Connect a wallet to see the fee";
+        $("sumFee").textContent = "—";
+        return;
+      }
+      const contract = new Contract(FACTORY_ADDRESS, FACTORY_ABI, roProvider);
+      const fee = await contract.feeAmount();
+      currentFeeWei = fee;
+      const feeText = Number(fee) === 0 ? "No service fee — just network gas." : `Flat ${formatEther(fee)} ETH service fee — no hidden costs.`;
+      $("feeBadgeText").textContent = feeText;
+      $("sumFee").textContent = Number(fee) === 0 ? "Gas only" : `${formatEther(fee)} ETH`;
+    }catch(e){
+      console.error("Could not load fee:", e);
+      $("feeBadgeText").textContent = "Service fee shown before you sign.";
+    }
+  }
+
+  async function connectWithUuid(uuid){
+    $("ethWalletMenu").classList.remove("open");
+    const entry = discoveredProviders.get(uuid);
+    if(!entry) return;
+    activeEip1193Provider = entry.provider;
+    try{
+      provider = new BrowserProvider(activeEip1193Provider);
+      const accounts = await provider.send("eth_requestAccounts", []);
+      userAddress = accounts[0];
+      signer = await provider.getSigner();
+      currentChainId = (await activeEip1193Provider.request({ method: "eth_chainId" })).toLowerCase();
+      $("connectLabel").textContent = shortAddr(userAddress);
+      $("connectDot").classList.add("connected");
+      updateSummary();
+      updateCreateButtonState();
+      loadFee();
+      wireProviderEvents(activeEip1193Provider);
+    }catch(e){
+      console.error(e);
+      $("ethStatus").textContent = "Error: " + friendlyEthError(e);
+      $("ethStatus").classList.add("error");
+    }
+  }
+
+  $("createBtn").addEventListener("click", async () => {
+    const statusEl = $("ethStatus");
+    const btn = $("createBtn");
+    $("ethReceipt").classList.remove("show");
+    statusEl.classList.remove("error");
+
+    const name = $("eth_name").value.trim();
+    const symbol = $("eth_symbol").value.trim();
+    const supply = $("eth_supply").value.trim();
+
+    if(!signer){ statusEl.textContent = "Connect your wallet first."; statusEl.classList.add("error"); return; }
+    if(currentChainId !== MAINNET_CHAIN_ID){
+      await switchToRobinhoodChain();
+      return;
+    }
+    if(!name || !symbol || !supply){ statusEl.textContent = "Fill in name, symbol, and supply."; statusEl.classList.add("error"); return; }
+
+    btn.disabled = true; btn.textContent = "Working…";
+    try{
+      const contract = new Contract(FACTORY_ADDRESS, FACTORY_ABI, signer);
+      const fee = currentFeeWei !== null ? currentFeeWei : await contract.feeAmount();
+      const rawSupply = BigInt(supply) * (10n ** 18n);
+
+      statusEl.textContent = "Waiting for wallet approval…";
+      const tx = await contract.createToken(name, symbol, rawSupply, { value: fee, gasLimit: 350000n });
+
+      statusEl.textContent = "Confirming — this can take a moment…";
+      const receipt = await tx.wait();
+
+      let tokenAddress = null;
+      for(const log of receipt.logs){
+        try{
+          const parsed = contract.interface.parseLog(log);
+          if(parsed && parsed.name === "TokenCreated"){
+            tokenAddress = parsed.args.token;
+            break;
+          }
+        }catch(e){ /* not our event, skip */ }
+      }
+
+      $("eth_rAddress").textContent = tokenAddress || "(check tx logs)";
+      $("eth_rTx").textContent = receipt.hash;
+      $("eth_rLink").href = `https://robinhoodchain.blockscout.com/tx/${receipt.hash}`;
+      $("ethReceipt").classList.add("show");
+      if(window.playLaunchAnimation) window.playLaunchAnimation();
+      statusEl.textContent = "Token created.";
+
+      if(typeof window.gtag === "function"){
+        window.gtag("event", "conversion", { send_to: "AW-18369032243/wZKTCMDuhtwcELPghLdE" });
+      }
+    }catch(e){
+      console.error(e);
+      statusEl.textContent = "Error: " + friendlyEthError(e);
+      statusEl.classList.add("error");
+    }finally{
+      updateCreateButtonState();
+    }
+  });
+
+  updateSummary();
 </script>
 
 </body>
