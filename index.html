@@ -20,17 +20,17 @@ twq('config','rfyik');
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>DegenKit — Launch your token in one signature</title>
-<meta name="description" content="Create and lock a Solana token with no code — mint and freeze authority revoked automatically. Robinhood Chain support is next.">
+<meta name="description" content="Launch tokens with no code on Solana, Ethereum, BNB Chain, Base and Robinhood Chain — non-custodial, flat fee, tax tokens included.">
 <link rel="canonical" href="https://degenkit.app/">
 <meta property="og:type" content="website">
 <meta property="og:title" content="DegenKit — Launch your token in one signature">
-<meta property="og:description" content="Create and lock a Solana token with no code — mint and freeze authority revoked automatically. Robinhood Chain support is next.">
+<meta property="og:description" content="Launch tokens with no code on Solana, Ethereum, BNB Chain, Base and Robinhood Chain — non-custodial, flat fee, tax tokens included.">
 <meta property="og:url" content="https://degenkit.app/">
 <meta property="og:image" content="https://degenkit.app/assets/mascot-hero.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@DegenKitApp">
 <meta name="twitter:title" content="DegenKit — Launch your token in one signature">
-<meta name="twitter:description" content="Create and lock a Solana token with no code — mint and freeze authority revoked automatically. Robinhood Chain support is next.">
+<meta name="twitter:description" content="Launch tokens with no code on Solana, Ethereum, BNB Chain, Base and Robinhood Chain — non-custodial, flat fee, tax tokens included.">
 <meta name="twitter:image" content="https://degenkit.app/assets/mascot-hero.png">
 <link rel="icon" type="image/png" href="assets/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -50,6 +50,7 @@ twq('config','rfyik');
     --radius:18px;
   }
   html[data-theme="light"]{
+    --header-bg: rgba(250,247,242,0.86);
     --void:#FAF7F2;
     --panel:#FFFFFF;
     --panel-2:#F1ECE2;
@@ -96,7 +97,7 @@ twq('config','rfyik');
   /* ---------- header ---------- */
   header{
     position:sticky; top:0; z-index:50;
-    background:rgba(11,11,14,0.82); backdrop-filter:blur(10px);
+    background:var(--header-bg, rgba(11,11,14,0.82)); backdrop-filter:blur(10px);
     border-bottom:1px solid var(--line);
   }
   .header-row{
@@ -327,6 +328,13 @@ twq('config','rfyik');
   }
   .footer-bottom p{color:var(--muted); font-size:12.5px; margin:0;}
   .footer-socials{display:flex; gap:10px;}
+  html[data-theme="light"] .navlink{color:#4A443A;}
+  html[data-theme="light"] .navlink:hover{color:#1F1B15;}
+  html[data-theme="light"] .eyebrow,html[data-theme="light"] .plus{color:#C2410C;}
+  html[data-theme="light"] .log-status.live{color:#0B7A55;}
+  html[data-theme="light"] .log-status.next{color:#C2410C;}
+  html[data-theme="light"] .log-tag{color:#C2410C;}
+  html[data-theme="light"] .social-icn{color:#4A443A;}
 </style>
 <script>
   (function(){
@@ -357,7 +365,7 @@ twq('config','rfyik');
 <section class="hero" id="top">
   <div class="wrap hero-grid">
     <div>
-      <div class="eyebrow"><span class="dot"></span> Solana · Live now</div>
+      <div class="eyebrow"><span class="dot"></span> Multi-chain · Live now</div>
       <h1 class="headline">Launch your token<br>in <span class="accent" id="headlineCycle">one signature.</span></h1>
       <p class="hero-sub">Name it, mint it, lock it — no code and no smart contract writing. Mint and freeze authority are revoked automatically, so nobody can rug the supply, not even you.</p>
       <div class="hero-ctas">
@@ -383,14 +391,14 @@ twq('config','rfyik');
     <span>Mint &amp; freeze revoked</span>
     <span>Metadata locked</span>
     <span>One transaction</span>
-    <span>Solana live</span>
-    <span>Robinhood Chain next</span>
+    <span>Solana · ETH · BNB · Base · Robinhood</span>
+    <span>Tax tokens</span>
     <span>No code required</span>
     <span>Mint &amp; freeze revoked</span>
     <span>Metadata locked</span>
     <span>One transaction</span>
-    <span>Solana live</span>
-    <span>Robinhood Chain next</span>
+    <span>Solana · ETH · BNB · Base · Robinhood</span>
+    <span>Tax tokens</span>
     <span>No code required</span>
   </div>
 </div>
@@ -416,7 +424,7 @@ twq('config','rfyik');
       <div class="feature-card reveal">
         <div class="feature-port">🚀</div>
         <h3>Built to grow</h3>
-        <p>Live on Solana today. Robinhood Chain support is next on the runway, with the same one-signature flow.</p>
+        <p>Live on Solana, Ethereum, BNB Chain, Base and Robinhood Chain — the same one-signature flow everywhere, with tax tokens on EVM chains.</p>
       </div>
     </div>
   </div>
@@ -441,10 +449,10 @@ twq('config','rfyik');
       <div class="log-item reveal">
         <div class="log-tag">T+1</div>
         <div class="log-body">
-          <h3>Robinhood Chain</h3>
-          <p>The same one-click creation flow, brought to Robinhood Chain.</p>
+          <h3>Multi-chain: Ethereum, BNB Chain, Base &amp; Robinhood</h3>
+          <p>The same one-click creation flow on every major EVM chain, plus tax tokens with separate buy and sell rates that you set yourself.</p>
         </div>
-        <div class="log-status next">Next</div>
+        <div class="log-status live">Live</div>
       </div>
       <div class="log-item reveal">
         <div class="log-tag">T+2</div>
@@ -483,7 +491,7 @@ twq('config','rfyik');
     <div class="faq-list">
       <details class="faq-item reveal in" open>
         <summary>Which chains does DegenKit support?<span class="plus">+</span></summary>
-        <div class="a">Solana is live today. Robinhood Chain support is next on our roadmap — the same one-signature flow will carry over.</div>
+        <div class="a">Solana, Ethereum, BNB Chain, Base and Robinhood Chain are supported, with the same simple flow on each.</div>
       </details>
       <details class="faq-item reveal">
         <summary>Do I need to code anything?<span class="plus">+</span></summary>
@@ -495,7 +503,7 @@ twq('config','rfyik');
       </details>
       <details class="faq-item reveal">
         <summary>What does it cost?<span class="plus">+</span></summary>
-        <div class="a">A 0.3 SOL service fee, plus the standard Solana network fee — both included in the single transaction you sign.</div>
+        <div class="a">A 0.28 SOL service fee, plus the standard Solana network fee — both included in the single transaction you sign.</div>
       </details>
       <details class="faq-item reveal">
         <summary>Can the supply change after my token is created?<span class="plus">+</span></summary>
@@ -536,7 +544,7 @@ twq('config','rfyik');
     <div class="footer-top">
       <div class="footer-brand">
         <div class="logo"><img src="assets/icon.png" alt="" class="logo-icon"><span class="logo-text">DegenKit</span></div>
-        <p>Token creation, without the guesswork. Launch on Solana today — Robinhood Chain is next.</p>
+        <p>Token creation, without the guesswork. Launch on Solana, Ethereum, BNB Chain, Base and Robinhood Chain.</p>
       </div>
       <div class="footer-cols">
         <div class="footer-col">

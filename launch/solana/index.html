@@ -736,6 +736,23 @@ twq('config','rfyik');
     background:var(--panel-2); border:1px solid rgba(0,217,163,0.4); color:var(--brass-bright);
     padding:8px 10px; border-radius:8px; font-family:'JetBrains Mono',monospace; font-size:12px; cursor:pointer;
   }
+
+  /* LIGHTFIX */
+  html[data-theme="light"]{ --brass-bright:#00785A; --lt:#00785A; --lt-rgb:0,120,90; --mint:#00785A; }
+  html[data-theme="light"] h1.headline .accent{ background:linear-gradient(90deg,#00785A, #00A67C, #0891B2); -webkit-background-clip:text; background-clip:text; }
+  html[data-theme="light"] .sidebar-item{ color:#3F3A2E; }
+  html[data-theme="light"] .sidebar-item:hover{ background:rgba(0,0,0,0.05); color:#1F1B15; }
+  html[data-theme="light"] .sidebar-item.active{ background:rgba(0,120,90,0.12); color:#00785A; font-weight:600; }
+  html[data-theme="light"] .sidebar-item .ic{ color:inherit; }
+  html[data-theme="light"] .sidebar-item.disabled{ opacity:1; color:#8A8372; }
+  html[data-theme="light"] .sidebar-item.disabled:hover{ background:none; color:#8A8372; }
+  html[data-theme="light"] .sidebar-item .soon-tag{ opacity:1; color:#6B6453; }
+  html[data-theme="light"] .fee-badge, html[data-theme="light"] .fee-badge *{ color:#00785A; }
+  html[data-theme="light"] .warn-box{ color:#9B2C22; }
+  html[data-theme="light"] .chain-option .chain-tag.new{ color:#00785A; border-color:rgba(0,120,90,0.45); background:rgba(0,120,90,0.08); }
+  html[data-theme="light"] #coinLetter, html[data-theme="light"] #taxCoinLetter{ color:#00785A; }
+  html[data-theme="light"] .callout b, html[data-theme="light"] .slippage-btn.active{ color:#00785A; }
+  /* /LIGHTFIX */
 </style>
 <script>
   (function(){
@@ -855,6 +872,12 @@ twq('config','rfyik');
           <a href="/launch/robinhood/" class="chain-option">
             <img src="../../assets/robinhood-logo.png" alt=""> <span>Robinhood Chain</span> <span class="chain-tag new">New</span>
           </a>
+          <a href="/launch/bnb/" class="chain-option">
+            <img src="../../assets/bnb-logo.png" alt=""> <span>BNB Chain</span> <span class="chain-tag new">New</span>
+          </a>
+          <a href="/launch/base/" class="chain-option">
+            <img src="../../assets/base-logo.png" alt=""> <span>Base</span> <span class="chain-tag new">New</span>
+          </a>
         </div>
       </div>
       <button class="mobile-tools-toggle" id="mobileToolsToggle">
@@ -917,7 +940,7 @@ twq('config','rfyik');
     <p class="hint" data-i18n="token_info_hint">This information is written on-chain to the metadata (name, symbol, description URI) and the mint account.</p>
 
     <div class="fee-badge">
-      <span class="dot"></span> Flat 0.3 SOL total — no hidden fees, no surprise charges.
+      <span class="dot"></span> Flat 0.28 SOL total — no hidden fees, no surprise charges.
     </div>
 
     <div class="row">
@@ -1003,7 +1026,7 @@ twq('config','rfyik');
         <div class="s-row"><span class="k" data-i18n="sum_decimals">Decimals</span><span class="v" id="sumDec">6</span></div>
         <div class="s-row"><span class="k" data-i18n="sum_supply">Supply</span><span class="v" id="sumSupply">1,000,000,000</span></div>
         <div class="s-row"><span class="k" data-i18n="sum_wallet">Wallet</span><span class="v" id="sumWallet" data-i18n="wallet_not_connected">Not connected</span></div>
-        <div class="s-row"><span class="k" data-i18n="sum_fee">Service fee</span><span class="v">0.3 SOL</span></div>
+        <div class="s-row"><span class="k" data-i18n="sum_fee">Service fee</span><span class="v">0.28 SOL</span></div>
       </div>
 
       <div class="press-wrap">
@@ -2068,7 +2091,7 @@ twq('config','rfyik');
 
   // ---- Configurable per-tool fees, loaded from Supabase (fallback defaults if it fails) ----
   const TOOL_FEES = {
-    token_create: 0.3,
+    token_create: 0.28,
     manage_revoke_mint: 0.05,
     manage_revoke_freeze: 0.05,
     update_metadata: 0.05,
