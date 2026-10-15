@@ -1,0 +1,5 @@
+/* Theme toggle icons: sun (switch to light) shown in dark mode, moon (switch to dark) shown in light mode */
+.theme-toggle{font-size:0 !important; color:var(--ink,var(--cream,#EDE8DC)); position:relative;}
+.theme-toggle::before{content:''; position:absolute; inset:0; margin:auto; width:20px; height:20px; background:currentColor;
+  -webkit-mask:url(icons/sun.svg) center/contain no-repeat; mask:url(icons/sun.svg) center/contain no-repeat;}
+html[data-theme="light"] .theme-toggle::before{-webkit-mask-image:url(icons/moon.svg); mask-image:url(icons/moon.svg);}
