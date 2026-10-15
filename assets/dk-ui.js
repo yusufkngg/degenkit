@@ -314,11 +314,9 @@
 
   /* ---------------- announcement rail (square 1080x1080 images) ---------------- */
   var NEWS = [
-    { img: "news/1.webp", t: "Tax tokens are live", s: "Ethereum · BNB · Base · Robinhood", href: "../ethereum/", g: "linear-gradient(135deg,#FF7A1A,#E8505B)" },
-    { img: "news/2.webp", t: "Robinhood Chain is live", s: "Fixed-supply and tax tokens", href: "../robinhood/", g: "linear-gradient(135deg,#0B6B1E,#7BC500)" },
-    { img: "news/3.webp", t: "Launch on BNB Chain", s: "Low-fee tokens in one click", href: "../bnb/", g: "linear-gradient(135deg,#8A6500,#F0B90B)" },
-    { img: "news/4.webp", t: "Launch on Base", s: "Coinbase's low-fee Layer 2", href: "../base/", g: "linear-gradient(135deg,#0A2A8A,#0052FF)" }
-  ].filter(function (n) { return n.href.indexOf("/" + CHAIN + "/") < 0; });
+    { img: "news/1.webp", t: "Create your tax token", s: "Set your buy & sell tax.", href: "../ethereum/#tax", g: "linear-gradient(135deg,#FF7A1A,#E8505B)" },
+    { img: "news/2.webp", t: "Launch your token", s: "Your next big idea starts here.", href: "../", g: "linear-gradient(135deg,#3B1D6B,#FF7A1A)" }
+  ];
 
   function addNews() {
     var v = document.getElementById("view-create");
@@ -327,7 +325,7 @@
     var row = document.createElement("div"); row.className = "workshop news-row"; row.setAttribute("aria-label", "Announcements");
     NEWS.slice(0, 2).forEach(function (n) {
       var a = document.createElement("a"); a.className = "news-card"; a.href = n.href; a.style.background = n.g;
-      a.innerHTML = '<img class="news-img" alt="" src="' + ASSETS + n.img + '"><div class="news-txt"><b>' + esc(n.t) + "</b><span>" + esc(n.s) + "</span></div>";
+      a.innerHTML = '<img class="news-img" alt="' + esc(n.t) + '" src="' + ASSETS + n.img + '"><div class="news-txt"><b>' + esc(n.t) + "</b><span>" + esc(n.s) + "</span></div>";
       var im = a.querySelector("img");
       im.addEventListener("load", function () { a.classList.add("has-img"); });
       im.addEventListener("error", function () { im.remove(); });
@@ -336,21 +334,48 @@
     ws.after(row);
   }
 
-  /* ---------------- popup card ---------------- */
+  /* ---------------- popup card (alternates between two messages) ---------------- */
+  var POPS = [
+    { key: "robinhood", logo: "robinhood-logo.png", tag: "New", title: "Robinhood Chain is live", text: "Launch your token on Robinhood Chain: fixed supply, no mint function.", cta: "Launch on Robinhood →", href: "../robinhood/" },
+    { key: "ethereum", logo: "ethereum-logo.png", tag: "Live", title: "Tax tokens are live", text: "Set your own buy and sell tax on Ethereum. Ownership transfer included.", cta: "Create a tax token →", href: "../ethereum/#tax" }
+  ];
   function addPopup() {
-    try { if (+localStorage.getItem("dk-pop-v1") > Date.now()) return; } catch (e) {}
-    var P = PROMOS.filter(function (p) { return p.key === (CHAIN === "robinhood" ? "base" : "robinhood"); })[0];
+    try { if (sessionStorage.getItem("dk-pop-closed")) return; } catch (e) {}
+    var list = POPS.filter(function (p) { return p.key !== CHAIN || p.key === "ethereum"; });
+    var n = 0;
+    try { n = +localStorage.getItem("dk-pop-n") || 0; localStorage.setItem("dk-pop-n", String(n + 1)); } catch (e) {}
+    var P = list[n % list.length];
     var el = document.createElement("div"); el.className = "dk-pop"; el.setAttribute("role", "complementary");
     el.innerHTML = '<button type="button" class="dk-pop-x" aria-label="Close">×</button>' +
-      '<div class="dk-pop-top"><img src="' + ASSETS + P.logo + '" alt=""><div><b>' + esc(P.name) + ' is live</b><span>' + esc(P.line) + "</span></div></div>" +
-      '<a class="dk-pop-cta" href="../' + P.key + '/">Launch on ' + esc(P.name) + " →</a>";
+      '<div class="dk-pop-top"><img src="' + ASSETS + P.logo + '" alt=""><div><b>' + esc(P.title) + ' <i>' + esc(P.tag) + "</i></b><span>" + esc(P.text) + "</span></div></div>" +
+      '<a class="dk-pop-cta" href="' + P.href + '">' + esc(P.cta) + "</a>";
     function close() {
       el.classList.remove("show"); setTimeout(function () { el.remove(); }, 300);
-      try { localStorage.setItem("dk-pop-v1", String(Date.now() + 864e5)); } catch (e) {}
+      try { sessionStorage.setItem("dk-pop-closed", "1"); } catch (e) {}
     }
     el.querySelector(".dk-pop-x").addEventListener("click", close);
     document.addEventListener("keydown", function (e) { if (e.key === "Escape" && el.parentNode) close(); });
     setTimeout(function () { document.body.appendChild(el); requestAnimationFrame(function () { el.classList.add("show"); }); }, 3500);
+  }
+
+  /* ---------------- sidebar icons (custom SVG set) ---------------- */
+  var ICONS = [
+    [/token creator|create token/i, "token"], [/my tokens/i, "my_tokens"], [/authorit/i, "update"], [/metadata/i, "updatemetadata"],
+    [/burn/i, "burn"], [/airdrop/i, "airdrop"], [/multisender/i, "multisender"], [/market/i, "market"], [/scanner/i, "scan"],
+    [/swap/i, "swap"], [/create liquidity/i, "add"], [/remove liquidity/i, "remove"], [/support/i, "support"]
+  ];
+  function applyIcons() {
+    document.querySelectorAll(".sidebar-item .ic").forEach(function (ic) {
+      var label = ic.parentNode.textContent.replace(/soon/i, "");
+      for (var i = 0; i < ICONS.length; i++) {
+        if (ICONS[i][0].test(label)) {
+          ic.classList.add("svg"); ic.style.setProperty("--ico", "url(" + ASSETS + "icons/" + ICONS[i][1] + ".svg)"); break;
+        }
+      }
+    });
+  }
+  function openHash() {
+    if (location.hash === "#tax" && window.switchView) setTimeout(function () { try { window.switchView("tax"); } catch (e) {} }, 400);
   }
 
   /* ---------------- Solana: coming-soon pages ---------------- */
@@ -376,8 +401,10 @@
   function boot() {
     addNews();
     if (CHAIN === "solana") { initMarket(); initSoon(); }
+    applyIcons();
     addPromos();
     addPopup();
+    openHash();
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot); else boot();
 })();

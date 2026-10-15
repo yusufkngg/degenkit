@@ -209,7 +209,7 @@ html[data-theme="light"] .mkt-card{background:var(--panel); box-shadow:0 8px 24p
 
 .sidebar-item.soon-open{opacity:1; cursor:pointer;}
 .sidebar-item.soon-open:hover{background:rgba(255,122,26,0.10);}
-.soon-box{max-width:520px; margin:clamp(24px,5vw,60px) auto; padding:32px 28px; text-align:center; border:1px solid var(--line); border-radius:14px; background:var(--panel);}
+.soon-box{max-width:760px; width:calc(100% - 2 * var(--gut)); box-sizing:border-box; margin:clamp(24px,5vw,60px) auto; padding:32px 28px; text-align:center; border:1px solid var(--line); border-radius:14px; background:var(--panel);}
 .soon-ic{font-size:40px; margin-bottom:10px;}
 .soon-box h2{font-family:'Space Grotesk',sans-serif; font-size:28px; margin:12px 0 6px;}
 .soon-box p{color:var(--muted); margin:0 0 16px;}
@@ -217,3 +217,31 @@ html[data-theme="light"] .mkt-card{background:var(--panel); box-shadow:0 8px 24p
 .soon-box li{padding:10px 14px; border-radius:10px; background:rgba(255,122,26,0.08); border:1px solid rgba(255,122,26,0.2); font-size:14px;}
 .soon-box li::before{content:'✓ '; color:#FF7A1A; font-weight:800;}
 .main-area, .main-inner, .tool-view{min-width:0;}
+
+/* ---------- v4: one shared gutter so every block lines up ---------- */
+:root{--gut:clamp(16px,3vw,40px);}
+.hero, .workshop, .news-row, .promo-wrap{padding-left:var(--gut) !important; padding-right:var(--gut) !important;}
+#marketMini, #marketFull{max-width:1200px; margin-left:auto; margin-right:auto; padding-left:var(--gut) !important; padding-right:var(--gut) !important;}
+.news-card{aspect-ratio:2/1 !important;}
+/* every secondary tool uses the same 760px column; promo row below it matches */
+.tool-view:not(#view-create):not(#view-market):not(#view-tax) .tool-panel{max-width:760px !important; width:100%;}
+.tool-view:not(#view-create):not(#view-market):not(#view-tax) .tool-header{max-width:760px !important;}
+.tool-view:not(#view-create):not(#view-market):not(#view-tax) .promo-wrap{max-width:calc(760px + 2 * var(--gut)) !important;}
+.tool-view .tool-panel > .panel{width:100%; box-sizing:border-box;}
+
+/* sidebar svg icons */
+.sidebar-item .ic.svg{font-size:0 !important; position:relative;}
+.sidebar-item .ic.svg::before{content:''; width:19px; height:19px; background:currentColor; -webkit-mask:var(--ico) center/contain no-repeat; mask:var(--ico) center/contain no-repeat;}
+.sidebar-item .ic.svg{color:var(--muted);}
+.sidebar-item:hover .ic.svg{color:#FF9A3C;}
+.sidebar-item.active .ic.svg{color:#1F0B00;}
+.dk-pop-top b i{font-style:normal; font-size:10px; font-weight:800; padding:2px 7px; border-radius:100px; background:#FF2E6A; color:#fff; vertical-align:middle; margin-left:4px;}
+/* bigger, clearer theme icon */
+.theme-toggle::before{width:24px !important; height:24px !important;}
+.sidebar-item .ic.svg{color:#CFC8B8;}
+html[data-theme="light"] .sidebar-item .ic.svg{color:#5A5446;}
+.sidebar-item .ic.svg::before{width:20px; height:20px;}
+.sidebar-item:hover .ic.svg{color:#FF9A3C;}
+.sidebar-item.active .ic.svg, html[data-theme="light"] .sidebar-item.active .ic.svg{color:#1F0B00;}
+#marketMini, #marketFull{padding-left:0 !important; padding-right:0 !important; max-width:none;}
+#marketFull{padding-left:var(--gut) !important; padding-right:var(--gut) !important; max-width:1200px;}
