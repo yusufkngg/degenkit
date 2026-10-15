@@ -369,7 +369,7 @@
       var label = ic.parentNode.textContent.replace(/soon/i, "");
       for (var i = 0; i < ICONS.length; i++) {
         if (ICONS[i][0].test(label)) {
-          ic.classList.add("svg"); ic.style.setProperty("--ico", "url(" + ASSETS + "icons/" + ICONS[i][1] + ".svg)"); break;
+          ic.textContent = ""; ic.classList.add("svg"); ic.style.setProperty("--ico", "url(" + ASSETS + "icons/" + ICONS[i][1] + ".svg)"); break;
         }
       }
     });

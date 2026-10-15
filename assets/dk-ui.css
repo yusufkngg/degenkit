@@ -223,10 +223,13 @@ html[data-theme="light"] .mkt-card{background:var(--panel); box-shadow:0 8px 24p
 .hero, .workshop, .news-row, .promo-wrap{padding-left:var(--gut) !important; padding-right:var(--gut) !important;}
 #marketMini, #marketFull{max-width:1200px; margin-left:auto; margin-right:auto; padding-left:var(--gut) !important; padding-right:var(--gut) !important;}
 .news-card{aspect-ratio:2/1 !important;}
-/* every secondary tool uses the same 760px column; promo row below it matches */
-.tool-view:not(#view-create):not(#view-market):not(#view-tax) .tool-panel{max-width:760px !important; width:100%;}
-.tool-view:not(#view-create):not(#view-market):not(#view-tax) .tool-header{max-width:760px !important;}
-.tool-view:not(#view-create):not(#view-market):not(#view-tax) .promo-wrap{max-width:calc(760px + 2 * var(--gut)) !important;}
+/* every secondary tool uses the same full-width column as Token Creator */
+.tool-view:not(#view-create):not(#view-market):not(#view-tax) .tool-panel,
+.tool-view:not(#view-create):not(#view-market):not(#view-tax) .tool-header{max-width:1200px !important; width:100%; box-sizing:border-box; padding-left:var(--gut); padding-right:var(--gut);}
+.tool-view:not(#view-create):not(#view-market):not(#view-tax) .tool-header{text-align:left; padding-top:clamp(10px,1.6vw,20px); margin-bottom:6px;}
+.tool-view:not(#view-create):not(#view-market):not(#view-tax) .tool-header h1{font-size:clamp(30px,3.4vw,44px) !important; line-height:1.08; margin:0 0 8px; background:linear-gradient(90deg,var(--ink),var(--ink)); -webkit-background-clip:text; background-clip:text;}
+.tool-view:not(#view-create):not(#view-market):not(#view-tax) .tool-header p{font-size:16.5px; max-width:640px; margin:0;}
+.tool-view:not(#view-create):not(#view-market):not(#view-tax) .tool-panel{margin:22px auto 60px;}
 .tool-view .tool-panel > .panel{width:100%; box-sizing:border-box;}
 
 /* sidebar svg icons */
