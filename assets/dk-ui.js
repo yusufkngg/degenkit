@@ -322,20 +322,18 @@
 
   function addNews() {
     var v = document.getElementById("view-create");
-    if (!v || v.querySelector(".news-layout") || !NEWS.length) return;
-    var lay = document.createElement("div"); lay.className = "news-layout";
-    var main = document.createElement("div"); main.className = "news-main";
-    while (v.firstChild) main.appendChild(v.firstChild);
-    var rail = document.createElement("aside"); rail.className = "news-rail"; rail.setAttribute("aria-label", "Announcements");
-    NEWS.forEach(function (n) {
+    var ws = v && v.querySelector(".workshop");
+    if (!ws || v.querySelector(".news-row") || !NEWS.length) return;
+    var row = document.createElement("div"); row.className = "workshop news-row"; row.setAttribute("aria-label", "Announcements");
+    NEWS.slice(0, 2).forEach(function (n) {
       var a = document.createElement("a"); a.className = "news-card"; a.href = n.href; a.style.background = n.g;
       a.innerHTML = '<img class="news-img" alt="" src="' + ASSETS + n.img + '"><div class="news-txt"><b>' + esc(n.t) + "</b><span>" + esc(n.s) + "</span></div>";
       var im = a.querySelector("img");
       im.addEventListener("load", function () { a.classList.add("has-img"); });
       im.addEventListener("error", function () { im.remove(); });
-      rail.appendChild(a);
+      row.appendChild(a);
     });
-    lay.appendChild(main); lay.appendChild(rail); v.appendChild(lay);
+    ws.after(row);
   }
 
   /* ---------------- popup card ---------------- */
