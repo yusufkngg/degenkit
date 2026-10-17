@@ -915,9 +915,8 @@ twq('config','rfyik');
       <div class="sidebar-item" data-view="swap"><span class="ic">⇄</span> Swap</div>
     </div>
     <div class="sidebar-group">
-      <div class="sidebar-label">Coming soon</div>
-      <div class="sidebar-item disabled"><span class="ic">◉</span> Create Liquidity<span class="soon-tag">soon</span></div>
-      <div class="sidebar-item disabled"><span class="ic">◎</span> Remove Liquidity<span class="soon-tag">soon</span></div>
+      <div class="sidebar-item" data-view="liqcreate"><span class="ic">◉</span> Create Liquidity</div>
+      <div class="sidebar-item" data-view="liqremove"><span class="ic">◎</span> Remove Liquidity</div>
     </div>
     <div class="sidebar-bottom">
       <a href="/support/" class="sidebar-item" target="_blank"><span class="ic">✉</span> Support</a>
@@ -1396,6 +1395,124 @@ twq('config','rfyik');
     </div>
   </section>
 
+  <section id="view-liqcreate" class="tool-view">
+    <div class="tool-header">
+      <h1>Create Liquidity</h1>
+      <p>Open a Raydium trading pool for your token in one step — you sign once and it becomes tradable on Raydium and Jupiter.</p>
+    </div>
+    <div class="tool-panel">
+      <div class="panel">
+        <div class="field">
+          <label>Your token</label>
+          <select id="lc_token"><option value="">Connect your wallet to load your tokens</option></select>
+          <input type="text" id="lc_tokenCustom" style="display:none; margin-top:8px;" placeholder="Paste token mint address">
+          <div class="hint" id="lc_tokenInfo"></div>
+        </div>
+        <div class="field">
+          <label>Pair with</label>
+          <div class="pct-shortcut-row" id="lc_quoteRow">
+            <button type="button" class="pct-btn active" data-quote="SOL">SOL</button>
+            <button type="button" class="pct-btn" data-quote="USDC" id="lc_usdcBtn">USDC</button>
+          </div>
+        </div>
+        <div class="field">
+          <label>Tokens to add</label>
+          <input type="number" id="lc_tokenAmt" min="0" step="any" placeholder="0">
+          <div class="pct-shortcut-row" style="margin-top:8px;" id="lc_pctRow">
+            <button type="button" class="pct-btn" data-pct="25">25%</button>
+            <button type="button" class="pct-btn" data-pct="50">50%</button>
+            <button type="button" class="pct-btn" data-pct="75">75%</button>
+            <button type="button" class="pct-btn" data-pct="100">Max</button>
+          </div>
+        </div>
+        <div class="field">
+          <label><span id="lc_quoteName">SOL</span> to add</label>
+          <input type="number" id="lc_quoteAmt" min="0" step="any" placeholder="0">
+          <div class="hint" id="lc_quoteBal"></div>
+        </div>
+
+        <div class="mint-info-row"><span class="k">Starting price</span><span class="v" id="lc_price">—</span></div>
+        <div class="mint-info-row"><span class="k">Starting market cap</span><span class="v" id="lc_mcap">—</span></div>
+        <div class="mint-info-row"><span class="k">Raydium pool fee</span><span class="v" id="lc_rayFee">~0.15 SOL</span></div>
+        <div class="mint-info-row"><span class="k">DegenKit service fee</span><span class="v" id="lc_feeDisplay">0.05 SOL</span></div>
+
+        <button class="btn-launch" id="lc_go" style="width:100%; margin-top:14px;" disabled>Enter amounts</button>
+        <div class="status-line" id="lcStatus"></div>
+
+        <div class="receipt" id="lcReceipt">
+          <div class="receipt-head"><span class="stamp-badge">✓ POOL LIVE</span></div>
+          <div class="r-row"><span class="k">pool</span><span class="v-copy"><span class="v" id="lc_rPool">—</span><button class="copy-btn" data-copy-target="lc_rPool" aria-label="Copy">⧉</button></span></div>
+          <div class="r-row"><span class="k">tx</span><span class="v-copy"><span class="v" id="lc_rTx">—</span><button class="copy-btn" data-copy-target="lc_rTx" aria-label="Copy">⧉</button></span></div>
+          <a class="r-link" id="lc_rSwap" href="#" target="_blank" rel="noopener">Trade on Raydium →</a>
+          <a class="r-link" id="lc_rDex" href="#" target="_blank" rel="noopener">View chart on DexScreener →</a>
+          <a class="r-link" id="lc_rLink" href="#" target="_blank" rel="noopener">View on Explorer →</a>
+        </div>
+
+        <div class="warn-box" style="margin-top:18px;">
+          The starting price is set by the ratio of the two amounts and can't be edited afterwards — double-check it. Raydium charges its own one-time pool creation fee. The LP tokens for the pool are sent to your wallet; keep them safe, they are what lets you remove the liquidity later.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="view-liqremove" class="tool-view">
+    <div class="tool-header">
+      <h1>Remove Liquidity</h1>
+      <p>Pull your tokens and SOL back out of a Raydium pool you provided liquidity to — all or part, in one transaction.</p>
+    </div>
+    <div class="tool-panel">
+      <div class="panel">
+        <div class="field">
+          <label>Your Raydium pools</label>
+          <div id="lr_list"><div class="empty-note">Connect your wallet to find your pools.</div></div>
+          <button type="button" class="btn-ghost" id="lr_refresh" style="margin-top:10px;">Refresh</button>
+        </div>
+        <div class="field">
+          <label>Pool not listed? Paste the pool ID</label>
+          <div class="swap-token-row">
+            <input type="text" id="lr_poolId" placeholder="Pool ID">
+            <button type="button" class="btn-ghost" id="lr_find">Find</button>
+          </div>
+        </div>
+
+        <div id="lr_pick" style="display:none;">
+          <div class="field">
+            <label>Amount to remove</label>
+            <div class="pct-shortcut-row" id="lr_pctRow">
+              <button type="button" class="pct-btn" data-pct="25">25%</button>
+              <button type="button" class="pct-btn" data-pct="50">50%</button>
+              <button type="button" class="pct-btn" data-pct="75">75%</button>
+              <button type="button" class="pct-btn active" data-pct="100">100%</button>
+            </div>
+          </div>
+          <div class="field">
+            <label>Slippage tolerance</label>
+            <div class="pct-shortcut-row" id="lr_slipRow">
+              <button type="button" class="pct-btn" data-bps="50">0.5%</button>
+              <button type="button" class="pct-btn active" data-bps="100">1%</button>
+              <button type="button" class="pct-btn" data-bps="300">3%</button>
+            </div>
+          </div>
+          <div class="mint-info-row"><span class="k">You receive (est.)</span><span class="v" id="lr_recv">—</span></div>
+          <div class="mint-info-row"><span class="k">DegenKit service fee</span><span class="v" id="lr_feeDisplay">0.02 SOL</span></div>
+        </div>
+
+        <button class="btn-launch" id="lr_go" style="width:100%; margin-top:14px;" disabled>Select a pool</button>
+        <div class="status-line" id="lrStatus"></div>
+
+        <div class="receipt" id="lrReceipt">
+          <div class="receipt-head"><span class="stamp-badge">✓ REMOVED</span></div>
+          <div class="r-row"><span class="k">tx</span><span class="v-copy"><span class="v" id="lr_rTx">—</span><button class="copy-btn" data-copy-target="lr_rTx" aria-label="Copy">⧉</button></span></div>
+          <a class="r-link" id="lr_rLink" href="#" target="_blank" rel="noopener">View on Explorer →</a>
+        </div>
+
+        <div class="warn-box" style="margin-top:18px;">
+          Removing liquidity makes your token harder or impossible to trade on this pool. Amounts shown are estimates — you receive your share of the pool at the moment the transaction lands. Works for Raydium standard (CPMM) pools.
+        </div>
+      </div>
+    </div>
+  </section>
+
   </div>
   </main>
 </div>
@@ -1719,6 +1836,7 @@ twq('config','rfyik');
       statusEl.classList.remove("error");
       updateAdminButtonVisibility();
       if(window.__updatePressButtonState) window.__updatePressButtonState();
+      if(window.__liqRefresh) window.__liqRefresh();
     }catch(e){
       statusEl.textContent = window.T("wallet_connect_fail") + e.message;
       statusEl.classList.add("error");
@@ -1739,6 +1857,7 @@ twq('config','rfyik');
     document.getElementById("sumWallet").textContent = window.T("wallet_not_connected");
     updateAdminButtonVisibility();
     if(window.__updatePressButtonState) window.__updatePressButtonState();
+    if(window.__liqRefresh) window.__liqRefresh();
   }
 
   document.getElementById("walletBtn").addEventListener("click", (e) => {
@@ -1754,7 +1873,9 @@ twq('config','rfyik');
   document.getElementById("walletMenu").addEventListener("click", (e) => e.stopPropagation());
 
   // ---------- mint success animation ----------
-  window.playLaunchAnimation = function(){
+  window.playLaunchAnimation = function(msg){
+    const capEl = document.querySelector("#launchOverlay .launch-caption");
+    if(capEl){ if(!capEl.dataset.def) capEl.dataset.def = capEl.textContent; capEl.textContent = msg || capEl.dataset.def; }
     const overlay = document.getElementById("launchOverlay");
     const rocket = document.getElementById("launchRocket");
     overlay.classList.remove("show");
@@ -1829,6 +1950,7 @@ twq('config','rfyik');
     document.getElementById("sidebarEl") && document.getElementById("sidebarEl").classList.remove("mobile-open");
     window.scrollTo(0,0);
     if(viewKey === "manage" && window.__loadMyTokens) window.__loadMyTokens();
+    if((viewKey === "liqcreate" || viewKey === "liqremove") && window.__loadLiq) window.__loadLiq();
   }
   window.switchView = switchView;
   document.querySelectorAll(".sidebar-item[data-view]").forEach(item => {
@@ -2100,6 +2222,8 @@ twq('config','rfyik');
     airdrop: 0.02,
     multisender: 0.02,
     swap: 0.01,
+    create_liquidity: 0.05,
+    remove_liquidity: 0.02,
   };
   async function loadToolFees(){
     try{
@@ -3383,6 +3507,357 @@ twq('config','rfyik');
     }finally{
       btn.disabled = false;
       btn.textContent = "Swap";
+    }
+  });
+
+  // ================= LIQUIDITY (Raydium CPMM) =================
+  const USDC_MINT = "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v";
+  const WSOL_MINT = "So11111111111111111111111111111111111111112";
+  TOOL_FEES.create_liquidity = TOOL_FEES.create_liquidity ?? 0.05;
+  TOOL_FEES.remove_liquidity = TOOL_FEES.remove_liquidity ?? 0.02;
+  const lcFeeEls = () => {
+    const a = $("lc_feeDisplay"), b = $("lr_feeDisplay");
+    if(a) a.textContent = TOOL_FEES.create_liquidity + " SOL";
+    if(b) b.textContent = TOOL_FEES.remove_liquidity + " SOL";
+  };
+  lcFeeEls(); setTimeout(lcFeeEls, 2500); setTimeout(lcFeeEls, 6000);
+
+  let rayMod = null;
+  async function loadRay(){
+    if(!rayMod) rayMod = await import("../../assets/dk-raydium.js");
+    return rayMod;
+  }
+  function rayCtx(){
+    return {
+      rpc: RPC[state.network],
+      cluster: state.network === "devnet" ? "devnet" : "mainnet",
+      owner: state.walletAddress,
+      signTx: async (bytes) => {
+        const f = state.standardWallet.features["solana:signTransaction"];
+        const [r] = await f.signTransaction({ transaction: bytes, account: state.standardAccount });
+        return r.signedTransaction;
+      },
+    };
+  }
+  const explorerTx = (sig) => `https://explorer.solana.com/tx/${sig}` + (state.network === "devnet" ? "?cluster=devnet" : "");
+  function toRaw(str, decimals){
+    const s = String(str).trim();
+    if(!/^\d*\.?\d*$/.test(s) || s === "" || s === ".") return "0";
+    const [i, f = ""] = s.split(".");
+    return (BigInt(i || "0") * (10n ** BigInt(decimals)) + BigInt((f + "0".repeat(decimals)).slice(0, decimals) || "0")).toString();
+  }
+  function fromRaw(raw, decimals){
+    const s = BigInt(raw).toString().padStart(decimals + 1, "0");
+    const i = s.slice(0, s.length - decimals), f = s.slice(s.length - decimals).replace(/0+$/, "");
+    return f ? i + "." + f : i;
+  }
+  const fmtNum = (n, max = 6) => Number(n).toLocaleString("en-US", { maximumFractionDigits: max });
+  function setLiqStatus(id, msg, isErr){
+    const el = $(id); el.textContent = msg || ""; el.classList.toggle("error", !!isErr);
+  }
+  async function collectLiqFee(toolKey, statusId){
+    // Separate lightweight transaction (same pattern as Swap) so a fee hiccup never affects the pool itself.
+    try{
+      setLiqStatus(statusId, "Done — collecting service fee…");
+      const connection = new web3.Connection(RPC[state.network], "confirmed");
+      const payer = new web3.PublicKey(state.walletAddress);
+      const feeTx = new web3.Transaction();
+      feeTx.add(feeTransferIx(payer, TOOL_FEES[toolKey]));
+      feeTx.feePayer = payer;
+      feeTx.recentBlockhash = (await connection.getLatestBlockhash()).blockhash;
+      const bytes = feeTx.serialize({ requireAllSignatures: false, verifySignatures: false });
+      const f = state.standardWallet.features["solana:signTransaction"];
+      const [r] = await f.signTransaction({ transaction: bytes, account: state.standardAccount });
+      await connection.sendRawTransaction(r.signedTransaction, { maxRetries: 5 });
+    }catch(e){ console.error("Fee collection failed (liquidity action itself succeeded):", e); }
+  }
+
+  // ---------- Create ----------
+  const lc = { tokens: [], quote: "SOL", dec: null, balRaw: 0n, quoteBalRaw: 0n, quoteDec: 9, supply: null, loaded: false, mintInfo: null };
+
+  async function lcLoadTokens(){
+    const sel = $("lc_token");
+    if(!state.walletAddress){ sel.innerHTML = '<option value="">Connect your wallet to load your tokens</option>'; return; }
+    if(!libsReady){ return; }
+    sel.innerHTML = '<option value="">Loading your tokens…</option>';
+    try{
+      const connection = new web3.Connection(RPC[state.network], "confirmed");
+      const owner = new web3.PublicKey(state.walletAddress);
+      const resps = await Promise.all([splToken.TOKEN_PROGRAM_ID, splToken.TOKEN_2022_PROGRAM_ID].map(p => connection.getParsedTokenAccountsByOwner(owner, { programId: p }).catch(() => ({ value: [] }))));
+      const rows = [];
+      for(const r of resps) for(const a of r.value){
+        const i = a.account.data.parsed.info;
+        if(i.tokenAmount.amount === "0" || i.mint === WSOL_MINT) continue;
+        rows.push({ mint: i.mint, raw: i.tokenAmount.amount, dec: i.tokenAmount.decimals, ui: i.tokenAmount.uiAmount });
+      }
+      const pdas = rows.map(r => deriveMetadataPDA(new web3.PublicKey(r.mint)));
+      for(let k = 0; k < pdas.length; k += 90){
+        const infos = await connection.getMultipleAccountsInfo(pdas.slice(k, k + 90)).catch(() => []);
+        infos.forEach((acc, j) => { if(acc && acc.data){ try{ const d = decodeMetadataBuffer(acc.data); rows[k + j].name = d.name; rows[k + j].symbol = d.symbol; }catch(e){} } });
+      }
+      lc.tokens = rows;
+      sel.innerHTML = '<option value="">Select a token…</option>' +
+        rows.map(r => `<option value="${r.mint}">${(r.symbol || r.name || r.mint.slice(0,4) + "…" + r.mint.slice(-4)).replace(/</g,"&lt;")} — ${fmtNum(r.ui)}</option>`).join("") +
+        '<option value="custom">Paste a mint address…</option>';
+    }catch(e){
+      console.error(e);
+      sel.innerHTML = '<option value="">Could not load tokens — paste a mint instead</option><option value="custom">Paste a mint address…</option>';
+    }
+  }
+
+  async function lcSelectedMint(){
+    const v = $("lc_token").value;
+    return v === "custom" ? $("lc_tokenCustom").value.trim() : v;
+  }
+
+  async function lcOnTokenChange(){
+    $("lc_tokenCustom").style.display = $("lc_token").value === "custom" ? "block" : "none";
+    lc.dec = null; lc.balRaw = 0n; lc.mintInfo = null;
+    $("lc_tokenInfo").textContent = "";
+    const mint = await lcSelectedMint();
+    if(!mint){ lcRecalc(); return; }
+    try{
+      const pk = new web3.PublicKey(mint);
+      const connection = new web3.Connection(RPC[state.network], "confirmed");
+      const acc = await connection.getAccountInfo(pk);
+      if(!acc) throw new Error("Token not found on " + (state.network === "devnet" ? "devnet" : "mainnet") + ".");
+      const mi = await splToken.getMint(connection, pk, "confirmed", acc.owner);
+      lc.dec = mi.decimals; lc.supply = mi.supply; lc.mintInfo = mi;
+      const row = lc.tokens.find(t => t.mint === mint);
+      if(row) lc.balRaw = BigInt(row.raw);
+      else if(state.walletAddress){
+        const ata = await splToken.getAssociatedTokenAddress(pk, new web3.PublicKey(state.walletAddress), false, acc.owner);
+        const b = await connection.getTokenAccountBalance(ata).catch(() => null);
+        lc.balRaw = b ? BigInt(b.value.amount) : 0n;
+      }
+      let note = "Balance: " + fmtNum(fromRaw(lc.balRaw.toString(), lc.dec), 4);
+      if(mi.freezeAuthority) note += " · ⚠ Freeze authority is still set — traders may avoid this token. You can revoke it in Authorities.";
+      $("lc_tokenInfo").textContent = note;
+    }catch(e){
+      $("lc_tokenInfo").textContent = "Invalid or unknown token: " + friendlyError(e);
+    }
+    lcRecalc();
+  }
+
+  async function lcLoadQuoteBalance(){
+    lc.quoteBalRaw = 0n;
+    if(!state.walletAddress || !libsReady){ lcRecalc(); return; }
+    try{
+      const connection = new web3.Connection(RPC[state.network], "confirmed");
+      const owner = new web3.PublicKey(state.walletAddress);
+      if(lc.quote === "SOL"){
+        lc.quoteBalRaw = BigInt(await connection.getBalance(owner)); lc.quoteDec = 9;
+      }else{
+        const ata = await splToken.getAssociatedTokenAddress(new web3.PublicKey(USDC_MINT), owner);
+        const b = await connection.getTokenAccountBalance(ata).catch(() => null);
+        lc.quoteBalRaw = b ? BigInt(b.value.amount) : 0n; lc.quoteDec = 6;
+      }
+      $("lc_quoteBal").textContent = "Balance: " + fmtNum(fromRaw(lc.quoteBalRaw.toString(), lc.quoteDec), 4) + " " + lc.quote;
+    }catch(e){ console.error(e); }
+    lcRecalc();
+  }
+
+  let lcRayFee = 0.15;
+  function lcRecalc(){
+    const btn = $("lc_go");
+    const t = Number($("lc_tokenAmt").value), q = Number($("lc_quoteAmt").value);
+    const sym = lc.quote;
+    if(t > 0 && q > 0){
+      const price = q / t;
+      $("lc_price").textContent = "1 token = " + fmtNum(price, price < 0.0001 ? 12 : 8) + " " + sym;
+      if(lc.supply !== null && lc.dec !== null){
+        const supplyUi = Number(fromRaw(lc.supply.toString(), lc.dec));
+        $("lc_mcap").textContent = fmtNum(supplyUi * price, 2) + " " + sym;
+      }else $("lc_mcap").textContent = "—";
+    }else{ $("lc_price").textContent = "—"; $("lc_mcap").textContent = "—"; }
+    $("lc_rayFee").textContent = "~" + lcRayFee + " SOL";
+
+    let msg = "", ok = false;
+    if(!state.walletAddress) msg = "Connect your wallet";
+    else if(!libsReady) msg = "Loading…";
+    else if(!lc.dec && lc.dec !== 0) msg = "Select a token";
+    else if(!(t > 0) || !(q > 0)) msg = "Enter amounts";
+    else{
+      const tokRaw = BigInt(toRaw($("lc_tokenAmt").value, lc.dec));
+      const qRaw = BigInt(toRaw($("lc_quoteAmt").value, lc.quoteDec));
+      const lam = (x) => BigInt(Math.round(x * 1e9));
+      const needSol = lam(lcRayFee + TOOL_FEES.create_liquidity + 0.02) + (lc.quote === "SOL" ? qRaw : 0n);
+      if(tokRaw <= 0n || qRaw <= 0n) msg = "Enter amounts";
+      else if(tokRaw > lc.balRaw) msg = "Not enough tokens";
+      else if(lc.quote === "USDC" && qRaw > lc.quoteBalRaw) msg = "Not enough USDC";
+      else if(lc.quote === "SOL" && needSol > lc.quoteBalRaw) msg = "Not enough SOL (keep ~" + (lcRayFee + TOOL_FEES.create_liquidity + 0.02).toFixed(2) + " SOL for fees)";
+      else if(lc.quote === "USDC" && lam(lcRayFee + TOOL_FEES.create_liquidity + 0.02) > (lc.solBalRaw || 0n)) { msg = "Keep ~" + (lcRayFee + TOOL_FEES.create_liquidity + 0.02).toFixed(2) + " SOL for fees"; }
+      else ok = true;
+    }
+    btn.disabled = !ok;
+    btn.textContent = ok ? "Create pool" : msg;
+  }
+
+  $("lc_token").addEventListener("change", lcOnTokenChange);
+  $("lc_tokenCustom").addEventListener("input", () => { clearTimeout(lc._t); lc._t = setTimeout(lcOnTokenChange, 500); });
+  ["lc_tokenAmt", "lc_quoteAmt"].forEach(id => $(id).addEventListener("input", lcRecalc));
+  $("lc_pctRow").addEventListener("click", (e) => {
+    const b = e.target.closest("[data-pct]"); if(!b || lc.dec === null) return;
+    const raw = lc.balRaw * BigInt(b.dataset.pct) / 100n;
+    $("lc_tokenAmt").value = fromRaw(raw.toString(), lc.dec);
+    document.querySelectorAll("#lc_pctRow .pct-btn").forEach(x => x.classList.toggle("active", x === b));
+    lcRecalc();
+  });
+  $("lc_quoteRow").addEventListener("click", (e) => {
+    const b = e.target.closest("[data-quote]"); if(!b) return;
+    lc.quote = b.dataset.quote;
+    document.querySelectorAll("#lc_quoteRow .pct-btn").forEach(x => x.classList.toggle("active", x === b));
+    $("lc_quoteName").textContent = lc.quote; $("lc_quoteAmt").value = "";
+    lcLoadQuoteBalance();
+  });
+
+  async function lcRefreshSol(){
+    if(!state.walletAddress || !libsReady) return;
+    try{
+      const connection = new web3.Connection(RPC[state.network], "confirmed");
+      lc.solBalRaw = BigInt(await connection.getBalance(new web3.PublicKey(state.walletAddress)));
+    }catch(e){}
+  }
+
+  async function lcOpen(){
+    // USDC only exists as this mint on mainnet.
+    $("lc_usdcBtn").style.display = state.network === "devnet" ? "none" : "";
+    if(state.network === "devnet" && lc.quote === "USDC"){ lc.quote = "SOL"; document.querySelector('#lc_quoteRow [data-quote="SOL"]').click(); }
+    await Promise.all([lcLoadTokens(), lcRefreshSol(), lcLoadQuoteBalance()]);
+    if(state.walletAddress && libsReady){
+      loadRay().then(m => m.getCreateFeeSol(rayCtx())).then(f => { lcRayFee = Math.round(f * 1000) / 1000; lcRecalc(); }).catch(() => {});
+    }
+    lcRecalc();
+  }
+
+  $("lc_go").addEventListener("click", async () => {
+    const btn = $("lc_go");
+    $("lcReceipt").classList.remove("show"); setLiqStatus("lcStatus", "");
+    if(!state.walletAddress){ setLiqStatus("lcStatus", "Connect your wallet first.", true); return; }
+    btn.disabled = true; const label = btn.textContent; btn.textContent = "Working…";
+    try{
+      const mint = await lcSelectedMint();
+      const quoteMint = lc.quote === "SOL" ? WSOL_MINT : USDC_MINT;
+      const args = {
+        tokenMint: mint, quoteMint,
+        tokenAmountRaw: toRaw($("lc_tokenAmt").value, lc.dec),
+        quoteAmountRaw: toRaw($("lc_quoteAmt").value, lc.quoteDec),
+      };
+      const ray = await loadRay();
+      const res = await ray.createPool(rayCtx(), args, (s) => setLiqStatus("lcStatus", s));
+      await collectLiqFee("create_liquidity", "lcStatus");
+      $("lc_rPool").textContent = res.poolId; $("lc_rTx").textContent = res.txId;
+      $("lc_rLink").href = explorerTx(res.txId);
+      $("lc_rSwap").href = `https://raydium.io/swap/?inputMint=sol&outputMint=${mint}`;
+      $("lc_rDex").href = `https://dexscreener.com/solana/${res.poolId}`;
+      $("lc_rSwap").style.display = $("lc_rDex").style.display = state.network === "devnet" ? "none" : "";
+      $("lcReceipt").classList.add("show");
+      setLiqStatus("lcStatus", "Pool created. It can take a minute to show up on Raydium and DexScreener.");
+      logAction({ wallet_address: state.walletAddress, tool: "create_liquidity", network: state.network, tx_signature: res.txId, status: "success", details: { mint, pool: res.poolId, quote: lc.quote } });
+      if(window.playLaunchAnimation) window.playLaunchAnimation("Pool is live — liftoff! 🚀");
+      lcLoadTokens(); lcLoadQuoteBalance();
+    }catch(e){
+      console.error(e);
+      setLiqStatus("lcStatus", "Error: " + friendlyError(e), true);
+      logAction({ wallet_address: state.walletAddress, tool: "create_liquidity", network: state.network, status: "failed", error_message: String(e.message || e).slice(0, 500) });
+    }finally{
+      btn.textContent = label; lcRecalc();
+    }
+  });
+
+  // ---------- Remove ----------
+  const lr = { positions: [], sel: null, pct: 100, slipBps: 100 };
+
+  function lrRender(){
+    const el = $("lr_list");
+    if(!state.walletAddress){ el.innerHTML = '<div class="empty-note">Connect your wallet to find your pools.</div>'; return; }
+    if(!lr.positions.length){ el.innerHTML = '<div class="empty-note">No Raydium pools found for this wallet.</div>'; return; }
+    el.innerHTML = lr.positions.map((p, i) => `
+      <button type="button" class="lr-pos${lr.sel && lr.sel.poolId === p.poolId ? " active" : ""}" data-i="${i}">
+        <span class="lr-pair">${p.symbolA.replace(/</g,"&lt;")} / ${p.symbolB.replace(/</g,"&lt;")}</span>
+        <span class="lr-meta">${fmtNum(p.estA, 4)} ${p.symbolA.replace(/</g,"&lt;")} + ${fmtNum(p.estB, 4)} ${p.symbolB.replace(/</g,"&lt;")} · ${(p.share * 100).toFixed(p.share < 0.01 ? 4 : 2)}% of pool</span>
+      </button>`).join("");
+  }
+
+  function lrRecalc(){
+    const pick = $("lr_pick"), btn = $("lr_go");
+    if(!lr.sel){ pick.style.display = "none"; btn.disabled = true; btn.textContent = "Select a pool"; return; }
+    pick.style.display = "";
+    const p = lr.sel, f = lr.pct / 100;
+    $("lr_recv").textContent = fmtNum(p.estA * f, 6) + " " + p.symbolA + " + " + fmtNum(p.estB * f, 6) + " " + p.symbolB;
+    btn.disabled = false; btn.textContent = "Remove " + lr.pct + "%";
+  }
+
+  async function lrLoad(){
+    if(!state.walletAddress){ lrRender(); return; }
+    if(!libsReady) return;
+    $("lr_list").innerHTML = '<div class="empty-note">Searching your wallet for Raydium pools…</div>';
+    try{
+      const ray = await loadRay();
+      lr.positions = await ray.listPositions(rayCtx());
+      if(lr.sel && !lr.positions.find(p => p.poolId === lr.sel.poolId)) lr.sel = null;
+    }catch(e){
+      console.error(e); lr.positions = [];
+      setLiqStatus("lrStatus", "Could not reach Raydium: " + friendlyError(e), true);
+    }
+    lrRender(); lrRecalc();
+  }
+  window.__loadLiq = () => { lcOpen(); lrLoad(); };
+  window.__liqRefresh = () => { const v = document.querySelector(".tool-view.active"); if(v && (v.id === "view-liqcreate" || v.id === "view-liqremove")) window.__loadLiq(); };
+
+  $("lr_list").addEventListener("click", (e) => {
+    const b = e.target.closest(".lr-pos"); if(!b) return;
+    lr.sel = lr.positions[Number(b.dataset.i)]; lrRender(); lrRecalc();
+  });
+  $("lr_refresh").addEventListener("click", lrLoad);
+  $("lr_find").addEventListener("click", async () => {
+    const id = $("lr_poolId").value.trim();
+    if(!id) return;
+    if(!state.walletAddress){ setLiqStatus("lrStatus", "Connect your wallet first.", true); return; }
+    setLiqStatus("lrStatus", "Looking up pool…");
+    try{
+      new web3.PublicKey(id);
+      const ray = await loadRay();
+      const p = await ray.lookupPool(rayCtx(), id);
+      if(!p){ setLiqStatus("lrStatus", "You don't hold LP tokens for this pool.", true); return; }
+      if(!lr.positions.find(x => x.poolId === p.poolId)) lr.positions.push(p);
+      lr.sel = p; setLiqStatus("lrStatus", ""); lrRender(); lrRecalc();
+    }catch(e){ setLiqStatus("lrStatus", "Pool not found: " + friendlyError(e), true); }
+  });
+  $("lr_pctRow").addEventListener("click", (e) => {
+    const b = e.target.closest("[data-pct]"); if(!b) return;
+    lr.pct = Number(b.dataset.pct);
+    document.querySelectorAll("#lr_pctRow .pct-btn").forEach(x => x.classList.toggle("active", x === b)); lrRecalc();
+  });
+  $("lr_slipRow").addEventListener("click", (e) => {
+    const b = e.target.closest("[data-bps]"); if(!b) return;
+    lr.slipBps = Number(b.dataset.bps);
+    document.querySelectorAll("#lr_slipRow .pct-btn").forEach(x => x.classList.toggle("active", x === b));
+  });
+
+  $("lr_go").addEventListener("click", async () => {
+    const btn = $("lr_go");
+    $("lrReceipt").classList.remove("show"); setLiqStatus("lrStatus", "");
+    if(!state.walletAddress || !lr.sel){ return; }
+    btn.disabled = true; const label = btn.textContent; btn.textContent = "Working…";
+    try{
+      const p = lr.sel;
+      const lpRaw = (BigInt(p.lpRaw) * BigInt(lr.pct) / 100n).toString();
+      const ray = await loadRay();
+      const res = await ray.removeLiquidity(rayCtx(), p.poolId, lpRaw, lr.slipBps / 100, (s) => setLiqStatus("lrStatus", s));
+      await collectLiqFee("remove_liquidity", "lrStatus");
+      $("lr_rTx").textContent = res.txId; $("lr_rLink").href = explorerTx(res.txId);
+      $("lrReceipt").classList.add("show");
+      setLiqStatus("lrStatus", "Liquidity removed.");
+      logAction({ wallet_address: state.walletAddress, tool: "remove_liquidity", network: state.network, tx_signature: res.txId, status: "success", details: { pool: p.poolId, percent: lr.pct } });
+      if(window.playLaunchAnimation) window.playLaunchAnimation("Liquidity removed ✓");
+      lr.sel = null; lrLoad();
+    }catch(e){
+      console.error(e);
+      setLiqStatus("lrStatus", "Error: " + friendlyError(e), true);
+      logAction({ wallet_address: state.walletAddress, tool: "remove_liquidity", network: state.network, status: "failed", error_message: String(e.message || e).slice(0, 500) });
+    }finally{
+      btn.textContent = label; lrRecalc();
     }
   });
 </script>
