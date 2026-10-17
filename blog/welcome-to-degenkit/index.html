@@ -19,73 +19,121 @@ twq('config','rfyik');
 <!-- End X Pixel base code -->
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Welcome to DegenKit | DegenKit Blog</title>
-<meta name="description" content="Why we built a one-signature token creator for Solana, and what's coming next.">
-<link rel="icon" type="image/png" href="../../assets/favicon.png">
+<meta name="description" content="Why we built a one-signature token creator for Solana, what &quot;locked by default&quot; actually means on-chain, and what&#x27;s coming next.">
+<link rel="canonical" href="https://degenkit.app/blog/welcome-to-degenkit/">
+<link rel="alternate" type="application/rss+xml" title="DegenKit Blog" href="/blog/rss.xml">
+<link rel="icon" type="image/png" href="/assets/favicon.png">
+<meta property="og:site_name" content="DegenKit">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Welcome to DegenKit | DegenKit Blog">
+<meta property="og:description" content="Why we built a one-signature token creator for Solana, what &quot;locked by default&quot; actually means on-chain, and what&#x27;s coming next.">
+<meta property="og:url" content="https://degenkit.app/blog/welcome-to-degenkit/">
+<meta property="og:image" content="https://degenkit.app/assets/mascot-hero.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@DegenKitApp">
+<meta name="twitter:title" content="Welcome to DegenKit | DegenKit Blog">
+<meta name="twitter:description" content="Why we built a one-signature token creator for Solana, what &quot;locked by default&quot; actually means on-chain, and what&#x27;s coming next.">
+<meta name="twitter:image" content="https://degenkit.app/assets/mascot-hero.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../assets/styles.css">
-<style>
-  .post-wrap{max-width:700px; margin:0 auto; padding:56px clamp(20px,4vw,56px) 100px;}
-  .post-back{font-size:13px; color:var(--muted); font-family:'JetBrains Mono',monospace; display:inline-block; margin-bottom:24px;}
-  .post-wrap h1{font-family:'Space Grotesk',sans-serif; font-weight:800; font-size:clamp(28px,4.4vw,42px); margin:0 0 10px; line-height:1.1;}
-  .post-date{color:var(--muted); font-size:13px; font-family:'JetBrains Mono',monospace; margin-bottom:34px;}
-  .post-wrap h2{font-family:'Space Grotesk',sans-serif; font-size:21px; margin:34px 0 12px;}
-  .post-wrap p, .post-wrap li{color:#D8D3C7; font-size:15.5px; line-height:1.8;}
-  .post-wrap ul{padding-left:20px;}
-  .post-wrap a{color:var(--orange-bright);}
-</style>
+<link rel="stylesheet" href="/assets/styles.css">
+<link rel="stylesheet" href="/assets/theme-icons.css">
+<link rel="stylesheet" href="/assets/blog.css">
+<script>try{var t=localStorage.getItem('degenkit-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Welcome to DegenKit", "description": "Why we built a one-signature token creator for Solana, what \"locked by default\" actually means on-chain, and what's coming next.", "datePublished": "2026-07-15", "mainEntityOfPage": "https://degenkit.app/blog/welcome-to-degenkit/", "image": "https://degenkit.app/assets/mascot-hero.png", "author": {"@type": "Organization", "name": "DegenKit"}, "publisher": {"@type": "Organization", "name": "DegenKit"}}</script>
 </head>
 <body>
-
 <header>
   <div class="header-row">
-    <a class="logo" href="/"><img src="../../assets/icon.png" alt="" class="logo-icon"><span class="logo-text">DegenKit</span></a>
+    <a class="logo" href="/"><img src="/assets/icon.png" alt="" class="logo-icon"><span class="logo-text">DegenKit</span></a>
     <nav class="site-nav">
       <a class="navlink" href="/#features">Features</a>
       <a class="navlink" href="/#roadmap">Roadmap</a>
+      <a class="navlink" href="/blog/">Blog</a>
       <a class="navlink" href="/#faq">FAQ</a>
     </nav>
     <div class="header-actions">
-      <a class="btn-launch" href="/launch/solana/">Launch App</a>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light/dark theme" title="Toggle theme">◐</button>
+      <a class="btn-launch" href="/launch/">Launch App</a>
     </div>
   </div>
 </header>
-
-<div class="post-wrap">
-  <a class="post-back" href="/blog/">← Back to blog</a>
-  <h1>Welcome to DegenKit</h1>
-  <div class="post-date">July 2026</div>
-
-  <p>Launching a token on Solana usually means one of two things: writing and deploying your own program, or trusting a black-box launchpad and hoping the defaults are sane. DegenKit is our attempt at a third option — a tool that does the one-click thing without hiding what's actually happening on-chain.</p>
-
-  <h2>One signature, not one leap of faith</h2>
-  <p>When you create a token with DegenKit, everything happens in a single transaction that you sign: the mint account is created, your supply is minted to your wallet, metadata is written, and (if you choose) mint and freeze authority are revoked — all atomically. If any step fails, nothing is charged and nothing is half-done.</p>
-
-  <h2>Locked by default, not locked by trust</h2>
-  <p>"Mint and freeze authority revoked" isn't a promise we make about how we'll behave — it's a property of the token itself, verifiable by anyone on Solana's block explorers. Once those authorities are set to <code>null</code>, no one — not you, not us — can mint more supply or freeze a holder's account. That's the difference between a policy and a fact.</p>
-
-  <h2>What's live today</h2>
-  <ul>
-    <li>Token Creator — name, symbol, decimals, supply, image, one signature.</li>
-    <li>My Tokens, Authorities, Update Metadata, Burn Token, Scanner, Vanity Address — manage and analyze what you've already created.</li>
-    <li>Airdrop and Multisender — distribute tokens to many wallets at once.</li>
-    <li>Swap — trade tokens via Jupiter's aggregator.</li>
-  </ul>
-
-  <h2>What's next</h2>
-  <p>Robinhood Chain support is next on our <a href="/#roadmap">roadmap</a>, bringing the same one-signature flow to a second network. Liquidity tools and swaps are further out — those touch real DEX integrations, so we're taking our time to get them right rather than shipping something half-tested.</p>
-
-  <p>If you build something with DegenKit, or run into a rough edge, we'd like to hear about it — see the <a href="/support/">Support page</a>.</p>
-</div>
-
+<main class="bwrap">
+  <article class="post">
+    <div class="p-head">
+      <a class="back" href="/blog/">← All posts</a>
+      <div class="chips"><span class="chip">Product</span><span class="chip">Solana</span></div>
+      <h1>Welcome to DegenKit</h1>
+      <p class="lede">Why we built a one-signature token creator for Solana, what &quot;locked by default&quot; actually means on-chain, and what&#x27;s coming next.</p>
+      <div class="byline"><img src="/assets/icon.png" alt=""><span><b>DegenKit</b><i>July 15, 2026 · 2 min read</i></span></div>
+    </div>
+    <div class="cover hero ph"><img src="/assets/icon.png" alt=""></div>
+    <div class="prose">
+<p>Launching a token on Solana usually means one of two things: writing and deploying your own program, or trusting a black-box launchpad and hoping the defaults are sane. DegenKit is our attempt at a third option — a tool that does the one-click thing without hiding what&#x27;s actually happening on-chain.</p>
+<h2 id="one-signature-not-one-leap-of-faith">One signature, not one leap of faith</h2>
+<p>When you create a token with DegenKit, everything happens in a single transaction that you sign: the mint account is created, your supply is minted to your wallet, metadata is written, and (if you choose) mint and freeze authority are revoked — all atomically. If any step fails, nothing is charged and nothing is half-done.</p>
+<h2 id="locked-by-default-not-locked-by-trust">Locked by default, not locked by trust</h2>
+<p>&quot;Mint and freeze authority revoked&quot; isn&#x27;t a promise we make about how we&#x27;ll behave — it&#x27;s a property of the token itself, verifiable by anyone on Solana&#x27;s block explorers. Once those authorities are set to <code>null</code>, no one — not you, not us — can mint more supply or freeze a holder&#x27;s account. That&#x27;s the difference between a policy and a fact.</p>
+<h2 id="what-s-live-today">What&#x27;s live today</h2>
+<ul><li>Token Creator — name, symbol, decimals, supply, image, one signature.</li><li>My Tokens, Authorities, Update Metadata, Burn Token, Scanner, Vanity Address — manage and analyze what you&#x27;ve already created.</li><li>Airdrop and Multisender — distribute tokens to many wallets at once.</li><li>Swap — trade tokens via Jupiter&#x27;s aggregator.</li></ul>
+<h2 id="what-s-next">What&#x27;s next</h2>
+<p>Robinhood Chain support is next on our <a href="/#roadmap">roadmap</a>, bringing the same one-signature flow to a second network. Liquidity tools and swaps are further out — those touch real DEX integrations, so we&#x27;re taking our time to get them right rather than shipping something half-tested.</p>
+<p>If you build something with DegenKit, or run into a rough edge, we&#x27;d like to hear about it — see the <a href="/support/">Support page</a>.</p>
+    </div>
+    <div class="share">
+      <b>Share this post</b>
+      <div class="share-btns">
+        <a class="s-x" href="https://x.com/intent/post?text=Welcome%20to%20DegenKit%20%E2%80%94%20via%20%40DegenKitApp&amp;url=https%3A%2F%2Fdegenkit.app%2Fblog%2Fwelcome-to-degenkit%2F" target="_blank" rel="noopener noreferrer">Share on 𝕏</a>
+        <button class="s-copy" type="button" data-copy="https://degenkit.app/blog/welcome-to-degenkit/">Copy link</button>
+      </div>
+    </div>
+    <aside class="cta">
+      <div><h3>Ready to launch your token?</h3><p>Pick a network, set the details, sign once. No code.</p></div>
+      <a class="btn-launch" href="/launch/">Launch App</a>
+    </aside>
+  </article>
+  <section class="related"><h3>Keep reading</h3><div class="grid two"><a class="card" href="/blog/create-solana-token-without-coding/">
+  <div class="cover"><img src="/blog/img/create-solana-token-without-coding-cover.webp" alt="A token-creation diagram connects token details to wallet review and an explorer check." loading="lazy" decoding="async"></div>
+  <div class="c-body">
+    <div class="c-meta"><span>October 17, 2026</span></div>
+    <h2>How to Create a Solana Token Without Coding</h2>
+    <p>Prepare your token details, understand decimals and authorities, and follow a clear Solana token-creation workflow with DegenKit.</p>
+  </div>
+</a><a class="card" href="/blog/how-token-buy-sell-tax-works/">
+  <div class="cover"><img src="/blog/img/how-token-buy-sell-tax-works-cover.webp" alt="An illustrative token flow splits 1,000 tokens into 970 received and a 30-token fee." loading="lazy" decoding="async"></div>
+  <div class="c-body">
+    <div class="c-meta"><span>October 17, 2026</span></div>
+    <h2>How Buy and Sell Taxes Work on a Token</h2>
+    <p>Understand buy and sell taxes, follow a simple token-flow example, and learn what to check before creating a tax token on BNB Chain.</p>
+  </div>
+</a></div></section>
+</main>
 <footer>
   <div class="wrap">
-    <div class="footer-bottom" style="border-top:none; padding-top:0;">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="logo"><img src="/assets/icon.png" alt="" class="logo-icon"><span class="logo-text">DegenKit</span></div>
+        <p>Token creation, without the guesswork. Launch on Solana, Ethereum, BNB Chain, Base and Robinhood Chain.</p>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col"><h4>Site</h4><a href="/">Home</a><a href="/launch/">Launch App</a><a href="/blog/">Blog</a></div>
+        <div class="footer-col"><h4>Legal</h4><a href="/terms/">Terms &amp; Conditions</a><a href="/privacy/">Privacy Policy</a></div>
+        <div class="footer-col"><h4>Help</h4><a href="/support/">Support</a></div>
+      </div>
+    </div>
+    <div class="footer-bottom">
       <p>© 2026 DegenKit. All rights reserved.</p>
+      <div class="footer-socials"><a class="social-icn" href="https://x.com/DegenKitApp" target="_blank" rel="noopener" aria-label="X / Twitter">𝕏</a></div>
     </div>
   </div>
 </footer>
-
+<script>
+(function(){var r=document.documentElement,b=document.getElementById('themeToggle');
+if(b)b.addEventListener('click',function(){var n=r.getAttribute('data-theme')==='light'?'dark':'light';r.setAttribute('data-theme',n);try{localStorage.setItem('degenkit-theme',n)}catch(e){}});
+document.querySelectorAll('[data-copy]').forEach(function(el){el.addEventListener('click',function(){var u=el.getAttribute('data-copy'),t=el.textContent;
+(navigator.clipboard?navigator.clipboard.writeText(u):Promise.reject()).then(function(){el.textContent='Copied ✓';setTimeout(function(){el.textContent=t},1600)}).catch(function(){window.prompt('Copy link',u)})})});})();
+</script>
 </body>
 </html>

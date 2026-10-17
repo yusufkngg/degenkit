@@ -360,7 +360,7 @@
 
   /* ---------------- sidebar icons (custom SVG set) ---------------- */
   var ICONS = [
-    [/token creator|create token/i, "token"], [/my tokens/i, "my_tokens"], [/authorit/i, "update"], [/metadata/i, "updatemetadata"],
+    [/tax token/i, "taxtoken"], [/token creator|create token/i, "token"], [/my tokens/i, "my_tokens"], [/authorit/i, "update"], [/metadata/i, "updatemetadata"],
     [/burn/i, "burn"], [/airdrop/i, "airdrop"], [/multisender/i, "multisender"], [/market/i, "market"], [/scanner/i, "scan"],
     [/swap/i, "swap"], [/create liquidity/i, "add"], [/remove liquidity/i, "remove"], [/support/i, "support"]
   ];

@@ -156,7 +156,7 @@ twq('config','rfyik');
     text-decoration:none; box-sizing:border-box;
   }
   .wallet-item:hover{background:var(--panel);}
-  .wallet-item img{width:20px; height:20px; border-radius:6px; flex-shrink:0;}
+  .wallet-item img{width:24px; height:24px; border-radius:6px; flex-shrink:0; object-fit:contain;}
   .wallet-badge{
     width:20px; height:20px; border-radius:6px; flex-shrink:0; display:flex; align-items:center;
     justify-content:center; font-size:11px; font-weight:700; color:#fff; font-family:'Space Grotesk',sans-serif;
@@ -1421,14 +1421,14 @@ twq('config','rfyik');
   window.__discoveredWallets = new Map();
 
   const KNOWN_WALLETS = [
-    { name: "Phantom", color: "#AB9FF2", initial: "P", install: "https://phantom.app/" },
-    { name: "Solflare", color: "#FC9231", initial: "S", install: "https://solflare.com/" },
-    { name: "Backpack", color: "#E33E3E", initial: "B", install: "https://backpack.app/" },
-    { name: "Bitget Wallet", color: "#00F0C0", initial: "B", install: "https://web3.bitget.com/wallet-download" },
-    { name: "Coinbase Wallet", color: "#0052FF", initial: "C", install: "https://www.coinbase.com/wallet" },
-    { name: "Trust Wallet", color: "#3375BB", initial: "T", install: "https://trustwallet.com/" },
-    { name: "MetaMask", color: "#F6851B", initial: "🦊", install: "https://metamask.io/" },
-    { name: "Magic Eden", color: "#E42575", initial: "M", install: "https://wallet.magiceden.io/" },
+    { name: "Phantom", icon: "../../assets/wallets/phantom.png", color: "#AB9FF2", initial: "P", install: "https://phantom.app/" },
+    { name: "Solflare", icon: "../../assets/wallets/solflare.png", color: "#FC9231", initial: "S", install: "https://solflare.com/" },
+    { name: "Backpack", icon: "../../assets/wallets/backpack.png", color: "#E33E3E", initial: "B", install: "https://backpack.app/" },
+    { name: "Bitget Wallet", icon: "../../assets/wallets/bitget.png", color: "#00F0C0", initial: "B", install: "https://web3.bitget.com/wallet-download" },
+    { name: "Coinbase Wallet", icon: "../../assets/wallets/coinbase.png", color: "#0052FF", initial: "C", install: "https://www.coinbase.com/wallet" },
+    { name: "Trust Wallet", icon: "../../assets/wallets/trust.png", color: "#3375BB", initial: "T", install: "https://trustwallet.com/" },
+    { name: "MetaMask", icon: "../../assets/wallets/metamask.png", color: "#F6851B", initial: "🦊", install: "https://metamask.io/" },
+    { name: "Magic Eden", icon: "../../assets/wallets/magiceden.png", color: "#E42575", initial: "M", install: "https://wallet.magiceden.io/" },
   ];
 
   const ADMIN_WALLET = "A4zUeyAsG1R9JGgqAThryftTZdYDxtEe3fkXhGvkzCPB";
@@ -1674,11 +1674,11 @@ twq('config','rfyik');
         const wallet = window.__discoveredWallets.get(discoveredKey);
         const icon = wallet.icon
           ? `<img src="${wallet.icon}" alt="">`
-          : `<span class="wallet-badge" style="background:${w.color}">${w.initial}</span>`;
+          : `<img src="${w.icon}" alt="">`;
         return `<button class="wallet-item" data-wallet="${discoveredKey.replace(/"/g,'&quot;')}">${icon}<span>${w.name}</span><span class="wallet-status detected">Detected</span></button>`;
       }
       return `<a class="wallet-item" href="${w.install}" target="_blank" rel="noopener">
-        <span class="wallet-badge" style="background:${w.color}">${w.initial}</span><span>${w.name}</span><span class="wallet-status install">Install →</span>
+        <img src="${w.icon}" alt=""><span>${w.name}</span><span class="wallet-status install">Install →</span>
       </a>`;
     });
 

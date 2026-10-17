@@ -19,64 +19,109 @@ twq('config','rfyik');
 <!-- End X Pixel base code -->
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Blog | DegenKit</title>
-<meta name="description" content="Updates, guides, and notes from the DegenKit team.">
-<link rel="icon" type="image/png" href="../assets/favicon.png">
+<meta name="description" content="Updates, guides and launch playbooks from DegenKit.">
+<link rel="canonical" href="https://degenkit.app/blog/">
+<link rel="alternate" type="application/rss+xml" title="DegenKit Blog" href="/blog/rss.xml">
+<link rel="icon" type="image/png" href="/assets/favicon.png">
+<meta property="og:site_name" content="DegenKit">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Blog | DegenKit">
+<meta property="og:description" content="Updates, guides and launch playbooks from DegenKit.">
+<meta property="og:url" content="https://degenkit.app/blog/">
+<meta property="og:image" content="https://degenkit.app/assets/mascot-hero.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@DegenKitApp">
+<meta name="twitter:title" content="Blog | DegenKit">
+<meta name="twitter:description" content="Updates, guides and launch playbooks from DegenKit.">
+<meta name="twitter:image" content="https://degenkit.app/assets/mascot-hero.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/styles.css">
-<style>
-  .blog-hero{padding:56px clamp(20px,4vw,56px) 20px; max-width:760px; margin:0 auto; text-align:center;}
-  .blog-hero h1{font-family:'Space Grotesk',sans-serif; font-weight:800; font-size:clamp(30px,4.5vw,44px); margin:0 0 12px;}
-  .blog-hero p{color:var(--muted); font-size:15.5px;}
-  .blog-list{max-width:760px; margin:30px auto 100px; padding:0 clamp(20px,4vw,56px); display:flex; flex-direction:column; gap:18px;}
-  .blog-card{
-    display:block; border:1px solid var(--line); border-radius:14px; padding:24px 26px;
-    background:var(--panel); transition:border-color .15s, transform .15s;
-  }
-  .blog-card:hover{border-color:rgba(255,122,26,0.4); transform:translateY(-2px);}
-  .blog-card .b-date{font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--orange-bright); letter-spacing:0.06em; text-transform:uppercase;}
-  .blog-card h2{font-family:'Space Grotesk',sans-serif; font-size:20px; margin:8px 0 8px;}
-  .blog-card p{color:var(--muted); font-size:14px; line-height:1.6; margin:0;}
-</style>
+<link rel="stylesheet" href="/assets/styles.css">
+<link rel="stylesheet" href="/assets/theme-icons.css">
+<link rel="stylesheet" href="/assets/blog.css">
+<script>try{var t=localStorage.getItem('degenkit-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+
 </head>
 <body>
-
 <header>
   <div class="header-row">
-    <a class="logo" href="/"><img src="../assets/icon.png" alt="" class="logo-icon"><span class="logo-text">DegenKit</span></a>
+    <a class="logo" href="/"><img src="/assets/icon.png" alt="" class="logo-icon"><span class="logo-text">DegenKit</span></a>
     <nav class="site-nav">
       <a class="navlink" href="/#features">Features</a>
       <a class="navlink" href="/#roadmap">Roadmap</a>
+      <a class="navlink" href="/blog/">Blog</a>
       <a class="navlink" href="/#faq">FAQ</a>
     </nav>
     <div class="header-actions">
-      <a class="btn-launch" href="/launch/solana/">Launch App</a>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light/dark theme" title="Toggle theme">◐</button>
+      <a class="btn-launch" href="/launch/">Launch App</a>
     </div>
   </div>
 </header>
-
-<div class="blog-hero">
-  <div class="eyebrow" style="display:inline-flex;">Blog</div>
-  <h1>Notes from the runway</h1>
-  <p>Updates, guides, and behind-the-scenes notes on building DegenKit.</p>
-</div>
-
-<div class="blog-list">
-  <a class="blog-card" href="/blog/welcome-to-degenkit/">
-    <div class="b-date">July 2026</div>
+<main class="bwrap">
+  <section class="b-hero">
+    <div class="eyebrow" style="display:inline-flex;">Blog</div>
+    <h1>Notes from the runway</h1>
+    <p>Updates, guides and launch playbooks from DegenKit.</p>
+  </section>
+  <a class="feature" href="/blog/create-solana-token-without-coding/">
+  <div class="cover"><img src="/blog/img/create-solana-token-without-coding-cover.webp" alt="A token-creation diagram connects token details to wallet review and an explorer check." loading="lazy" decoding="async"></div>
+  <div class="f-body">
+    <div class="c-meta"><span>October 17, 2026 · 5 min read</span></div>
+    <h2>How to Create a Solana Token Without Coding</h2>
+    <p>Prepare your token details, understand decimals and authorities, and follow a clear Solana token-creation workflow with DegenKit.</p>
+    <span class="more">Read the post →</span>
+  </div>
+</a>
+  <div class="grid"><a class="card" href="/blog/how-token-buy-sell-tax-works/">
+  <div class="cover"><img src="/blog/img/how-token-buy-sell-tax-works-cover.webp" alt="An illustrative token flow splits 1,000 tokens into 970 received and a 30-token fee." loading="lazy" decoding="async"></div>
+  <div class="c-body">
+    <div class="c-meta"><span>October 17, 2026</span></div>
+    <h2>How Buy and Sell Taxes Work on a Token</h2>
+    <p>Understand buy and sell taxes, follow a simple token-flow example, and learn what to check before creating a tax token on BNB Chain.</p>
+  </div>
+</a><a class="card" href="/blog/token-launch-checklist/">
+  <div class="cover"><img src="/blog/img/token-launch-checklist-cover.webp" alt="Six launch-readiness cards cover identity, supply, permissions, liquidity, verification and publishing." loading="lazy" decoding="async"></div>
+  <div class="c-body">
+    <div class="c-meta"><span>October 17, 2026</span></div>
+    <h2>Token Launch Checklist: From Setup to Public Launch</h2>
+    <p>Use a practical launch checklist covering token identity, supply, permissions, liquidity planning, verification and public information.</p>
+  </div>
+</a><a class="card" href="/blog/welcome-to-degenkit/">
+  <div class="cover ph"><img src="/assets/icon.png" alt=""></div>
+  <div class="c-body">
+    <div class="c-meta"><span class="chip">Product</span><span class="chip">Solana</span><span>July 15, 2026</span></div>
     <h2>Welcome to DegenKit</h2>
-    <p>Why we built a one-signature token creator for Solana, what "locked by default" actually means on-chain, and what's coming next.</p>
-  </a>
-</div>
-
+    <p>Why we built a one-signature token creator for Solana, what &quot;locked by default&quot; actually means on-chain, and what&#x27;s coming next.</p>
+  </div>
+</a></div>
+</main>
 <footer>
   <div class="wrap">
-    <div class="footer-bottom" style="border-top:none; padding-top:0;">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="logo"><img src="/assets/icon.png" alt="" class="logo-icon"><span class="logo-text">DegenKit</span></div>
+        <p>Token creation, without the guesswork. Launch on Solana, Ethereum, BNB Chain, Base and Robinhood Chain.</p>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col"><h4>Site</h4><a href="/">Home</a><a href="/launch/">Launch App</a><a href="/blog/">Blog</a></div>
+        <div class="footer-col"><h4>Legal</h4><a href="/terms/">Terms &amp; Conditions</a><a href="/privacy/">Privacy Policy</a></div>
+        <div class="footer-col"><h4>Help</h4><a href="/support/">Support</a></div>
+      </div>
+    </div>
+    <div class="footer-bottom">
       <p>© 2026 DegenKit. All rights reserved.</p>
+      <div class="footer-socials"><a class="social-icn" href="https://x.com/DegenKitApp" target="_blank" rel="noopener" aria-label="X / Twitter">𝕏</a></div>
     </div>
   </div>
 </footer>
-
+<script>
+(function(){var r=document.documentElement,b=document.getElementById('themeToggle');
+if(b)b.addEventListener('click',function(){var n=r.getAttribute('data-theme')==='light'?'dark':'light';r.setAttribute('data-theme',n);try{localStorage.setItem('degenkit-theme',n)}catch(e){}});
+document.querySelectorAll('[data-copy]').forEach(function(el){el.addEventListener('click',function(){var u=el.getAttribute('data-copy'),t=el.textContent;
+(navigator.clipboard?navigator.clipboard.writeText(u):Promise.reject()).then(function(){el.textContent='Copied ✓';setTimeout(function(){el.textContent=t},1600)}).catch(function(){window.prompt('Copy link',u)})})});})();
+</script>
 </body>
 </html>
