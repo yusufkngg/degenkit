@@ -49,7 +49,7 @@ After creation, inspect the actual mint rather than relying only on a success me
 Make sure the authority behavior matches your project before signing. Permanent settings deserve a deliberate review.
 :::
 
-![A motion explainer moves through details, wallet review, confirmation and explorer verification.](/blog/img/create-solana-token-without-coding-demo.mp4)
+![A motion explainer moves through token details, authority locks, wallet review and explorer verification.](/blog/img/create-solana-token-without-coding-demo.mp4)
 
 ## Create the token in DegenKit
 
