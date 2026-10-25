@@ -11,6 +11,11 @@
   <url><loc>https://degenkit.app/terms/</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
   <url><loc>https://degenkit.app/privacy/</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
   <url><loc>https://degenkit.app/blog/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://degenkit.app/blog/airdrop-vs-multisender/</loc><lastmod>2026-10-25</lastmod><priority>0.6</priority></url>
+  <url><loc>https://degenkit.app/blog/how-to-spot-rug-pull-risk/</loc><lastmod>2026-10-25</lastmod><priority>0.6</priority></url>
+  <url><loc>https://degenkit.app/blog/mint-authority-vs-freeze-authority/</loc><lastmod>2026-10-25</lastmod><priority>0.6</priority></url>
+  <url><loc>https://degenkit.app/blog/what-burning-tokens-means/</loc><lastmod>2026-10-25</lastmod><priority>0.6</priority></url>
+  <url><loc>https://degenkit.app/blog/which-blockchain-to-launch-token/</loc><lastmod>2026-10-25</lastmod><priority>0.6</priority></url>
   <url><loc>https://degenkit.app/blog/create-solana-token-without-coding/</loc><lastmod>2026-10-17</lastmod><priority>0.6</priority></url>
   <url><loc>https://degenkit.app/blog/how-token-buy-sell-tax-works/</loc><lastmod>2026-10-17</lastmod><priority>0.6</priority></url>
   <url><loc>https://degenkit.app/blog/token-launch-checklist/</loc><lastmod>2026-10-17</lastmod><priority>0.6</priority></url>
