@@ -831,6 +831,7 @@ twq('config','rfyik');
       <button class="admin-tab active" data-admin-tab="logs">Token creations</button>
       <button class="admin-tab" data-admin-tab="actions">Tool actions</button>
       <button class="admin-tab" data-admin-tab="fees">Fees</button>
+      <button class="admin-tab" data-admin-tab="free">Free wallets</button>
     </div>
 
     <div class="admin-pane active" id="adminPaneLogs">
@@ -866,6 +867,18 @@ twq('config','rfyik');
           <tbody id="adminActionsTbody"></tbody>
         </table>
       </div>
+    </div>
+
+    <div class="admin-pane" id="adminPaneFree">
+      <p style="color:var(--muted); font-size:13px; margin:0 0 12px;">Wallets on this list create Solana tokens with <b>no DegenKit service fee</b> (they still pay the network fee and rent).</p>
+      <div class="admin-toolbar" style="flex-wrap:wrap; gap:8px;">
+        <input type="text" id="freeWalletInput" placeholder="Wallet address" style="flex:2; min-width:220px;" autocomplete="off" spellcheck="false">
+        <input type="text" id="freeNoteInput" placeholder="Note (optional)" style="flex:1; min-width:140px;" maxlength="80">
+        <button id="freeAddBtn">Add</button>
+        <button id="adminFreeRefresh">Refresh</button>
+        <span id="adminFreeStatus" class="admin-status"></span>
+      </div>
+      <div id="adminFreeList"></div>
     </div>
 
     <div class="admin-pane" id="adminPaneFees">
@@ -1996,6 +2009,7 @@ twq('config','rfyik');
       document.getElementById("adminPane" + key.charAt(0).toUpperCase() + key.slice(1)).classList.add("active");
       if(key === "actions") loadAdminActions();
       if(key === "fees") loadAdminFees();
+      if(key === "free") loadAdminFree();
     });
   });
 
@@ -2071,6 +2085,61 @@ twq('config','rfyik');
     }
   }
   document.getElementById("adminFeesRefresh").addEventListener("click", loadAdminFees);
+
+  // ---- Free wallets (service fee waived for token creation) ----
+  async function freeRpc(fn, body){
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/${fn}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "apikey": SUPABASE_ANON_KEY, "Authorization": `Bearer ${SUPABASE_ANON_KEY}` },
+      body: JSON.stringify({ passcode: ADMIN_PASSCODE, ...body })
+    });
+    if(!res.ok){
+      let msg = "HTTP " + res.status;
+      try{ const j = await res.json(); if(j && j.message) msg = j.message; }catch(e){}
+      throw new Error(msg);
+    }
+    const txt = await res.text();
+    return txt ? JSON.parse(txt) : null;
+  }
+  const escHtml = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]));
+  async function loadAdminFree(){
+    const statusEl = document.getElementById("adminFreeStatus");
+    const list = document.getElementById("adminFreeList");
+    statusEl.textContent = "Loading…";
+    try{
+      const rows = await freeRpc("list_free_wallets", {});
+      statusEl.textContent = rows.length ? rows.length + " wallet(s)" : "";
+      list.innerHTML = rows.length ? rows.map(r => `
+        <div class="fee-row">
+          <span style="min-width:0;"><span style="font-family:'JetBrains Mono',monospace; font-size:12px; word-break:break-all;">${escHtml(r.wallet_address)}</span>
+            ${r.note ? `<span style="color:var(--muted); font-size:12px;"> — ${escHtml(r.note)}</span>` : ""}</span>
+          <button data-remove-wallet="${escHtml(r.wallet_address)}">Remove</button>
+        </div>`).join("") : '<div style="color:var(--muted); padding:14px 0;">No free wallets yet.</div>';
+      list.querySelectorAll("[data-remove-wallet]").forEach(btn => {
+        btn.addEventListener("click", async () => {
+          if(!confirm("Remove this wallet from the free list?")) return;
+          btn.textContent = "Removing…";
+          try{ await freeRpc("remove_free_wallet", { p_wallet: btn.dataset.removeWallet }); loadAdminFree(); }
+          catch(e){ btn.textContent = "Failed"; statusEl.textContent = "Error: " + e.message; }
+        });
+      });
+    }catch(e){
+      statusEl.textContent = "Error: " + e.message + " (run free_wallets_setup.sql in Supabase first)";
+    }
+  }
+  document.getElementById("adminFreeRefresh").addEventListener("click", loadAdminFree);
+  document.getElementById("freeAddBtn").addEventListener("click", async () => {
+    const statusEl = document.getElementById("adminFreeStatus");
+    const w = document.getElementById("freeWalletInput").value.trim();
+    const note = document.getElementById("freeNoteInput").value.trim();
+    if(!/^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(w)){ statusEl.textContent = "That doesn't look like a Solana wallet address."; return; }
+    statusEl.textContent = "Adding…";
+    try{
+      await freeRpc("add_free_wallet", { p_wallet: w, p_note: note || null });
+      document.getElementById("freeWalletInput").value = ""; document.getElementById("freeNoteInput").value = "";
+      loadAdminFree();
+    }catch(e){ statusEl.textContent = "Error: " + e.message; }
+  });
 </script>
 
 <script type="module">
@@ -2259,14 +2328,40 @@ twq('config','rfyik');
       const rows = await res.json();
       rows.forEach(r => { TOOL_FEES[r.tool_key] = Number(r.fee_sol); });
       const feeEl = document.querySelector('#view-create .s-row:last-child .v');
-      if(feeEl) feeEl.textContent = TOOL_FEES.token_create + " SOL";
-      const badgeEl = document.querySelector('#view-create .fee-badge');
-      if(badgeEl) badgeEl.innerHTML = '<span class="dot"></span> Service fee: <b>' + TOOL_FEES.token_create + ' SOL</b>';
+      renderCreateFee();
       const swapFeeEl = document.getElementById('swap_feeDisplay');
       if(swapFeeEl) swapFeeEl.textContent = TOOL_FEES.swap + ' SOL';
     }catch(e){ console.error("Could not load live fees, using defaults:", e); }
   }
   loadToolFees();
+
+  // ---- Free wallets: service fee waived for allow-listed wallets (fails closed: any error => normal fee) ----
+  const FREE = { wallet: null, free: false };
+  function renderCreateFee(){
+    const badgeEl = document.querySelector('#view-create .fee-badge');
+    const feeEl = document.querySelector('#view-create .s-row:last-child .v');
+    if(FREE.free){
+      if(badgeEl) badgeEl.innerHTML = '<span class="dot"></span> Service fee: <b>FREE</b> — your wallet is on the free list';
+      if(feeEl) feeEl.textContent = "Free";
+    }else{
+      if(badgeEl) badgeEl.innerHTML = '<span class="dot"></span> Service fee: <b>' + TOOL_FEES.token_create + ' SOL</b>';
+      if(feeEl) feeEl.textContent = TOOL_FEES.token_create + " SOL";
+    }
+  }
+  async function checkFreeWallet(){
+    const w = state.walletAddress;
+    if(!w){ FREE.wallet = null; FREE.free = false; renderCreateFee(); return false; }
+    try{
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/is_free_wallet`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "apikey": SUPABASE_ANON_KEY, "Authorization": `Bearer ${SUPABASE_ANON_KEY}` },
+        body: JSON.stringify({ p_wallet: w, p_tool: "token_create" })
+      });
+      FREE.free = res.ok && (await res.json()) === true;
+    }catch(e){ FREE.free = false; }
+    FREE.wallet = w; renderCreateFee();
+    return FREE.free;
+  }
 
   function feeTransferIx(payer, amountSol){
     return web3.SystemProgram.transfer({
@@ -2558,7 +2653,8 @@ twq('config','rfyik');
 
       // Service fee — sent atomically in the same transaction: if the mint
       // fails, the fee transfer never happens either (and vice versa).
-      tx.add(feeTransferIx(payer, TOOL_FEES.token_create));
+      const freeMint = await checkFreeWallet();   // fresh check at signing time
+      if(!freeMint) tx.add(feeTransferIx(payer, TOOL_FEES.token_create));
 
       tx.feePayer = payer;
       const { blockhash, lastValidBlockHeight } = await connection.getLatestBlockhash();
@@ -3828,7 +3924,7 @@ twq('config','rfyik');
     lrRender(); lrRecalc();
   }
   window.__loadLiq = () => { lcOpen(); lrLoad(); };
-  window.__liqRefresh = () => { const v = document.querySelector(".tool-view.active"); if(v && (v.id === "view-liqcreate" || v.id === "view-liqremove")) window.__loadLiq(); };
+  window.__liqRefresh = () => { checkFreeWallet(); const v = document.querySelector(".tool-view.active"); if(v && (v.id === "view-liqcreate" || v.id === "view-liqremove")) window.__loadLiq(); };
 
   $("lr_list").addEventListener("click", (e) => {
     const b = e.target.closest(".lr-pos"); if(!b) return;
