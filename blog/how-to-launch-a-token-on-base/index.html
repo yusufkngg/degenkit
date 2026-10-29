@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18369032243"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-18369032243');
+</script>
+<!-- X Pixel base code -->
+<script>
+!function(e,t,n,s,u,a){e.twq||(s=e.twq=function(){s.exe?s.exe.apply(s,arguments):s.queue.push(arguments);
+},s.version='1.1',s.queue=[],u=t.createElement(n),u.async=!0,u.src='https://static.ads-twitter.com/uwt.js',
+a=t.getElementsByTagName(n)[0],a.parentNode.insertBefore(u,a))}(window,document,'script');
+twq('config','rfyik');
+</script>
+<!-- End X Pixel base code -->
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>How to Launch a Token on Base: Wallet, ETH and Your First ERC-20 | DegenKit Blog</title>
+<meta name="description" content="A step-by-step guide to creating a token on Base — adding the network, getting ETH onto it, choosing a plain or tax token, and verifying it on BaseScan.">
+<link rel="canonical" href="https://degenkit.app/blog/how-to-launch-a-token-on-base/">
+<link rel="alternate" type="application/rss+xml" title="DegenKit Blog" href="/blog/rss.xml">
+<link rel="icon" type="image/png" href="/assets/favicon.png">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#0B0B0E">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-10-29">
+<meta property="article:modified_time" content="2026-10-29">
+<meta property="og:image:alt" content="A Base network card with chain ID 8453 beside a new ERC-20 token card.">
+<meta property="article:tag" content="Guide">
+<meta property="article:tag" content="Base">
+<meta property="article:tag" content="Networks">
+<meta property="og:site_name" content="DegenKit">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How to Launch a Token on Base: Wallet, ETH and Your First ERC-20 | DegenKit Blog">
+<meta property="og:description" content="A step-by-step guide to creating a token on Base — adding the network, getting ETH onto it, choosing a plain or tax token, and verifying it on BaseScan.">
+<meta property="og:url" content="https://degenkit.app/blog/how-to-launch-a-token-on-base/">
+<meta property="og:image" content="https://degenkit.app/blog/img/how-to-launch-a-token-on-base-cover.webp">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@DegenKitApp">
+<meta name="twitter:title" content="How to Launch a Token on Base: Wallet, ETH and Your First ERC-20 | DegenKit Blog">
+<meta name="twitter:description" content="A step-by-step guide to creating a token on Base — adding the network, getting ETH onto it, choosing a plain or tax token, and verifying it on BaseScan.">
+<meta name="twitter:image" content="https://degenkit.app/blog/img/how-to-launch-a-token-on-base-cover.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/styles.css">
+<link rel="stylesheet" href="/assets/theme-icons.css">
+<link rel="stylesheet" href="/assets/blog.css">
+<script>try{var t=localStorage.getItem('degenkit-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "How to Launch a Token on Base: Wallet, ETH and Your First ERC-20", "description": "A step-by-step guide to creating a token on Base \u2014 adding the network, getting ETH onto it, choosing a plain or tax token, and verifying it on BaseScan.", "datePublished": "2026-10-29", "dateModified": "2026-10-29", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://degenkit.app/blog/how-to-launch-a-token-on-base/"}, "url": "https://degenkit.app/blog/how-to-launch-a-token-on-base/", "inLanguage": "en", "image": "https://degenkit.app/blog/img/how-to-launch-a-token-on-base-cover.webp", "keywords": "Guide, Base, Networks", "author": {"@type": "Organization", "name": "DegenKit", "url": "https://degenkit.app/"}, "publisher": {"@type": "Organization", "name": "DegenKit", "url": "https://degenkit.app/", "logo": {"@type": "ImageObject", "url": "https://degenkit.app/assets/icon.png"}}}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "DegenKit", "item": "https://degenkit.app/"}, {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://degenkit.app/blog/"}, {"@type": "ListItem", "position": 3, "name": "How to Launch a Token on Base: Wallet, ETH and Your First ERC-20", "item": "https://degenkit.app/blog/how-to-launch-a-token-on-base/"}]}</script>
+</head>
+<body>
+<header>
+  <div class="header-row">
+    <a class="logo" href="/"><img src="/assets/icon.png" alt="" class="logo-icon"><span class="logo-text">DegenKit</span></a>
+    <nav class="site-nav">
+      <a class="navlink" href="/#features">Features</a>
+      <a class="navlink" href="/#roadmap">Roadmap</a>
+      <a class="navlink" href="/blog/">Blog</a>
+      <a class="navlink" href="/#faq">FAQ</a>
+    </nav>
+    <div class="header-actions">
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light/dark theme" title="Toggle theme">◐</button>
+      <a class="btn-launch" href="/launch/">Launch App</a>
+    </div>
+  </div>
+</header>
+<main class="bwrap">
+  <article class="post">
+    <div class="p-head">
+      <nav aria-label="Breadcrumb"><a class="back" href="/blog/">← All posts</a></nav>
+      <div class="chips"><span class="chip">Guide</span><span class="chip">Base</span><span class="chip">Networks</span></div>
+      <h1>How to Launch a Token on Base: Wallet, ETH and Your First ERC-20</h1>
+      <p class="lede">A step-by-step guide to creating a token on Base — adding the network, getting ETH onto it, choosing a plain or tax token, and verifying it on BaseScan.</p>
+      <div class="byline"><img src="/assets/icon.png" alt=""><span><b>DegenKit</b><i>October 29, 2026 · 5 min read</i></span></div>
+    </div>
+    <div class="cover hero"><img src="/blog/img/how-to-launch-a-token-on-base-cover.webp" alt="A Base network card with chain ID 8453 beside a new ERC-20 token card." loading="lazy" decoding="async"></div>
+    <div class="prose">
+<p>Base is an Ethereum layer 2 built on the OP Stack. <a href="https://help.coinbase.com/en/coinbase/other-topics/other/base" target="_blank" rel="noopener noreferrer">Coinbase describes it</a> as a low-cost, developer-friendly network that uses ETH as its gas token. For a token creator, that means familiar ERC-20 tokens, MetaMask-style wallets and lower fees than Ethereum mainnet.</p>
+<p>This guide walks through the full process: set up the wallet, fund it, create the token and check the result.</p>
+<h2 id="what-you-need-before-you-start">What you need before you start</h2>
+<ul><li>An EVM wallet such as MetaMask.</li><li>A small amount of <strong>ETH on Base</strong> for the creation transaction and later actions.</li><li>Your token&#x27;s name, symbol and total supply, written down and checked.</li><li>A decision on whether you need a plain token or a tax token.</li></ul>
+<h2 id="step-1-add-base-to-your-wallet">Step 1: Add Base to your wallet</h2>
+<p>Many wallets already include Base. If yours does not, DegenKit&#x27;s Base page asks your wallet to add and switch to it when you connect. The values are:</p>
+<ul><li><strong>Network name:</strong> Base</li><li><strong>RPC URL:</strong> <code>https://mainnet.base.org</code></li><li><strong>Chain ID:</strong> 8453</li><li><strong>Currency symbol:</strong> ETH</li><li><strong>Block explorer:</strong> <code>https://basescan.org</code></li></ul>
+<p>Accept network prompts only from a site you opened yourself, and check the chain ID.</p>
+<h2 id="step-2-get-eth-onto-base">Step 2: Get ETH onto Base</h2>
+<p>ETH on Ethereum mainnet cannot pay fees on Base. According to <a href="https://docs.base.org/base-chain/network-information/bridges-mainnet" target="_blank" rel="noopener noreferrer">Base&#x27;s bridge documentation</a>, there are two common routes:</p>
+<ul><li><strong>From a Coinbase account:</strong> withdraw ETH and select Base as the network. No bridge is needed.</li><li><strong>From Ethereum:</strong> use one of the bridges listed in Base&#x27;s documentation. The old bridge at bridge.base.org has been deprecated.</li></ul>
+<p>Deposits to Base arrive without the long wait. Withdrawals back to Ethereum through the standard bridge take several days to finalize, so bridge only what you need.</p>
+<figure><img src="/blog/img/how-to-launch-a-token-on-base-1.webp" alt="Base mainnet wallet settings and the two common ways to fund a wallet with ETH on Base." loading="lazy" decoding="async"><figcaption>Network values as of October 2026. Check Base&#x27;s documentation for the current list of bridges.</figcaption></figure>
+<h2 id="step-3-choose-a-token-type">Step 3: Choose a token type</h2>
+<p>The <a href="https://degenkit.app/launch/base/">DegenKit Base launcher</a> offers two creators.</p>
+<p><strong>Token Creator</strong> makes a plain ERC-20 token with a fixed supply. It uses 18 decimals and the contract has no mint function, so the whole supply is created once and sent to your wallet.</p>
+<p><strong>Tax Token</strong> adds a buy tax and a sell tax that you set, paid in your token to a wallet you choose. The tax applies only to trades against a liquidity pool, and only after you add liquidity and mark that pool under <strong>My Tokens → Manage tax</strong>. Ordinary wallet-to-wallet transfers are not taxed.</p>
+<aside class="callout note"><strong>Know the trade-offs of a tax token</strong><p>A tax changes what buyers receive and how some routers handle the token. Read our guide on buy and sell taxes before you choose rates, and explain them publicly.</p></aside>
+<figure><video src="/blog/img/how-to-launch-a-token-on-base-demo.mp4" autoplay loop muted playsinline preload="metadata" aria-label="A wallet switches to Base, ETH arrives, a token is created on DegenKit and checked on BaseScan."></video></figure>
+<h2 id="step-4-create-the-token">Step 4: Create the token</h2>
+<p>Enter the name, symbol and supply. These are permanent once the transaction confirms, so check spelling and the number of zeros. Review the service fee and the network fee shown in your wallet, then approve.</p>
+<p>DegenKit shows the contract address and transaction as soon as the token is created.</p>
+<h2 id="step-5-verify-on-basescan">Step 5: Verify on BaseScan</h2>
+<p>Open the contract on <a href="https://basescan.org" target="_blank" rel="noopener noreferrer">BaseScan</a> and compare it with your notes:</p>
+<ol><li>The network is Base, not Ethereum or another layer 2.</li><li>The name, symbol and decimals match.</li><li>The total supply is correct and sits in your wallet.</li><li>For a tax token, the rates and tax wallet match what you set.</li></ol>
+<figure><img src="/blog/img/how-to-launch-a-token-on-base-2.webp" alt="A side-by-side comparison of DegenKit&#x27;s plain token and tax token on Base." loading="lazy" decoding="async"><figcaption>Both use 18 decimals and a fixed supply. Only the tax token charges a fee on pool trades.</figcaption></figure>
+<h2 id="after-the-token-exists">After the token exists</h2>
+<p>Creating the token is one milestone. People can only trade it once a liquidity pool exists on a DEX that supports Base. If you created a tax token, mark that pool afterwards so the tax starts applying.</p>
+<p>When you announce the launch, publish the full contract address with the network name. A token on Base is a different contract from a token with the same name on Ethereum or any other chain.</p>
+<h2 id="questions-people-ask">Questions people ask</h2>
+<h3 id="do-i-need-a-coinbase-account-to-use-base">Do I need a Coinbase account to use Base?</h3>
+<p>No. Base is a public network. A Coinbase account is just one convenient way to get ETH onto it.</p>
+<h3 id="can-i-change-the-supply-later">Can I change the supply later?</h3>
+<p>No. DegenKit&#x27;s Base tokens have no mint function, so the supply is final from the first transaction.</p>
+<h2 id="wrap-up">Wrap up</h2>
+<p>Launching on Base takes five steps: add the network, fund it with ETH, choose a token type, create it and verify it on BaseScan. Fees are low, but the decisions are permanent, so prepare them first. <a href="https://degenkit.app/launch/base/">Open the Base creator on DegenKit</a> when you are ready.</p>
+    </div>
+    <div class="share">
+      <b>Share this post</b>
+      <div class="share-btns">
+        <a class="s-x" href="https://x.com/intent/post?text=How%20to%20Launch%20a%20Token%20on%20Base%3A%20Wallet%2C%20ETH%20and%20Your%20First%20ERC-20%20%E2%80%94%20via%20%40DegenKitApp&amp;url=https%3A%2F%2Fdegenkit.app%2Fblog%2Fhow-to-launch-a-token-on-base%2F" target="_blank" rel="noopener noreferrer">Share on 𝕏</a>
+        <button class="s-copy" type="button" data-copy="https://degenkit.app/blog/how-to-launch-a-token-on-base/">Copy link</button>
+      </div>
+    </div>
+    <aside class="cta">
+      <div><h3>Ready to launch your token?</h3><p>Pick a network, set the details, sign once. No code.</p></div>
+      <a class="btn-launch" href="/launch/">Launch App</a>
+    </aside>
+  </article>
+  <section class="related"><h3>Keep reading</h3><div class="grid"><a class="card" href="/blog/robinhood-chain-token-guide/">
+  <div class="cover"><img src="/blog/img/robinhood-chain-token-guide-cover.webp" alt="A wallet prompt adds Robinhood Chain, chain ID 4663, next to a new token card." loading="lazy" decoding="async"></div>
+  <div class="c-body">
+    <div class="c-meta"><span class="chip">Guide</span><span class="chip">Robinhood Chain</span><span class="chip">Networks</span><span>October 26, 2026</span></div>
+    <h2>Robinhood Chain Explained: Add the Network and Launch a Token</h2>
+    <p>What Robinhood Chain is, how to add it to your wallet, how to get ETH onto it, and how to create a fixed-supply ERC-20 token there with DegenKit.</p>
+  </div>
+</a><a class="card" href="/blog/which-blockchain-to-launch-token/">
+  <div class="cover"><img src="/blog/img/which-blockchain-to-launch-token-cover.webp" alt="Five network cards — Solana, Ethereum, BNB Chain, Base and Robinhood Chain — branch out from a single token." loading="lazy" decoding="async"></div>
+  <div class="c-body">
+    <div class="c-meta"><span class="chip">Guide</span><span class="chip">Networks</span><span class="chip">Token Launch</span><span>October 25, 2026</span></div>
+    <h2>Solana, Ethereum, BNB Chain, Base or Robinhood Chain: Where Should You Launch a Token?</h2>
+    <p>Compare the five networks DegenKit supports — token standards, gas tokens, wallets, explorers and available tools — before you choose where to launch.</p>
+  </div>
+</a><a class="card" href="/blog/creating-a-token-vs-adding-liquidity/">
+  <div class="cover"><img src="/blog/img/creating-a-token-vs-adding-liquidity-cover.webp" alt="A new token on one side and a token–SOL liquidity pool on the other, joined by a step labeled add liquidity." loading="lazy" decoding="async"></div>
+  <div class="c-body">
+    <div class="c-meta"><span class="chip">Guide</span><span class="chip">Liquidity</span><span class="chip">Solana</span><span>October 29, 2026</span></div>
+    <h2>Creating a Token vs. Adding Liquidity: Two Different Milestones</h2>
+    <p>A new token cannot be traded until a liquidity pool exists. Learn what a pool is, how the starting price is set, what LP tokens do and what locking or burning them means.</p>
+  </div>
+</a></div></section>
+</main>
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="logo"><img src="/assets/icon.png" alt="" class="logo-icon"><span class="logo-text">DegenKit</span></div>
+        <p>Token creation, without the guesswork. Launch on Solana, Ethereum, BNB Chain, Base and Robinhood Chain.</p>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col"><h4>Site</h4><a href="/">Home</a><a href="/launch/">Launch App</a><a href="/blog/">Blog</a></div>
+        <div class="footer-col"><h4>Legal</h4><a href="/terms/">Terms &amp; Conditions</a><a href="/privacy/">Privacy Policy</a></div>
+        <div class="footer-col"><h4>Help</h4><a href="/support/">Support</a></div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 DegenKit. All rights reserved.</p>
+      <div class="footer-socials"><a class="social-icn" href="https://x.com/DegenKitApp" target="_blank" rel="noopener" aria-label="X / Twitter">𝕏</a></div>
+    </div>
+  </div>
+</footer>
+<script>
+(function(){var r=document.documentElement,b=document.getElementById('themeToggle');
+if(b)b.addEventListener('click',function(){var n=r.getAttribute('data-theme')==='light'?'dark':'light';r.setAttribute('data-theme',n);try{localStorage.setItem('degenkit-theme',n)}catch(e){}});
+document.querySelectorAll('[data-copy]').forEach(function(el){el.addEventListener('click',function(){var u=el.getAttribute('data-copy'),t=el.textContent;
+(navigator.clipboard?navigator.clipboard.writeText(u):Promise.reject()).then(function(){el.textContent='Copied ✓';setTimeout(function(){el.textContent=t},1600)}).catch(function(){window.prompt('Copy link',u)})})});})();
+</script>
+</body>
+</html>
