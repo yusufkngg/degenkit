@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://degenkit.app/</loc><lastmod>2026-10-29</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://degenkit.app/launch/</loc><lastmod>2026-10-29</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://degenkit.app/launch/solana/</loc><lastmod>2026-10-29</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://degenkit.app/launch/ethereum/</loc><lastmod>2026-10-29</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://degenkit.app/launch/bnb/</loc><lastmod>2026-10-29</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://degenkit.app/launch/base/</loc><lastmod>2026-10-29</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://degenkit.app/launch/robinhood/</loc><lastmod>2026-10-29</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://degenkit.app/support/</loc><lastmod>2026-10-29</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://degenkit.app/terms/</loc><lastmod>2026-10-29</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://degenkit.app/privacy/</loc><lastmod>2026-10-29</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://degenkit.app/blog/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://degenkit.app/blog/creating-a-token-vs-adding-liquidity/</loc><lastmod>2026-10-29</lastmod><priority>0.6</priority></url>
+  <url><loc>https://degenkit.app/blog/how-to-launch-a-token-on-base/</loc><lastmod>2026-10-29</lastmod><priority>0.6</priority></url>
+  <url><loc>https://degenkit.app/blog/how-to-read-a-holder-bubblemap/</loc><lastmod>2026-10-29</lastmod><priority>0.6</priority></url>
+  <url><loc>https://degenkit.app/blog/how-to-market-a-solana-token/</loc><lastmod>2026-10-26</lastmod><priority>0.6</priority></url>
+  <url><loc>https://degenkit.app/blog/robinhood-chain-token-guide/</loc><lastmod>2026-10-26</lastmod><priority>0.6</priority></url>
+  <url><loc>https://degenkit.app/blog/solana-token-metadata-explained/</loc><lastmod>2026-10-26</lastmod><priority>0.6</priority></url>
+  <url><loc>https://degenkit.app/blog/airdrop-vs-multisender/</loc><lastmod>2026-10-25</lastmod><priority>0.6</priority></url>
+  <url><loc>https://degenkit.app/blog/how-to-spot-rug-pull-risk/</loc><lastmod>2026-10-25</lastmod><priority>0.6</priority></url>
+  <url><loc>https://degenkit.app/blog/mint-authority-vs-freeze-authority/</loc><lastmod>2026-10-25</lastmod><priority>0.6</priority></url>
+  <url><loc>https://degenkit.app/blog/what-burning-tokens-means/</loc><lastmod>2026-10-25</lastmod><priority>0.6</priority></url>
+  <url><loc>https://degenkit.app/blog/which-blockchain-to-launch-token/</loc><lastmod>2026-10-25</lastmod><priority>0.6</priority></url>
+  <url><loc>https://degenkit.app/blog/create-solana-token-without-coding/</loc><lastmod>2026-10-17</lastmod><priority>0.6</priority></url>
+  <url><loc>https://degenkit.app/blog/how-token-buy-sell-tax-works/</loc><lastmod>2026-10-17</lastmod><priority>0.6</priority></url>
+  <url><loc>https://degenkit.app/blog/token-launch-checklist/</loc><lastmod>2026-10-17</lastmod><priority>0.6</priority></url>
+  <url><loc>https://degenkit.app/blog/welcome-to-degenkit/</loc><lastmod>2026-07-15</lastmod><priority>0.6</priority></url>
+</urlset>

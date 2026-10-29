@@ -266,3 +266,15 @@ html[data-theme="light"] .sidebar-item .ic.svg{color:#5A5446;}
 #view-liqremove .swap-token-row input{flex:1;min-width:0}
 html[data-theme="light"] .lr-pos{background:#fff;border-color:rgba(0,0,0,.12);color:#1F1B15}
 html[data-theme="light"] .lr-pos.active{background:rgba(194,65,12,.08);border-color:#C2410C}
+
+/* dk-guide */
+.dk-guide{max-width:860px;margin:48px auto 40px;padding:0 clamp(20px,3vw,40px);color:var(--ink);line-height:1.65;position:relative;z-index:1}
+.dk-guide h2{font-size:clamp(22px,3vw,30px);margin:0 0 12px}
+.dk-guide h3{font-size:18px;margin:28px 0 10px}
+.dk-guide p{color:var(--muted);margin:0 0 12px}
+.dk-guide ol{padding-left:22px;color:var(--muted)}
+.dk-guide li{margin:0 0 12px}.dk-guide li strong{color:var(--ink)}
+.dk-guide details{border:1px solid var(--line);border-radius:12px;background:var(--panel);padding:12px 16px;margin:0 0 10px}
+.dk-guide summary{cursor:pointer;font-weight:600;color:var(--ink)}
+.dk-guide details p{margin:10px 0 0}
+.dk-guide-more a{margin-left:10px;color:var(--ink);text-decoration:underline}

@@ -787,6 +787,7 @@ twq('config','rfyik');
   })();
 </script>
 <link rel="stylesheet" href="../../assets/dk-ui.css">
+<!-- dk-guide-ld --><script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How do I create a Solana token without coding?","acceptedAnswer":{"@type":"Answer","text":"Connect your wallet, fill in name, symbol, decimals, supply and image, and sign one transaction. Mint and freeze authority are revoked and metadata is locked automatically."}},{"@type":"Question","name":"How much does it cost to create a Solana token on DegenKit?","acceptedAnswer":{"@type":"Answer","text":"A 0.28 SOL service fee plus the standard Solana network fee, both in the single transaction you sign."}},{"@type":"Question","name":"Can I add liquidity on Raydium from DegenKit?","acceptedAnswer":{"@type":"Answer","text":"Yes. Create Liquidity opens a Raydium CPMM pool and Remove Liquidity withdraws it, all signed from your own wallet."}}]}</script><!-- /dk-guide-ld -->
 </head>
 <body>
 
@@ -1554,6 +1555,17 @@ twq('config','rfyik');
   </div>
   </main>
 </div>
+<!-- dk-guide:start -->
+<section class="dk-guide" aria-labelledby="dkg-h">
+<h2 id="dkg-h">How to create a Solana token with DegenKit</h2>
+<p>Solana is the fastest, cheapest place to launch a token. DegenKit creates an SPL token in one signature with mint and freeze authority revoked and metadata locked, then gives you Swap, Create/Remove Liquidity, Airdrop, Multisender and Scanner in the same app.</p>
+<p>Choose Solana for near-instant launches, tiny network fees and the largest memecoin trading crowd.</p>
+<ol><li><strong>Connect your Solana wallet</strong><br>Open the Solana launcher and connect Phantom, Solflare, Backpack or MetaMask&#x27;s Solana wallet. Use Devnet first if you want to rehearse for free.</li><li><strong>Enter name, symbol, decimals and supply</strong><br>Upload an image and a short description. This metadata is locked at creation.</li><li><strong>Review the fee and sign once</strong><br>The 0.28 SOL service fee plus the network fee are included in one transaction. Mint and freeze authority are revoked automatically.</li><li><strong>Create a liquidity pool</strong><br>Use Create Liquidity to open a Raydium pool with your token and SOL or USDC, set the starting price, and sign.</li><li><strong>Share and grow</strong><br>Use Airdrop and Multisender for distribution, and Scanner to check holders.</li></ol>
+<h3>Solana token creator FAQ</h3>
+<details><summary>How do I create a Solana token without coding?</summary><p>Connect your wallet, fill in name, symbol, decimals, supply and image, and sign one transaction. Mint and freeze authority are revoked and metadata is locked automatically.</p></details><details><summary>How much does it cost to create a Solana token on DegenKit?</summary><p>A 0.28 SOL service fee plus the standard Solana network fee, both in the single transaction you sign.</p></details><details><summary>Can I add liquidity on Raydium from DegenKit?</summary><p>Yes. Create Liquidity opens a Raydium CPMM pool and Remove Liquidity withdraws it, all signed from your own wallet.</p></details>
+<p class="dk-guide-more">Launching elsewhere? <a href="/launch/ethereum/">Ethereum</a><a href="/launch/bnb/">BNB Chain</a><a href="/launch/base/">Base</a><a href="/launch/robinhood/">Robinhood Chain</a></p>
+</section>
+<!-- dk-guide:end -->
 
 <footer>
   <span data-i18n="footer_line1">DegenKit — this tool sends transactions directly from your browser, signed with your wallet, to the Solana network.</span>

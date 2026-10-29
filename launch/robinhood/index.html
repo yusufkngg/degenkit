@@ -841,6 +841,7 @@ twq('config','rfyik');
   })();
 </script>
 <link rel="stylesheet" href="../../assets/dk-ui.css">
+<!-- dk-guide-ld --><script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How do I create a token on Robinhood Chain?","acceptedAnswer":{"@type":"Answer","text":"Open the Robinhood Chain launcher, connect your wallet so it switches to the network, enter name, symbol and supply, and sign one transaction."}},{"@type":"Question","name":"Is the token supply fixed?","acceptedAnswer":{"@type":"Answer","text":"Yes. The contract has no mint function, so the supply you choose is final for everyone, including DegenKit."}},{"@type":"Question","name":"Can I add a tax?","acceptedAnswer":{"@type":"Answer","text":"Yes, the Tax Token view lets you set buy and sell tax rates and a receiver wallet."}}]}</script><!-- /dk-guide-ld -->
 </head>
 <body>
 
@@ -1102,6 +1103,17 @@ twq('config','rfyik');
   </div>
   </main>
 </div>
+<!-- dk-guide:start -->
+<section class="dk-guide" aria-labelledby="dkg-h">
+<h2 id="dkg-h">How to create a Robinhood Chain token with DegenKit</h2>
+<p>Robinhood Chain is Robinhood&#x27;s EVM network. DegenKit lets you create a fixed-supply or tax token there with no code, signed from your own wallet in a single transaction.</p>
+<p>Choose Robinhood Chain if you want to be early on a new network and build for its audience.</p>
+<ol><li><strong>Connect your wallet</strong><br>Open the Robinhood Chain launcher and connect MetaMask or any EIP-1193 wallet. DegenKit is non-custodial: it never sees your keys, and every action is a transaction you sign yourself.</li><li><strong>Switch to Robinhood Chain</strong><br>If your wallet is on another network, the page asks it to switch to Robinhood Chain. You need a little ETH to pay network gas.</li><li><strong>Choose a token type</strong><br>Pick a plain fixed-supply ERC-20 or a Tax Token with your own buy and sell tax. Both have no mint function, so the supply you set is final.</li><li><strong>Fill in name, symbol and supply</strong><br>Name and symbol become the permanent on-chain identity. Decimals are fixed at 18, the ERC-20 standard.</li><li><strong>Review the fee and sign once</strong><br>The summary shows the service fee (if any) and you confirm one transaction. When it lands, the full supply is in your wallet and the contract is verifiable on the Robinhood Chain explorer.</li><li><strong>Add liquidity</strong><br>Create a pool on a DEX of your choice. For a Tax Token, open Manage and mark the pool address so the tax starts applying.</li></ol>
+<h3>Robinhood Chain token creator FAQ</h3>
+<details><summary>How do I create a token on Robinhood Chain?</summary><p>Open the Robinhood Chain launcher, connect your wallet so it switches to the network, enter name, symbol and supply, and sign one transaction.</p></details><details><summary>Is the token supply fixed?</summary><p>Yes. The contract has no mint function, so the supply you choose is final for everyone, including DegenKit.</p></details><details><summary>Can I add a tax?</summary><p>Yes, the Tax Token view lets you set buy and sell tax rates and a receiver wallet.</p></details>
+<p class="dk-guide-more">Launching elsewhere? <a href="/launch/ethereum/">Ethereum</a><a href="/launch/bnb/">BNB Chain</a><a href="/launch/base/">Base</a><a href="/launch/solana/">Solana</a></p>
+</section>
+<!-- dk-guide:end -->
 
 <script>
   const $ = (id) => document.getElementById(id);

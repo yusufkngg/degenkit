@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Page not found · DegenKit</title>
+<link rel="icon" href="/assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=JetBrains+Mono:wght@500&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0B0B0E; --panel:#151319; --line:#2A2732; --ink:#F4EFE6; --muted:#95907F; --grad:linear-gradient(180deg,#FFB44F 0%,#FF7A1A 55%,#F2560C 100%);}
+  html[data-theme="light"]{--bg:#FAF7F2; --panel:#FFFFFF; --line:#E2DBCB; --ink:#231F19; --muted:#77705E;}
+  *{box-sizing:border-box;}
+  body{margin:0; min-height:100vh; display:grid; place-items:center; padding:24px; background:var(--bg); color:var(--ink); font-family:'Inter',sans-serif;
+    background-image:radial-gradient(60% 50% at 50% 0%, rgba(255,122,26,0.18), transparent 70%);}
+  .box{width:100%; max-width:460px; text-align:center; padding:40px 28px; background:var(--panel); border:1px solid var(--line); border-radius:14px; box-shadow:0 18px 50px rgba(0,0,0,0.25);}
+  .box img{width:72px; height:72px; margin-bottom:12px;}
+  .code{font-family:'JetBrains Mono',monospace; font-size:13px; letter-spacing:0.14em; color:var(--muted);}
+  h1{font-family:'Space Grotesk',sans-serif; font-size:clamp(34px,8vw,44px); line-height:1.05; margin:8px 0 10px;
+    background:linear-gradient(90deg,#FFB44F,#FF7A1A,#E8505B); -webkit-background-clip:text; background-clip:text; color:transparent;}
+  p{color:var(--muted); line-height:1.55; margin:0 0 24px;}
+  .btns{display:flex; gap:10px; justify-content:center; flex-wrap:wrap;}
+  a.b{padding:11px 20px; border-radius:10px; font-weight:700; font-size:14px; text-decoration:none;}
+  a.p{background:var(--grad); color:#1F0B00; box-shadow:0 3px 0 #A83C05;}
+  a.s{border:1px solid var(--line); color:var(--ink);}
+</style>
+<script>try{var t=localStorage.getItem('degenkit-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+</head>
+<body>
+  <main class="box">
+    <img src="/assets/icon.png" alt="DegenKit">
+    <div class="code">ERROR 404</div>
+    <h1>Page not found</h1>
+    <p>This link is broken or the page has moved. Head back and keep launching.</p>
+    <div class="btns">
+      <a class="b p" href="/launch/">Launch a token</a>
+      <a class="b s" href="/">Home</a>
+    </div>
+  </main>
+</body>
+</html>

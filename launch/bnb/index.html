@@ -841,6 +841,7 @@ twq('config','rfyik');
   })();
 </script>
 <link rel="stylesheet" href="../../assets/dk-ui.css">
+<!-- dk-guide-ld --><script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How do I create a BEP-20 token on BNB Chain without coding?","acceptedAnswer":{"@type":"Answer","text":"Open the BNB Chain launcher, connect your wallet, fill in name, symbol and supply, and sign one transaction. The whole supply is minted to your wallet and cannot be increased."}},{"@type":"Question","name":"Can I launch a tax token on BNB Chain?","acceptedAnswer":{"@type":"Answer","text":"Yes. Set your own buy and sell tax and a tax receiver. Taxes can be changed later or frozen forever by renouncing ownership."}},{"@type":"Question","name":"Do I need BNB to create a token?","acceptedAnswer":{"@type":"Answer","text":"Yes, a small amount of BNB pays the network gas and the service fee shown before you sign."}}]}</script><!-- /dk-guide-ld -->
 </head>
 <body>
 
@@ -1102,6 +1103,17 @@ twq('config','rfyik');
   </div>
   </main>
 </div>
+<!-- dk-guide:start -->
+<section class="dk-guide" aria-labelledby="dkg-h">
+<h2 id="dkg-h">How to create a BNB Chain token with DegenKit</h2>
+<p>BNB Smart Chain has low fees and an active retail trading scene. DegenKit lets you create a BEP-20 token or a tax token on BNB Chain without writing code, signed from your own wallet.</p>
+<p>Choose BNB Chain when you want low transaction costs and access to PancakeSwap-style liquidity and a large retail audience.</p>
+<ol><li><strong>Connect your wallet</strong><br>Open the BNB Chain launcher and connect MetaMask, Trust Wallet or any EIP-1193 wallet. DegenKit is non-custodial: it never sees your keys, and every action is a transaction you sign yourself.</li><li><strong>Switch to BNB Chain</strong><br>If your wallet is on another network, the page asks it to switch to BNB Chain. You need a little BNB to pay network gas.</li><li><strong>Choose a token type</strong><br>Pick a plain fixed-supply ERC-20 or a Tax Token with your own buy and sell tax. Both have no mint function, so the supply you set is final.</li><li><strong>Fill in name, symbol and supply</strong><br>Name and symbol become the permanent on-chain identity. Decimals are fixed at 18, the ERC-20 standard.</li><li><strong>Review the fee and sign once</strong><br>The summary shows the service fee (if any) and you confirm one transaction. When it lands, the full supply is in your wallet and the contract is verifiable on BscScan.</li><li><strong>Add liquidity</strong><br>Create a pool on a DEX of your choice. For a Tax Token, open Manage and mark the pool address so the tax starts applying.</li></ol>
+<h3>BNB Chain token creator FAQ</h3>
+<details><summary>How do I create a BEP-20 token on BNB Chain without coding?</summary><p>Open the BNB Chain launcher, connect your wallet, fill in name, symbol and supply, and sign one transaction. The whole supply is minted to your wallet and cannot be increased.</p></details><details><summary>Can I launch a tax token on BNB Chain?</summary><p>Yes. Set your own buy and sell tax and a tax receiver. Taxes can be changed later or frozen forever by renouncing ownership.</p></details><details><summary>Do I need BNB to create a token?</summary><p>Yes, a small amount of BNB pays the network gas and the service fee shown before you sign.</p></details>
+<p class="dk-guide-more">Launching elsewhere? <a href="/launch/ethereum/">Ethereum</a><a href="/launch/base/">Base</a><a href="/launch/robinhood/">Robinhood Chain</a><a href="/launch/solana/">Solana</a></p>
+</section>
+<!-- dk-guide:end -->
 
 <script>
   const $ = (id) => document.getElementById(id);

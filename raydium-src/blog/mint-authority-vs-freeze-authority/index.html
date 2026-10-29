@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18369032243"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-18369032243');
+</script>
+<!-- X Pixel base code -->
+<script>
+!function(e,t,n,s,u,a){e.twq||(s=e.twq=function(){s.exe?s.exe.apply(s,arguments):s.queue.push(arguments);
+},s.version='1.1',s.queue=[],u=t.createElement(n),u.async=!0,u.src='https://static.ads-twitter.com/uwt.js',
+a=t.getElementsByTagName(n)[0],a.parentNode.insertBefore(u,a))}(window,document,'script');
+twq('config','rfyik');
+</script>
+<!-- End X Pixel base code -->
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Mint Authority vs. Freeze Authority: What Revoking Actually Does | DegenKit Blog</title>
+<meta name="description" content="Two Solana permissions, two very different powers. Learn what mint and freeze authority control, what revoking changes and how to check both.">
+<link rel="canonical" href="https://degenkit.app/blog/mint-authority-vs-freeze-authority/">
+<link rel="alternate" type="application/rss+xml" title="DegenKit Blog" href="/blog/rss.xml">
+<link rel="icon" type="image/png" href="/assets/favicon.png">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#0B0B0E">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-10-25">
+<meta property="article:modified_time" content="2026-10-25">
+<meta property="og:image:alt" content="A token sits between two permission cards, mint authority and freeze authority, both marked revoked.">
+<meta property="article:tag" content="Guide">
+<meta property="article:tag" content="Solana">
+<meta property="article:tag" content="Permissions">
+<meta property="og:site_name" content="DegenKit">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mint Authority vs. Freeze Authority: What Revoking Actually Does | DegenKit Blog">
+<meta property="og:description" content="Two Solana permissions, two very different powers. Learn what mint and freeze authority control, what revoking changes and how to check both.">
+<meta property="og:url" content="https://degenkit.app/blog/mint-authority-vs-freeze-authority/">
+<meta property="og:image" content="https://degenkit.app/blog/img/mint-authority-vs-freeze-authority-cover.webp">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@DegenKitApp">
+<meta name="twitter:title" content="Mint Authority vs. Freeze Authority: What Revoking Actually Does | DegenKit Blog">
+<meta name="twitter:description" content="Two Solana permissions, two very different powers. Learn what mint and freeze authority control, what revoking changes and how to check both.">
+<meta name="twitter:image" content="https://degenkit.app/blog/img/mint-authority-vs-freeze-authority-cover.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/styles.css">
+<link rel="stylesheet" href="/assets/theme-icons.css">
+<link rel="stylesheet" href="/assets/blog.css">
+<script>try{var t=localStorage.getItem('degenkit-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Mint Authority vs. Freeze Authority: What Revoking Actually Does", "description": "Two Solana permissions, two very different powers. Learn what mint and freeze authority control, what revoking changes and how to check both.", "datePublished": "2026-10-25", "dateModified": "2026-10-25", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://degenkit.app/blog/mint-authority-vs-freeze-authority/"}, "url": "https://degenkit.app/blog/mint-authority-vs-freeze-authority/", "inLanguage": "en", "image": "https://degenkit.app/blog/img/mint-authority-vs-freeze-authority-cover.webp", "keywords": "Guide, Solana, Permissions", "author": {"@type": "Organization", "name": "DegenKit", "url": "https://degenkit.app/"}, "publisher": {"@type": "Organization", "name": "DegenKit", "url": "https://degenkit.app/", "logo": {"@type": "ImageObject", "url": "https://degenkit.app/assets/icon.png"}}}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "DegenKit", "item": "https://degenkit.app/"}, {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://degenkit.app/blog/"}, {"@type": "ListItem", "position": 3, "name": "Mint Authority vs. Freeze Authority: What Revoking Actually Does", "item": "https://degenkit.app/blog/mint-authority-vs-freeze-authority/"}]}</script>
+</head>
+<body>
+<header>
+  <div class="header-row">
+    <a class="logo" href="/"><img src="/assets/icon.png" alt="" class="logo-icon"><span class="logo-text">DegenKit</span></a>
+    <nav class="site-nav">
+      <a class="navlink" href="/#features">Features</a>
+      <a class="navlink" href="/#roadmap">Roadmap</a>
+      <a class="navlink" href="/blog/">Blog</a>
+      <a class="navlink" href="/#faq">FAQ</a>
+    </nav>
+    <div class="header-actions">
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light/dark theme" title="Toggle theme">◐</button>
+      <a class="btn-launch" href="/launch/">Launch App</a>
+    </div>
+  </div>
+</header>
+<main class="bwrap">
+  <article class="post">
+    <div class="p-head">
+      <nav aria-label="Breadcrumb"><a class="back" href="/blog/">← All posts</a></nav>
+      <div class="chips"><span class="chip">Guide</span><span class="chip">Solana</span><span class="chip">Permissions</span></div>
+      <h1>Mint Authority vs. Freeze Authority: What Revoking Actually Does</h1>
+      <p class="lede">Two Solana permissions, two very different powers. Learn what mint and freeze authority control, what revoking changes and how to check both.</p>
+      <div class="byline"><img src="/assets/icon.png" alt=""><span><b>DegenKit</b><i>October 25, 2026 · 5 min read</i></span></div>
+    </div>
+    <div class="cover hero"><img src="/blog/img/mint-authority-vs-freeze-authority-cover.webp" alt="A token sits between two permission cards, mint authority and freeze authority, both marked revoked." loading="lazy" decoding="async"></div>
+    <div class="prose">
+<p>Every Solana token starts as a mint account, and that account can name two separate authorities. One controls supply. The other controls whether holders can move their tokens. People often say &quot;authorities revoked&quot; as if it were one setting, but these are two different roles with two different effects.</p>
+<p>This guide explains what each authority can do, what revoking changes, and how to check a token yourself.</p>
+<h2 id="two-keys-on-one-mint">Two keys on one mint</h2>
+<p><a href="https://solana.com/docs/tokens/basics/set-authority" target="_blank" rel="noopener noreferrer">Solana&#x27;s authority documentation</a> describes two authority types on a mint:</p>
+<ul><li><strong>Mint authority</strong> (<code>MintTokens</code>) controls the creation of new token units.</li><li><strong>Freeze authority</strong> (<code>FreezeAccount</code>) controls freezing and thawing token accounts.</li></ul>
+<p>Each role is held by an address or by no one. They are set and revoked separately, so one can stay active while the other is gone.</p>
+<h2 id="what-mint-authority-controls">What mint authority controls</h2>
+<p>The mint authority can <a href="https://solana.com/docs/tokens/basics/mint-tokens" target="_blank" rel="noopener noreferrer">mint new token units</a> to a token account. While that role exists, total supply can grow at any time. New units dilute every existing holder&#x27;s share, and anyone who sells them can push the price down.</p>
+<figure><img src="/blog/img/mint-authority-vs-freeze-authority-1.webp" alt="A supply example shows how minting another 1,000,000,000 tokens cuts a 1% holder&#x27;s share to 0.5%." loading="lazy" decoding="async"><figcaption>Illustrative numbers. Minting changes your share without touching your balance.</figcaption></figure>
+<p>Revoking the mint authority fixes the supply ceiling. Supply can still go down, because holders can <a href="https://solana.com/docs/tokens/basics/burn-tokens" target="_blank" rel="noopener noreferrer">burn tokens</a> from their own balance. It can never go up again.</p>
+<h2 id="what-freeze-authority-controls">What freeze authority controls</h2>
+<p>The freeze authority can <a href="https://solana.com/docs/tokens/basics/freeze-account" target="_blank" rel="noopener noreferrer">freeze a token account</a>. A frozen account cannot receive, transfer or burn tokens until it is thawed. The owner and balance stay the same, but the tokens are stuck.</p>
+<p>Some regulated assets keep a freeze authority so an issuer can meet legal obligations. For a community or meme token, an active freeze authority mainly means one party can stop holders from selling.</p>
+<figure><img src="/blog/img/mint-authority-vs-freeze-authority-2.webp" alt="Mint authority and freeze authority compared side by side: what each can do while active and what changes after revoking." loading="lazy" decoding="async"><figcaption>Two separate roles on the same mint. Revoking one does not revoke the other.</figcaption></figure>
+<h2 id="what-revoking-changes">What revoking changes</h2>
+<p>Revoking means setting an authority to <code>None</code>. According to Solana&#x27;s documentation, this permanently removes the selected role. There is no way to restore it later, even for the original creator.</p>
+<ul><li><strong>Mint authority revoked:</strong> no one can create new units. The current supply is the maximum.</li><li><strong>Freeze authority revoked:</strong> no token account for that mint can be frozen again.</li></ul>
+<p>DegenKit&#x27;s Solana creator revokes both authorities when it creates a token. For tokens you created elsewhere and still control, the Authorities tool lets you load a mint and revoke either role separately.</p>
+<aside class="callout warning"><strong>Revoking is one-way</strong><p>Revoked authorities cannot be restored. If your project genuinely needs future minting, decide that before revoking. Then explain the plan publicly.</p></aside>
+<figure><video src="/blog/img/mint-authority-vs-freeze-authority-demo.mp4" autoplay loop muted playsinline preload="metadata" aria-label="Two keys represent mint and freeze authority. Minting doubles the supply and halves a holder&#x27;s share, freezing blocks a holder&#x27;s transfer, and revoking both breaks the keys for good."></video></figure>
+<h2 id="what-revoking-does-not-change">What revoking does not change</h2>
+<p>Revoked authorities answer two specific questions. They do not settle everything else:</p>
+<ul><li><strong>Metadata</strong> is controlled separately. <a href="https://www.metaplex.com/docs/smart-contracts/token-metadata/update" target="_blank" rel="noopener noreferrer">Metaplex&#x27;s documentation</a> explains that an update authority can change the name, symbol and URI while metadata is mutable.</li><li><strong>Liquidity</strong> is not affected. A pool can still be withdrawn by whoever controls the liquidity position.</li><li><strong>Holder concentration</strong> stays the same. A wallet holding most of the supply can still sell it.</li><li><strong>Price and demand</strong> are not set by permissions.</li></ul>
+<p>Treat revoked authorities as a baseline, not a safety certificate.</p>
+<h2 id="how-to-check-a-token-s-authorities">How to check a token&#x27;s authorities</h2>
+<p>You do not need to trust a project&#x27;s announcement. Check the mint account itself:</p>
+<ol><li>Open the mint address in a Solana explorer.</li><li>Find the <strong>Mint Authority</strong> and <strong>Freeze Authority</strong> fields.</li><li>A revoked role appears as empty or <code>None</code>. An active role shows an address.</li><li>Note who holds any active role and whether the project explains why.</li></ol>
+<p>In DegenKit, <strong>My Tokens</strong> shows the authority status of tokens in your connected wallet. The <strong>Scanner</strong> shows it for any Solana mint, alongside holder concentration.</p>
+<h2 id="how-evm-tokens-differ">How EVM tokens differ</h2>
+<p>Ethereum-style tokens do not use Solana&#x27;s mint account model. Their permissions live in the contract code. DegenKit&#x27;s ERC-20 tokens on Ethereum, BNB Chain, Base and Robinhood Chain have no mint function at all. The entire supply is created once, in the deployment transaction.</p>
+<p>Other EVM contracts can include an owner who mints, pauses or blocklists. For those tokens, read the contract and its owner functions rather than looking for Solana-style authority fields.</p>
+<h2 id="questions-people-ask">Questions people ask</h2>
+<h3 id="can-a-token-have-mint-authority-revoked-but-freeze-authority-active">Can a token have mint authority revoked but freeze authority active?</h3>
+<p>Yes. The roles are independent. Always check both fields.</p>
+<h3 id="does-revoking-cost-anything">Does revoking cost anything?</h3>
+<p>Revoking is a normal transaction, so it needs a network fee. A tool may add its own service fee, which is shown before you sign.</p>
+<h2 id="wrap-up">Wrap up</h2>
+<p>Mint authority decides whether supply can grow. Freeze authority decides whether holders can be stopped. Revoking either one is permanent, and neither one replaces checking metadata, liquidity and holders. <a href="https://degenkit.app/launch/solana/">Open DegenKit&#x27;s Authorities tool</a> to check or revoke the roles on a token you control.</p>
+    </div>
+    <div class="share">
+      <b>Share this post</b>
+      <div class="share-btns">
+        <a class="s-x" href="https://x.com/intent/post?text=Mint%20Authority%20vs.%20Freeze%20Authority%3A%20What%20Revoking%20Actually%20Does%20%E2%80%94%20via%20%40DegenKitApp&amp;url=https%3A%2F%2Fdegenkit.app%2Fblog%2Fmint-authority-vs-freeze-authority%2F" target="_blank" rel="noopener noreferrer">Share on 𝕏</a>
+        <button class="s-copy" type="button" data-copy="https://degenkit.app/blog/mint-authority-vs-freeze-authority/">Copy link</button>
+      </div>
+    </div>
+    <aside class="cta">
+      <div><h3>Ready to launch your token?</h3><p>Pick a network, set the details, sign once. No code.</p></div>
+      <a class="btn-launch" href="/launch/">Launch App</a>
+    </aside>
+  </article>
+  <section class="related"><h3>Keep reading</h3><div class="grid"><a class="card" href="/blog/creating-a-token-vs-adding-liquidity/">
+  <div class="cover"><img src="/blog/img/creating-a-token-vs-adding-liquidity-cover.webp" alt="A new token on one side and a token–SOL liquidity pool on the other, joined by a step labeled add liquidity." loading="lazy" decoding="async"></div>
+  <div class="c-body">
+    <div class="c-meta"><span class="chip">Guide</span><span class="chip">Liquidity</span><span class="chip">Solana</span><span>October 29, 2026</span></div>
+    <h2>Creating a Token vs. Adding Liquidity: Two Different Milestones</h2>
+    <p>A new token cannot be traded until a liquidity pool exists. Learn what a pool is, how the starting price is set, what LP tokens do and what locking or burning them means.</p>
+  </div>
+</a><a class="card" href="/blog/how-to-read-a-holder-bubblemap/">
+  <div class="cover"><img src="/blog/img/how-to-read-a-holder-bubblemap-cover.webp" alt="A holder bubblemap with one large labeled pool bubble and smaller holder bubbles around it." loading="lazy" decoding="async"></div>
+  <div class="c-body">
+    <div class="c-meta"><span class="chip">Guide</span><span class="chip">Safety</span><span class="chip">Solana</span><span>October 29, 2026</span></div>
+    <h2>How to Read a Holder Bubblemap Before You Buy</h2>
+    <p>Big bubbles are not automatically bad news. Learn what a holder bubblemap shows, what the largest accounts usually are, and how to check them yourself.</p>
+  </div>
+</a><a class="card" href="/blog/how-to-market-a-solana-token/">
+  <div class="cover"><img src="/blog/img/how-to-market-a-solana-token-cover.webp" alt="A launch post card with an official mint address, verified links and trust signals for a Solana token." loading="lazy" decoding="async"></div>
+  <div class="c-body">
+    <div class="c-meta"><span class="chip">Guide</span><span class="chip">Marketing</span><span class="chip">Solana</span><span>October 26, 2026</span></div>
+    <h2>How to Market a Solana Token Without Hype or Shortcuts</h2>
+    <p>A practical launch-marketing plan for Solana tokens — trust signals first, one official address, listings in the right order, honest promotion and steady updates.</p>
+  </div>
+</a></div></section>
+</main>
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="logo"><img src="/assets/icon.png" alt="" class="logo-icon"><span class="logo-text">DegenKit</span></div>
+        <p>Token creation, without the guesswork. Launch on Solana, Ethereum, BNB Chain, Base and Robinhood Chain.</p>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col"><h4>Site</h4><a href="/">Home</a><a href="/launch/">Launch App</a><a href="/blog/">Blog</a></div>
+        <div class="footer-col"><h4>Legal</h4><a href="/terms/">Terms &amp; Conditions</a><a href="/privacy/">Privacy Policy</a></div>
+        <div class="footer-col"><h4>Help</h4><a href="/support/">Support</a></div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 DegenKit. All rights reserved.</p>
+      <div class="footer-socials"><a class="social-icn" href="https://x.com/DegenKitApp" target="_blank" rel="noopener" aria-label="X / Twitter">𝕏</a></div>
+    </div>
+  </div>
+</footer>
+<script>
+(function(){var r=document.documentElement,b=document.getElementById('themeToggle');
+if(b)b.addEventListener('click',function(){var n=r.getAttribute('data-theme')==='light'?'dark':'light';r.setAttribute('data-theme',n);try{localStorage.setItem('degenkit-theme',n)}catch(e){}});
+document.querySelectorAll('[data-copy]').forEach(function(el){el.addEventListener('click',function(){var u=el.getAttribute('data-copy'),t=el.textContent;
+(navigator.clipboard?navigator.clipboard.writeText(u):Promise.reject()).then(function(){el.textContent='Copied ✓';setTimeout(function(){el.textContent=t},1600)}).catch(function(){window.prompt('Copy link',u)})})});})();
+</script>
+</body>
+</html>
