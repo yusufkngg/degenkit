@@ -20,10 +20,17 @@ def parse_front(text):
     if not m:
         raise ValueError("missing front matter (--- ... ---)")
     meta = {}
+    last = None
     for line in m.group(1).splitlines():
-        if ":" in line and not line.strip().startswith("#"):
+        st = line.strip()
+        if st.startswith("- ") and last:                      # YAML list item (tags: / - Guide)
+            meta[last] = (meta.get(last, "") + "," if meta.get(last) else "") + st[2:].strip().strip('"').strip("'")
+        elif ":" in line and not st.startswith("#"):
             k, v = line.split(":", 1)
-            meta[k.strip().lower()] = v.strip().strip('"').strip("'")
+            last = k.strip().lower()
+            v = v.strip().strip('"').strip("'")
+            if last == "tags": v = v.strip("[]")
+            meta[last] = v
     return meta, m.group(2)
 
 def safe_url(u, allow_rel=True):
@@ -209,7 +216,7 @@ document.querySelectorAll('[data-copy]').forEach(function(el){el.addEventListene
 
 PRE_THEME = "<script>try{var t=localStorage.getItem('degenkit-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>"
 
-def page(title, desc, canonical, body, og_image=None, og_type="website", jsonld=""):
+def page(title, desc, canonical, body, og_image=None, og_type="website", jsonld="", extra_meta=""):
     img = og_image or SITE + "/assets/mascot-hero.png"
     return f"""<!DOCTYPE html>
 <html lang="en">
@@ -223,6 +230,12 @@ def page(title, desc, canonical, body, og_image=None, og_type="website", jsonld=
 <link rel="canonical" href="{esc(canonical)}">
 <link rel="alternate" type="application/rss+xml" title="DegenKit Blog" href="/blog/rss.xml">
 <link rel="icon" type="image/png" href="/assets/favicon.png">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#0B0B0E">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+<meta property="og:locale" content="en_US">
+{extra_meta}
 <meta property="og:site_name" content="DegenKit">
 <meta property="og:type" content="{og_type}">
 <meta property="og:title" content="{esc(title)}">
@@ -298,27 +311,49 @@ def build_index(posts):
   {feat}
   {grid}
 </main>"""
-    (OUT / "index.html").write_text(page("Blog | DegenKit", "Updates, guides and launch playbooks from DegenKit.", SITE + "/blog/", body), encoding="utf-8")
+    import json as _j
+    idx_ld = '<script type="application/ld+json">%s</script>' % _j.dumps({
+        "@context": "https://schema.org", "@type": "Blog", "name": "DegenKit Blog", "url": SITE + "/blog/", "inLanguage": "en",
+        "publisher": {"@type": "Organization", "name": AUTHOR, "url": SITE + "/"},
+        "blogPost": [{"@type": "BlogPosting", "headline": q["title"], "url": f"{SITE}/blog/{q['slug']}/", "datePublished": q["date"].isoformat()} for q in posts]}).replace("</", "<\\/")
+    idx_ld += '<script type="application/ld+json">%s</script>' % _j.dumps({
+        "@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "DegenKit", "item": SITE + "/"},
+            {"@type": "ListItem", "position": 2, "name": "Blog", "item": SITE + "/blog/"}]})
+    (OUT / "index.html").write_text(page("DegenKit Blog — Token Launch Guides & Playbooks", "Practical guides on launching a token: authorities, metadata, taxes, airdrops, liquidity, risk checks and choosing a network.", SITE + "/blog/", body, jsonld=idx_ld), encoding="utf-8")
 
 def build_post(p, posts):
     url = f"{SITE}/blog/{p['slug']}/"
-    others = [x for x in posts if x["slug"] != p["slug"]][:2]
+    tagset = set(t.lower() for t in p["tags"])
+    others = sorted([x for x in posts if x["slug"] != p["slug"]],
+                    key=lambda x: (-len(tagset & set(t.lower() for t in x["tags"])), -x["date"].toordinal()))[:3]
     related = ""
     if others:
-        related = '<section class="related"><h3>Keep reading</h3><div class="grid two">%s</div></section>' % "".join(card(x) for x in others)
+        related = '<section class="related"><h3>Keep reading</h3><div class="grid">%s</div></section>' % "".join(card(x) for x in others)
     share_text = urllib.parse.quote(p["title"] + " — via @DegenKitApp")
     share_url = urllib.parse.quote(url, safe="")
     og_img = abs_url(p["cover"]) if p["cover"] else None
     jsonld = '<script type="application/ld+json">%s</script>' % __import__("json").dumps({
         "@context": "https://schema.org", "@type": "BlogPosting", "headline": p["title"], "description": p["excerpt"],
-        "datePublished": p["date"].isoformat(), "mainEntityOfPage": url,
+        "datePublished": p["date"].isoformat(), "dateModified": p["date"].isoformat(),
+        "mainEntityOfPage": {"@type": "WebPage", "@id": url}, "url": url, "inLanguage": "en",
         "image": og_img or SITE + "/assets/mascot-hero.png",
-        "author": {"@type": "Organization", "name": AUTHOR}, "publisher": {"@type": "Organization", "name": AUTHOR},
+        "keywords": ", ".join(p["tags"]),
+        "author": {"@type": "Organization", "name": AUTHOR, "url": SITE + "/"},
+        "publisher": {"@type": "Organization", "name": AUTHOR, "url": SITE + "/",
+                      "logo": {"@type": "ImageObject", "url": SITE + "/assets/icon.png"}},
     }).replace("</", "<\\/")
+    jsonld += '<script type="application/ld+json">%s</script>' % __import__("json").dumps({
+        "@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "DegenKit", "item": SITE + "/"},
+            {"@type": "ListItem", "position": 2, "name": "Blog", "item": SITE + "/blog/"},
+            {"@type": "ListItem", "position": 3, "name": p["title"], "item": url}]}).replace("</", "<\\/")
+    extra = '<meta property="article:published_time" content="%s">\n<meta property="article:modified_time" content="%s">\n<meta property="og:image:alt" content="%s">' % (p["date"].isoformat(), p["date"].isoformat(), esc(p["cover_alt"] or p["title"]))
+    for t in p["tags"][:5]: extra += '\n<meta property="article:tag" content="%s">' % esc(t)
     body = f"""<main class="bwrap">
   <article class="post">
     <div class="p-head">
-      <a class="back" href="/blog/">← All posts</a>
+      <nav aria-label="Breadcrumb"><a class="back" href="/blog/">← All posts</a></nav>
       <div class="chips">{tags_html(p)}</div>
       <h1>{esc(p['title'])}</h1>
       <p class="lede">{esc(p['excerpt'])}</p>
@@ -343,7 +378,7 @@ def build_post(p, posts):
   {related}
 </main>"""
     d = OUT / p["slug"]; d.mkdir(parents=True, exist_ok=True)
-    (d / "index.html").write_text(page(f"{p['title']} | DegenKit Blog", p["excerpt"], url, body, og_img, "article", jsonld), encoding="utf-8")
+    (d / "index.html").write_text(page(f"{p['title']} | DegenKit Blog", p["excerpt"], url, body, og_img, "article", jsonld, extra), encoding="utf-8")
 
 def build_rss(posts):
     items = "".join(f"<item><title>{esc(p['title'])}</title><link>{SITE}/blog/{p['slug']}/</link><guid>{SITE}/blog/{p['slug']}/</guid>"

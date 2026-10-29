@@ -66,9 +66,9 @@ html[data-theme="light"] .b-hero h1{background:linear-gradient(90deg,#C2410C,#EA
 .prose ul, .prose ol{padding-left:1.3em; margin:0 0 1.3em;}
 .prose li{margin:.35em 0;}
 .prose hr{border:0; border-top:1px solid var(--line); margin:2.4em 0;}
-.prose code{font-family:'JetBrains Mono',monospace; font-size:.88em; padding:2px 6px; border-radius:6px; background:var(--panel-2); border:1px solid var(--line); color:var(--ink);}
+.prose code{font-family:'JetBrains Mono',monospace; font-size:.88em; padding:2px 6px; border-radius:6px; background:var(--panel-2); border:1px solid var(--line); color:var(--ink); overflow-wrap:anywhere;}
 .prose pre{overflow-x:auto; padding:16px 18px; border-radius:12px; background:var(--panel); border:1px solid var(--line); margin:0 0 1.4em;}
-.prose pre code{background:none; border:0; padding:0; font-size:14px; line-height:1.7;}
+.prose pre code{background:none; border:0; padding:0; font-size:14px; line-height:1.7; overflow-wrap:normal;}
 .prose blockquote{margin:1.6em 0; padding:6px 0 6px 20px; border-left:3px solid #FF7A1A;}
 .prose blockquote p{font-size:clamp(18px,2.2vw,21px); font-style:italic; color:var(--ink); margin:0 0 .6em;}
 .prose figure{margin:2em 0;}

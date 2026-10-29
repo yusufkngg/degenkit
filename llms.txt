@@ -1,0 +1,16 @@
+# DegenKit
+
+> DegenKit (https://degenkit.app) is a no-code, non-custodial token launcher. Create a token on Solana, Ethereum, BNB Chain, Base or Robinhood Chain by filling one form and signing one transaction from your own wallet. DegenKit never holds keys or funds.
+
+## Launch a token
+- [Choose a network](https://degenkit.app/launch/): network selector
+- [Solana](https://degenkit.app/launch/solana/): SPL tokens, mint/freeze authority revoked and metadata locked at creation; tools: Authorities, Update Metadata, Burn, Airdrop, Multisender, Scanner, Swap
+- [Ethereum](https://degenkit.app/launch/ethereum/): fixed-supply ERC-20 and tax tokens
+- [BNB Chain](https://degenkit.app/launch/bnb/): BEP-20 and tax tokens
+- [Base](https://degenkit.app/launch/base/): ERC-20 and tax tokens
+- [Robinhood Chain](https://degenkit.app/launch/robinhood/): fixed-supply and tax tokens
+
+## Learn
+- [Blog](https://degenkit.app/blog/): guides on token launches, authorities, taxes, airdrops and risk checks
+- [Support](https://degenkit.app/support/)
+- [Terms](https://degenkit.app/terms/) · [Privacy](https://degenkit.app/privacy/)

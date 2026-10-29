@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18369032243"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-18369032243');
+</script>
+<!-- X Pixel base code -->
+<script>
+!function(e,t,n,s,u,a){e.twq||(s=e.twq=function(){s.exe?s.exe.apply(s,arguments):s.queue.push(arguments);
+},s.version='1.1',s.queue=[],u=t.createElement(n),u.async=!0,u.src='https://static.ads-twitter.com/uwt.js',
+a=t.getElementsByTagName(n)[0],a.parentNode.insertBefore(u,a))}(window,document,'script');
+twq('config','rfyik');
+</script>
+<!-- End X Pixel base code -->
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Solana Token Metadata: Name, Symbol, Image and Why Locking Matters | DegenKit Blog</title>
+<meta name="description" content="Where a Solana token&#x27;s name, symbol and image actually live, who can change them, and what locking metadata does — and doesn&#x27;t — protect.">
+<link rel="canonical" href="https://degenkit.app/blog/solana-token-metadata-explained/">
+<link rel="alternate" type="application/rss+xml" title="DegenKit Blog" href="/blog/rss.xml">
+<link rel="icon" type="image/png" href="/assets/favicon.png">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#0B0B0E">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-10-26">
+<meta property="article:modified_time" content="2026-10-26">
+<meta property="og:image:alt" content="A token card splits into on-chain fields and an off-chain JSON file that holds the image and description.">
+<meta property="article:tag" content="Guide">
+<meta property="article:tag" content="Solana">
+<meta property="article:tag" content="Metadata">
+<meta property="og:site_name" content="DegenKit">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Solana Token Metadata: Name, Symbol, Image and Why Locking Matters | DegenKit Blog">
+<meta property="og:description" content="Where a Solana token&#x27;s name, symbol and image actually live, who can change them, and what locking metadata does — and doesn&#x27;t — protect.">
+<meta property="og:url" content="https://degenkit.app/blog/solana-token-metadata-explained/">
+<meta property="og:image" content="https://degenkit.app/blog/img/solana-token-metadata-explained-cover.webp">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@DegenKitApp">
+<meta name="twitter:title" content="Solana Token Metadata: Name, Symbol, Image and Why Locking Matters | DegenKit Blog">
+<meta name="twitter:description" content="Where a Solana token&#x27;s name, symbol and image actually live, who can change them, and what locking metadata does — and doesn&#x27;t — protect.">
+<meta name="twitter:image" content="https://degenkit.app/blog/img/solana-token-metadata-explained-cover.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/styles.css">
+<link rel="stylesheet" href="/assets/theme-icons.css">
+<link rel="stylesheet" href="/assets/blog.css">
+<script>try{var t=localStorage.getItem('degenkit-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Solana Token Metadata: Name, Symbol, Image and Why Locking Matters", "description": "Where a Solana token's name, symbol and image actually live, who can change them, and what locking metadata does \u2014 and doesn't \u2014 protect.", "datePublished": "2026-10-26", "dateModified": "2026-10-26", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://degenkit.app/blog/solana-token-metadata-explained/"}, "url": "https://degenkit.app/blog/solana-token-metadata-explained/", "inLanguage": "en", "image": "https://degenkit.app/blog/img/solana-token-metadata-explained-cover.webp", "keywords": "Guide, Solana, Metadata", "author": {"@type": "Organization", "name": "DegenKit", "url": "https://degenkit.app/"}, "publisher": {"@type": "Organization", "name": "DegenKit", "url": "https://degenkit.app/", "logo": {"@type": "ImageObject", "url": "https://degenkit.app/assets/icon.png"}}}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "DegenKit", "item": "https://degenkit.app/"}, {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://degenkit.app/blog/"}, {"@type": "ListItem", "position": 3, "name": "Solana Token Metadata: Name, Symbol, Image and Why Locking Matters", "item": "https://degenkit.app/blog/solana-token-metadata-explained/"}]}</script>
+</head>
+<body>
+<header>
+  <div class="header-row">
+    <a class="logo" href="/"><img src="/assets/icon.png" alt="" class="logo-icon"><span class="logo-text">DegenKit</span></a>
+    <nav class="site-nav">
+      <a class="navlink" href="/#features">Features</a>
+      <a class="navlink" href="/#roadmap">Roadmap</a>
+      <a class="navlink" href="/blog/">Blog</a>
+      <a class="navlink" href="/#faq">FAQ</a>
+    </nav>
+    <div class="header-actions">
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light/dark theme" title="Toggle theme">◐</button>
+      <a class="btn-launch" href="/launch/">Launch App</a>
+    </div>
+  </div>
+</header>
+<main class="bwrap">
+  <article class="post">
+    <div class="p-head">
+      <nav aria-label="Breadcrumb"><a class="back" href="/blog/">← All posts</a></nav>
+      <div class="chips"><span class="chip">Guide</span><span class="chip">Solana</span><span class="chip">Metadata</span></div>
+      <h1>Solana Token Metadata: Name, Symbol, Image and Why Locking Matters</h1>
+      <p class="lede">Where a Solana token&#x27;s name, symbol and image actually live, who can change them, and what locking metadata does — and doesn&#x27;t — protect.</p>
+      <div class="byline"><img src="/assets/icon.png" alt=""><span><b>DegenKit</b><i>October 26, 2026 · 5 min read</i></span></div>
+    </div>
+    <div class="cover hero"><img src="/blog/img/solana-token-metadata-explained-cover.webp" alt="A token card splits into on-chain fields and an off-chain JSON file that holds the image and description." loading="lazy" decoding="async"></div>
+    <div class="prose">
+<p>When a wallet shows a token&#x27;s name and logo, it is not reading them from the token itself. A Solana mint account stores supply, decimals and authorities. The name, symbol and image live somewhere else, and that &quot;somewhere else&quot; decides who can change them later.</p>
+<p>This guide explains how Solana token metadata is structured, what locking it means, and how to check it.</p>
+<h2 id="the-mint-doesn-t-hold-the-name">The mint doesn&#x27;t hold the name</h2>
+<p>A Solana mint account records the numbers: supply, decimals, mint authority and freeze authority. Everything people recognize the token by is added through <strong>metadata</strong>.</p>
+<p>Most tokens use the <a href="https://solana.com/docs/tokens/metaplex" target="_blank" rel="noopener noreferrer">Metaplex metadata standard</a>. It creates a separate metadata account linked to the mint. Tokens built with the newer Token Extensions program can store metadata directly on the mint instead. The idea is the same in both cases: identity is stored separately from supply.</p>
+<h2 id="what-lives-on-chain">What lives on-chain</h2>
+<p>According to Solana&#x27;s documentation, a Metaplex metadata account stores:</p>
+<ul><li><strong>Name:</strong> up to 32 characters.</li><li><strong>Symbol:</strong> up to 10 characters.</li><li><strong>URI:</strong> a link of up to 200 characters to a JSON file.</li><li><strong>Update authority:</strong> the address allowed to change the metadata.</li><li><strong>Is mutable:</strong> whether the metadata can still be updated.</li></ul>
+<p>These fields are what explorers and wallets read first.</p>
+<h2 id="what-lives-off-chain">What lives off-chain</h2>
+<p>The URI points to a small JSON file. For a fungible token it usually contains the name, symbol, a description and a link to the image. Wallets fetch that file to show the logo.</p>
+<p>This split has a practical consequence. The on-chain record can be permanent while the files it points to sit on ordinary storage. If the JSON or the image becomes unreachable, the token keeps working but the logo can disappear from wallets.</p>
+<figure><img src="/blog/img/solana-token-metadata-explained-1.webp" alt="On-chain metadata fields linked by a URI to an off-chain JSON file with the description and image." loading="lazy" decoding="async"><figcaption>The name and symbol sit on-chain. The image and description sit in the file the URI points to.</figcaption></figure>
+<h2 id="who-can-change-it">Who can change it</h2>
+<p>While metadata is mutable, the update authority can change the name, symbol and URI. <a href="https://www.metaplex.com/docs/smart-contracts/token-metadata/update" target="_blank" rel="noopener noreferrer">Metaplex&#x27;s documentation</a> explains that updates only work while the <strong>Is Mutable</strong> flag is true. Once it is set to false, future updates fail.</p>
+<p>That is useful for a project that genuinely needs to fix a typo or move its image. It is also a risk for holders: a token can change its name or logo after people have bought it, and impersonation becomes easier.</p>
+<aside class="callout tip"><strong>Lock it when it&#x27;s right</strong><p>Check spelling, image quality and the symbol before you create the token. If you lock metadata at creation, that review is your only chance to get it right.</p></aside>
+<figure><video src="/blog/img/solana-token-metadata-explained-demo.mp4" autoplay loop muted playsinline preload="metadata" aria-label="A token&#x27;s name, symbol, image and URI are entered, the JSON file is built, the metadata is locked and a wallet displays the result."></video></figure>
+<h2 id="what-locking-protects-and-what-it-doesn-t">What locking protects — and what it doesn&#x27;t</h2>
+<p>Locking metadata stops anyone from editing the name, symbol and URI. Holders can rely on the token looking the same tomorrow.</p>
+<p>It does not:</p>
+<ul><li>revoke the mint or freeze authority, which are separate roles;</li><li>guarantee that the image file stays online, because the file lives at the address the URI points to;</li><li>stop someone else from creating a different token with a similar name and logo.</li></ul>
+<p>So treat locked metadata as one trust signal among several. Always publish your mint address, because the address — not the name — identifies your token.</p>
+<figure><img src="/blog/img/solana-token-metadata-explained-2.webp" alt="A side-by-side comparison of mutable and locked metadata: who can edit, what holders can rely on and when each fits." loading="lazy" decoding="async"><figcaption>Locking is permanent. Mutable metadata keeps flexibility, and the update risk that comes with it.</figcaption></figure>
+<h2 id="how-degenkit-handles-metadata">How DegenKit handles metadata</h2>
+<p>DegenKit&#x27;s <a href="https://degenkit.app/launch/solana/">Solana token creator</a> writes the name, symbol and a metadata URI on-chain in the same transaction that creates the mint. You can upload a logo and add a description; DegenKit builds the JSON file and stores it for you. If you already host your own JSON, you can paste a manual metadata URI instead.</p>
+<p>Metadata created this way is always locked, so it cannot be edited after minting. For tokens created elsewhere with mutable metadata, the <strong>Update Metadata</strong> tool lets the update authority change the name, symbol or image. The <strong>Scanner</strong> shows whether any Solana token&#x27;s metadata is locked.</p>
+<h2 id="how-to-check-a-token-s-metadata">How to check a token&#x27;s metadata</h2>
+<ol><li>Open the mint address in a Solana explorer and find the metadata section.</li><li>Compare the name and symbol with the project&#x27;s official channels.</li><li>Check whether the metadata is mutable and who holds the update authority.</li><li>Open the URI and confirm that the JSON loads and points to the expected image.</li></ol>
+<h2 id="wrap-up">Wrap up</h2>
+<p>A Solana token&#x27;s identity lives in metadata, not in the mint. The name, symbol and URI sit on-chain; the image and description sit in the file the URI points to. Locking makes that identity permanent, but it does not replace checking authorities and the mint address. <a href="https://degenkit.app/launch/solana/">Create a token with locked metadata on DegenKit</a> once your details are final.</p>
+    </div>
+    <div class="share">
+      <b>Share this post</b>
+      <div class="share-btns">
+        <a class="s-x" href="https://x.com/intent/post?text=Solana%20Token%20Metadata%3A%20Name%2C%20Symbol%2C%20Image%20and%20Why%20Locking%20Matters%20%E2%80%94%20via%20%40DegenKitApp&amp;url=https%3A%2F%2Fdegenkit.app%2Fblog%2Fsolana-token-metadata-explained%2F" target="_blank" rel="noopener noreferrer">Share on 𝕏</a>
+        <button class="s-copy" type="button" data-copy="https://degenkit.app/blog/solana-token-metadata-explained/">Copy link</button>
+      </div>
+    </div>
+    <aside class="cta">
+      <div><h3>Ready to launch your token?</h3><p>Pick a network, set the details, sign once. No code.</p></div>
+      <a class="btn-launch" href="/launch/">Launch App</a>
+    </aside>
+  </article>
+  <section class="related"><h3>Keep reading</h3><div class="grid"><a class="card" href="/blog/how-to-market-a-solana-token/">
+  <div class="cover"><img src="/blog/img/how-to-market-a-solana-token-cover.webp" alt="A launch post card with an official mint address, verified links and trust signals for a Solana token." loading="lazy" decoding="async"></div>
+  <div class="c-body">
+    <div class="c-meta"><span class="chip">Guide</span><span class="chip">Marketing</span><span class="chip">Solana</span><span>October 26, 2026</span></div>
+    <h2>How to Market a Solana Token Without Hype or Shortcuts</h2>
+    <p>A practical launch-marketing plan for Solana tokens — trust signals first, one official address, listings in the right order, honest promotion and steady updates.</p>
+  </div>
+</a><a class="card" href="/blog/airdrop-vs-multisender/">
+  <div class="cover"><img src="/blog/img/airdrop-vs-multisender-cover.webp" alt="One wallet fans out token transfers to many recipient wallets, some with equal and some with custom amounts." loading="lazy" decoding="async"></div>
+  <div class="c-body">
+    <div class="c-meta"><span class="chip">Guide</span><span class="chip">Solana</span><span class="chip">Distribution</span><span>October 25, 2026</span></div>
+    <h2>Airdrop vs. Multisender: Sending Tokens to Many Wallets</h2>
+    <p>Same amount for everyone or a custom amount per wallet? Learn when to use an airdrop or a multisender, how batching works on Solana and what to check before you send.</p>
+  </div>
+</a><a class="card" href="/blog/how-to-spot-rug-pull-risk/">
+  <div class="cover"><img src="/blog/img/how-to-spot-rug-pull-risk-cover.webp" alt="A token scanner card shows a risk score ring next to mint, freeze, metadata and holder checks." loading="lazy" decoding="async"></div>
+  <div class="c-body">
+    <div class="c-meta"><span class="chip">Guide</span><span class="chip">Safety</span><span class="chip">Solana</span><span>October 25, 2026</span></div>
+    <h2>How to Spot Rug-Pull Risk Before You Buy a Token</h2>
+    <p>Learn which on-chain signals point to rug-pull risk — authorities, metadata, holder concentration and liquidity — and what a scanner can and cannot tell you.</p>
+  </div>
+</a></div></section>
+</main>
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="logo"><img src="/assets/icon.png" alt="" class="logo-icon"><span class="logo-text">DegenKit</span></div>
+        <p>Token creation, without the guesswork. Launch on Solana, Ethereum, BNB Chain, Base and Robinhood Chain.</p>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col"><h4>Site</h4><a href="/">Home</a><a href="/launch/">Launch App</a><a href="/blog/">Blog</a></div>
+        <div class="footer-col"><h4>Legal</h4><a href="/terms/">Terms &amp; Conditions</a><a href="/privacy/">Privacy Policy</a></div>
+        <div class="footer-col"><h4>Help</h4><a href="/support/">Support</a></div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 DegenKit. All rights reserved.</p>
+      <div class="footer-socials"><a class="social-icn" href="https://x.com/DegenKitApp" target="_blank" rel="noopener" aria-label="X / Twitter">𝕏</a></div>
+    </div>
+  </div>
+</footer>
+<script>
+(function(){var r=document.documentElement,b=document.getElementById('themeToggle');
+if(b)b.addEventListener('click',function(){var n=r.getAttribute('data-theme')==='light'?'dark':'light';r.setAttribute('data-theme',n);try{localStorage.setItem('degenkit-theme',n)}catch(e){}});
+document.querySelectorAll('[data-copy]').forEach(function(el){el.addEventListener('click',function(){var u=el.getAttribute('data-copy'),t=el.textContent;
+(navigator.clipboard?navigator.clipboard.writeText(u):Promise.reject()).then(function(){el.textContent='Copied ✓';setTimeout(function(){el.textContent=t},1600)}).catch(function(){window.prompt('Copy link',u)})})});})();
+</script>
+</body>
+</html>
