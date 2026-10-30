@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18369032243"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-18369032243');
+</script>
+<!-- X Pixel base code -->
+<script>
+!function(e,t,n,s,u,a){e.twq||(s=e.twq=function(){s.exe?s.exe.apply(s,arguments):s.queue.push(arguments);
+},s.version='1.1',s.queue=[],u=t.createElement(n),u.async=!0,u.src='https://static.ads-twitter.com/uwt.js',
+a=t.getElementsByTagName(n)[0],a.parentNode.insertBefore(u,a))}(window,document,'script');
+twq('config','rfyik');
+</script>
+<!-- End X Pixel base code -->
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Price, Market Cap and FDV: What the Numbers on a Token Page Mean | DegenKit Blog</title>
+<meta name="description" content="Price, market cap and fully diluted valuation are calculated from the same few inputs, yet they answer different questions. Learn how each is worked out and what none of them tells you.">
+<link rel="canonical" href="https://degenkit.app/blog/market-cap-vs-fdv-explained/">
+<link rel="alternate" type="application/rss+xml" title="DegenKit Blog" href="/blog/rss.xml">
+<link rel="icon" type="image/png" href="/assets/favicon.png">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#0B0B0E">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-10-30">
+<meta property="article:modified_time" content="2026-10-30">
+<meta property="og:image:alt" content="A token page showing price, market cap and FDV side by side, with the pool&#x27;s liquidity shown separately below.">
+<meta property="article:tag" content="Guide">
+<meta property="article:tag" content="Tokenomics">
+<meta property="article:tag" content="Liquidity">
+<meta property="og:site_name" content="DegenKit">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Price, Market Cap and FDV: What the Numbers on a Token Page Mean | DegenKit Blog">
+<meta property="og:description" content="Price, market cap and fully diluted valuation are calculated from the same few inputs, yet they answer different questions. Learn how each is worked out and what none of them tells you.">
+<meta property="og:url" content="https://degenkit.app/blog/market-cap-vs-fdv-explained/">
+<meta property="og:image" content="https://degenkit.app/blog/img/market-cap-vs-fdv-explained-cover.webp">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@DegenKitApp">
+<meta name="twitter:title" content="Price, Market Cap and FDV: What the Numbers on a Token Page Mean | DegenKit Blog">
+<meta name="twitter:description" content="Price, market cap and fully diluted valuation are calculated from the same few inputs, yet they answer different questions. Learn how each is worked out and what none of them tells you.">
+<meta name="twitter:image" content="https://degenkit.app/blog/img/market-cap-vs-fdv-explained-cover.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/styles.css">
+<link rel="stylesheet" href="/assets/theme-icons.css">
+<link rel="stylesheet" href="/assets/blog.css">
+<script>try{var t=localStorage.getItem('degenkit-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Price, Market Cap and FDV: What the Numbers on a Token Page Mean", "description": "Price, market cap and fully diluted valuation are calculated from the same few inputs, yet they answer different questions. Learn how each is worked out and what none of them tells you.", "datePublished": "2026-10-30", "dateModified": "2026-10-30", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://degenkit.app/blog/market-cap-vs-fdv-explained/"}, "url": "https://degenkit.app/blog/market-cap-vs-fdv-explained/", "inLanguage": "en", "image": "https://degenkit.app/blog/img/market-cap-vs-fdv-explained-cover.webp", "keywords": "Guide, Tokenomics, Liquidity", "author": {"@type": "Organization", "name": "DegenKit", "url": "https://degenkit.app/"}, "publisher": {"@type": "Organization", "name": "DegenKit", "url": "https://degenkit.app/", "logo": {"@type": "ImageObject", "url": "https://degenkit.app/assets/icon.png"}}}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "DegenKit", "item": "https://degenkit.app/"}, {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://degenkit.app/blog/"}, {"@type": "ListItem", "position": 3, "name": "Price, Market Cap and FDV: What the Numbers on a Token Page Mean", "item": "https://degenkit.app/blog/market-cap-vs-fdv-explained/"}]}</script>
+</head>
+<body>
+<header>
+  <div class="header-row">
+    <a class="logo" href="/"><img src="/assets/icon.png" alt="" class="logo-icon"><span class="logo-text">DegenKit</span></a>
+    <nav class="site-nav">
+      <a class="navlink" href="/#features">Features</a>
+      <a class="navlink" href="/#roadmap">Roadmap</a>
+      <a class="navlink" href="/blog/">Blog</a>
+      <a class="navlink" href="/#faq">FAQ</a>
+    </nav>
+    <div class="header-actions">
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light/dark theme" title="Toggle theme">◐</button>
+      <a class="btn-launch" href="/launch/">Launch App</a>
+    </div>
+  </div>
+</header>
+<main class="bwrap">
+  <article class="post">
+    <div class="p-head">
+      <nav aria-label="Breadcrumb"><a class="back" href="/blog/">← All posts</a></nav>
+      <div class="chips"><span class="chip">Guide</span><span class="chip">Tokenomics</span><span class="chip">Liquidity</span></div>
+      <h1>Price, Market Cap and FDV: What the Numbers on a Token Page Mean</h1>
+      <p class="lede">Price, market cap and fully diluted valuation are calculated from the same few inputs, yet they answer different questions. Learn how each is worked out and what none of them tells you.</p>
+      <div class="byline"><img src="/assets/icon.png" alt=""><span><b>DegenKit</b><i>October 30, 2026 · 5 min read</i></span></div>
+    </div>
+    <div class="cover hero"><img src="/blog/img/market-cap-vs-fdv-explained-cover.webp" alt="A token page showing price, market cap and FDV side by side, with the pool&#x27;s liquidity shown separately below." loading="lazy" decoding="async"></div>
+    <div class="prose">
+<p>Open any token on a chart site and three numbers sit near the top: price, market cap and FDV. They look like three separate facts. In reality they come from the same inputs, and the difference between them is usually a question about supply.</p>
+<p>This guide explains how each number is calculated, why they sometimes match, and why none of them is the amount of money you could actually take out of the market.</p>
+<h2 id="price-comes-from-the-pool">Price comes from the pool</h2>
+<p>For a new token, price is set by its liquidity pool. When you create a pool, the ratio of the two sides sets the starting price. Deposit 100,000,000 tokens and 10 SOL, and one token starts at 0.0000001 SOL.</p>
+<p>After that, every trade changes the ratio, and with it the price. If you want the full mechanics, read <a href="/blog/creating-a-token-vs-adding-liquidity/">creating a token vs. adding liquidity</a>.</p>
+<h2 id="market-cap-and-fdv-are-price-times-supply">Market cap and FDV are price times supply</h2>
+<p><a href="https://www.coingecko.com/learn/what-is-fully-diluted-valuation-fdv-in-crypto" target="_blank" rel="noopener noreferrer">CoinGecko&#x27;s explainer</a> gives the two formulas:</p>
+<ul><li><strong>Market cap</strong> = price × circulating supply</li><li><strong>Fully diluted valuation (FDV)</strong> = price × total supply</li></ul>
+<p>The only difference is which supply you multiply by. Circulating supply is what is currently in circulation. Total supply also counts tokens that exist but are still pending distribution, such as team allocations or vesting, and leaves out burned tokens.</p>
+<figure><img src="/blog/img/market-cap-vs-fdv-explained-1.webp" alt="The three numbers on a token page and how each one is calculated from price and supply." loading="lazy" decoding="async"><figcaption>Same price, different supply. When everything circulates, market cap and FDV are the same number.</figcaption></figure>
+<h2 id="when-they-match-and-when-they-don-t">When they match, and when they don&#x27;t</h2>
+<p>If every token is already circulating and tradable, the two numbers are the same. Many simple launches look like this.</p>
+<p>They split apart when part of the supply is locked, vesting or held back for later. CoinGecko notes that market cap does not account for vested tokens, while FDV hints at the value if they all arrive. A big gap means more supply is still to come, and the price per token can drop if demand does not grow with it.</p>
+<aside class="callout note"><strong>How DegenKit shows it</strong><p>When you add liquidity, DegenKit&#x27;s <strong>Create Liquidity</strong> tool shows a starting price and a <strong>starting market cap</strong>. That figure is your token&#x27;s total supply multiplied by the starting price, in SOL or USDC. It treats the whole supply as if it were circulating.</p></aside>
+<figure><video src="/blog/img/market-cap-vs-fdv-explained-demo.mp4" autoplay loop muted playsinline preload="metadata" aria-label="Price comes from the pool ratio, market cap and FDV multiply it by supply, and liquidity shows how much can actually be traded."></video></figure>
+<h2 id="market-cap-is-not-money-in-the-pool">Market cap is not money in the pool</h2>
+<p>This is the most common misunderstanding. Market cap multiplies the last price by every token. It does not mean anyone could sell all those tokens at that price.</p>
+<p>Take the example above. The supply is 1,000,000,000 tokens and the price is 0.0000001 SOL, so the market cap is 100 SOL. But the pool only holds 10 SOL. If someone sold 100,000,000 tokens (10% of the supply) into that pool, they would receive about 5 SOL, not 10 SOL. The price would fall by about 75% in one trade.</p>
+<p>What makes trading stable is <strong>liquidity</strong>, the amount sitting in the pool. Compare it with the market cap, not the other way round.</p>
+<figure><img src="/blog/img/market-cap-vs-fdv-explained-2.webp" alt="A 100 SOL market cap next to a 10 SOL pool, showing that selling 10% of the supply returns about 5 SOL and drops the price about 75%." loading="lazy" decoding="async"><figcaption>Illustrative constant-product math, before fees. Real pools also charge a trading fee.</figcaption></figure>
+<h2 id="why-the-creator-s-wallet-matters">Why the creator&#x27;s wallet matters</h2>
+<p>On DegenKit, the whole supply goes to your wallet when the token is created. Until you distribute it, those tokens count in total supply, and they also count in a market cap calculated the simple way.</p>
+<p>Chart sites can only adjust for this if they know which wallets hold locked supply. <a href="https://marketplace.dexscreener.com/product/token-info" target="_blank" rel="noopener noreferrer">DEX Screener&#x27;s Enhanced Token Info</a>, for example, lets projects designate such wallets so the market cap displays correctly. Publishing your allocations also helps buyers check the numbers themselves.</p>
+<h2 id="questions-people-ask">Questions people ask</h2>
+<h3 id="is-a-low-market-cap-a-good-sign">Is a low market cap a good sign?</h3>
+<p>Not on its own. A low market cap with very thin liquidity can move sharply in either direction. Look at liquidity, holder spread and supply plans together.</p>
+<h3 id="can-market-cap-change-without-any-trades">Can market cap change without any trades?</h3>
+<p>Yes, if the token is paired with SOL. The token&#x27;s price in SOL stays put, but its dollar value follows SOL. Our guide on <a href="/blog/sol-or-usdc-liquidity-pair/">choosing SOL or USDC for your pool</a> explains this.</p>
+<h2 id="wrap-up">Wrap up</h2>
+<p>Price comes from the pool. Market cap and FDV multiply that price by supply: circulating for market cap, total for FDV. None of them shows how much could really be sold, which is why liquidity matters most. <a href="https://degenkit.app/launch/solana/">Open Create Liquidity on DegenKit</a> to see the starting price and market cap before you sign.</p>
+    </div>
+    <div class="share">
+      <b>Share this post</b>
+      <div class="share-btns">
+        <a class="s-x" href="https://x.com/intent/post?text=Price%2C%20Market%20Cap%20and%20FDV%3A%20What%20the%20Numbers%20on%20a%20Token%20Page%20Mean%20%E2%80%94%20via%20%40DegenKitApp&amp;url=https%3A%2F%2Fdegenkit.app%2Fblog%2Fmarket-cap-vs-fdv-explained%2F" target="_blank" rel="noopener noreferrer">Share on 𝕏</a>
+        <button class="s-copy" type="button" data-copy="https://degenkit.app/blog/market-cap-vs-fdv-explained/">Copy link</button>
+      </div>
+    </div>
+    <aside class="cta">
+      <div><h3>Ready to launch your token?</h3><p>Pick a network, set the details, sign once. No code.</p></div>
+      <a class="btn-launch" href="/launch/">Launch App</a>
+    </aside>
+  </article>
+  <section class="related"><h3>Keep reading</h3><div class="grid"><a class="card" href="/blog/how-to-remove-liquidity/">
+  <div class="cover"><img src="/blog/img/how-to-remove-liquidity-cover.webp" alt="A pool position card with a 50 percent removal selected and the estimated token and SOL amounts shown." loading="lazy" decoding="async"></div>
+  <div class="c-body">
+    <div class="c-meta"><span class="chip">Guide</span><span class="chip">Liquidity</span><span class="chip">Solana</span><span>October 30, 2026</span></div>
+    <h2>How to Remove Liquidity from a Raydium Pool (and What Buyers See)</h2>
+    <p>Removing liquidity returns your share of a pool, which is rarely the same amounts you put in. Learn how it works, what comes back, how it changes trading and how to do it openly.</p>
+  </div>
+</a><a class="card" href="/blog/slippage-vs-price-impact/">
+  <div class="cover"><img src="/blog/img/slippage-vs-price-impact-cover.webp" alt="A swap card showing a quoted amount, a price impact line and a slippage tolerance selector." loading="lazy" decoding="async"></div>
+  <div class="c-body">
+    <div class="c-meta"><span class="chip">Guide</span><span class="chip">Trading</span><span class="chip">Liquidity</span><span>October 30, 2026</span></div>
+    <h2>Slippage vs. Price Impact: Why Your Swap Got a Different Price</h2>
+    <p>Price impact comes from your own trade moving the pool. Slippage comes from the market moving before your trade lands. Learn the difference and how to set a sensible tolerance.</p>
+  </div>
+</a><a class="card" href="/blog/sol-or-usdc-liquidity-pair/">
+  <div class="cover"><img src="/blog/img/sol-or-usdc-liquidity-pair-cover.webp" alt="Two pool cards side by side, one pairing a token with SOL and the other with USDC." loading="lazy" decoding="async"></div>
+  <div class="c-body">
+    <div class="c-meta"><span class="chip">Guide</span><span class="chip">Liquidity</span><span class="chip">Solana</span><span>October 30, 2026</span></div>
+    <h2>SOL or USDC: Choosing the Pair for Your Liquidity Pool</h2>
+    <p>Your token&#x27;s pool pairs it with either SOL or USDC. That choice decides what your price is measured in, what buyers need, and how the dollar value moves. Here is how to choose.</p>
+  </div>
+</a></div></section>
+</main>
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="logo"><img src="/assets/icon.png" alt="" class="logo-icon"><span class="logo-text">DegenKit</span></div>
+        <p>Token creation, without the guesswork. Launch on Solana, Ethereum, BNB Chain, Base and Robinhood Chain.</p>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col"><h4>Site</h4><a href="/">Home</a><a href="/launch/">Launch App</a><a href="/blog/">Blog</a></div>
+        <div class="footer-col"><h4>Legal</h4><a href="/terms/">Terms &amp; Conditions</a><a href="/privacy/">Privacy Policy</a></div>
+        <div class="footer-col"><h4>Help</h4><a href="/support/">Support</a></div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 DegenKit. All rights reserved.</p>
+      <div class="footer-socials"><a class="social-icn" href="https://x.com/DegenKitApp" target="_blank" rel="noopener" aria-label="X / Twitter">𝕏</a></div>
+    </div>
+  </div>
+</footer>
+<script>
+(function(){var r=document.documentElement,b=document.getElementById('themeToggle');
+if(b)b.addEventListener('click',function(){var n=r.getAttribute('data-theme')==='light'?'dark':'light';r.setAttribute('data-theme',n);try{localStorage.setItem('degenkit-theme',n)}catch(e){}});
+document.querySelectorAll('[data-copy]').forEach(function(el){el.addEventListener('click',function(){var u=el.getAttribute('data-copy'),t=el.textContent;
+(navigator.clipboard?navigator.clipboard.writeText(u):Promise.reject()).then(function(){el.textContent='Copied ✓';setTimeout(function(){el.textContent=t},1600)}).catch(function(){window.prompt('Copy link',u)})})});})();
+</script>
+</body>
+</html>

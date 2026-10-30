@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18369032243"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-18369032243');
+</script>
+<!-- X Pixel base code -->
+<script>
+!function(e,t,n,s,u,a){e.twq||(s=e.twq=function(){s.exe?s.exe.apply(s,arguments):s.queue.push(arguments);
+},s.version='1.1',s.queue=[],u=t.createElement(n),u.async=!0,u.src='https://static.ads-twitter.com/uwt.js',
+a=t.getElementsByTagName(n)[0],a.parentNode.insertBefore(u,a))}(window,document,'script');
+twq('config','rfyik');
+</script>
+<!-- End X Pixel base code -->
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>How to Remove Liquidity from a Raydium Pool (and What Buyers See) | DegenKit Blog</title>
+<meta name="description" content="Removing liquidity returns your share of a pool, which is rarely the same amounts you put in. Learn how it works, what comes back, how it changes trading and how to do it openly.">
+<link rel="canonical" href="https://degenkit.app/blog/how-to-remove-liquidity/">
+<link rel="alternate" type="application/rss+xml" title="DegenKit Blog" href="/blog/rss.xml">
+<link rel="icon" type="image/png" href="/assets/favicon.png">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#0B0B0E">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-10-30">
+<meta property="article:modified_time" content="2026-10-30">
+<meta property="og:image:alt" content="A pool position card with a 50 percent removal selected and the estimated token and SOL amounts shown.">
+<meta property="article:tag" content="Guide">
+<meta property="article:tag" content="Liquidity">
+<meta property="article:tag" content="Solana">
+<meta property="og:site_name" content="DegenKit">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How to Remove Liquidity from a Raydium Pool (and What Buyers See) | DegenKit Blog">
+<meta property="og:description" content="Removing liquidity returns your share of a pool, which is rarely the same amounts you put in. Learn how it works, what comes back, how it changes trading and how to do it openly.">
+<meta property="og:url" content="https://degenkit.app/blog/how-to-remove-liquidity/">
+<meta property="og:image" content="https://degenkit.app/blog/img/how-to-remove-liquidity-cover.webp">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@DegenKitApp">
+<meta name="twitter:title" content="How to Remove Liquidity from a Raydium Pool (and What Buyers See) | DegenKit Blog">
+<meta name="twitter:description" content="Removing liquidity returns your share of a pool, which is rarely the same amounts you put in. Learn how it works, what comes back, how it changes trading and how to do it openly.">
+<meta name="twitter:image" content="https://degenkit.app/blog/img/how-to-remove-liquidity-cover.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/styles.css">
+<link rel="stylesheet" href="/assets/theme-icons.css">
+<link rel="stylesheet" href="/assets/blog.css">
+<script>try{var t=localStorage.getItem('degenkit-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "How to Remove Liquidity from a Raydium Pool (and What Buyers See)", "description": "Removing liquidity returns your share of a pool, which is rarely the same amounts you put in. Learn how it works, what comes back, how it changes trading and how to do it openly.", "datePublished": "2026-10-30", "dateModified": "2026-10-30", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://degenkit.app/blog/how-to-remove-liquidity/"}, "url": "https://degenkit.app/blog/how-to-remove-liquidity/", "inLanguage": "en", "image": "https://degenkit.app/blog/img/how-to-remove-liquidity-cover.webp", "keywords": "Guide, Liquidity, Solana", "author": {"@type": "Organization", "name": "DegenKit", "url": "https://degenkit.app/"}, "publisher": {"@type": "Organization", "name": "DegenKit", "url": "https://degenkit.app/", "logo": {"@type": "ImageObject", "url": "https://degenkit.app/assets/icon.png"}}}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "DegenKit", "item": "https://degenkit.app/"}, {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://degenkit.app/blog/"}, {"@type": "ListItem", "position": 3, "name": "How to Remove Liquidity from a Raydium Pool (and What Buyers See)", "item": "https://degenkit.app/blog/how-to-remove-liquidity/"}]}</script>
+</head>
+<body>
+<header>
+  <div class="header-row">
+    <a class="logo" href="/"><img src="/assets/icon.png" alt="" class="logo-icon"><span class="logo-text">DegenKit</span></a>
+    <nav class="site-nav">
+      <a class="navlink" href="/#features">Features</a>
+      <a class="navlink" href="/#roadmap">Roadmap</a>
+      <a class="navlink" href="/blog/">Blog</a>
+      <a class="navlink" href="/#faq">FAQ</a>
+    </nav>
+    <div class="header-actions">
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light/dark theme" title="Toggle theme">◐</button>
+      <a class="btn-launch" href="/launch/">Launch App</a>
+    </div>
+  </div>
+</header>
+<main class="bwrap">
+  <article class="post">
+    <div class="p-head">
+      <nav aria-label="Breadcrumb"><a class="back" href="/blog/">← All posts</a></nav>
+      <div class="chips"><span class="chip">Guide</span><span class="chip">Liquidity</span><span class="chip">Solana</span></div>
+      <h1>How to Remove Liquidity from a Raydium Pool (and What Buyers See)</h1>
+      <p class="lede">Removing liquidity returns your share of a pool, which is rarely the same amounts you put in. Learn how it works, what comes back, how it changes trading and how to do it openly.</p>
+      <div class="byline"><img src="/assets/icon.png" alt=""><span><b>DegenKit</b><i>October 30, 2026 · 4 min read</i></span></div>
+    </div>
+    <div class="cover hero"><img src="/blog/img/how-to-remove-liquidity-cover.webp" alt="A pool position card with a 50 percent removal selected and the estimated token and SOL amounts shown." loading="lazy" decoding="async"></div>
+    <div class="prose">
+<p>Adding liquidity makes a token tradable. Removing it takes some or all of that market away again. It is a normal tool for adjusting a position, and also the action buyers watch most closely. This guide covers both sides.</p>
+<h2 id="what-removing-liquidity-does">What removing liquidity does</h2>
+<p>When you added liquidity, the pool gave you <strong>LP tokens</strong>. They represent your share of the pool. <a href="https://docs.raydium.io/user-flows/choosing-a-pool-type" target="_blank" rel="noopener noreferrer">Raydium&#x27;s documentation</a> explains that to exit, you burn LP tokens and receive your proportional share of the pool&#x27;s reserves, including the trading fees the pool has earned.</p>
+<p>So you don&#x27;t get back &quot;your deposit&quot;. You get back your <strong>share of whatever the pool holds now</strong>.</p>
+<h2 id="why-the-amounts-change">Why the amounts change</h2>
+<p>Trades change what a pool holds. If people bought your token, the pool now has fewer tokens and more SOL. If they sold, it has more tokens and less SOL.</p>
+<p>A simple illustration: you created a pool with 100,000,000 tokens and 10 SOL and own all of it. After net buying, the pool holds 80,000,000 tokens and 12.5 SOL. Removing 100% returns about 80,000,000 tokens and 12.5 SOL, plus any fees, not the original amounts.</p>
+<figure><img src="/blog/img/how-to-remove-liquidity-1.webp" alt="A pool that started at 100M tokens and 10 SOL and, after net buying, returns 80M tokens and 12.5 SOL when fully withdrawn." loading="lazy" decoding="async"><figcaption>Illustrative constant-product numbers. Trading fees add a little on top.</figcaption></figure>
+<h2 id="what-buyers-see">What buyers see</h2>
+<p>Removing liquidity makes the pool smaller, and that is visible to everyone.</p>
+<ul><li><strong>Partial removal</strong> leaves a thinner market. The same buy or sell moves the price more. In the example above, a 1 SOL buy into a 10 SOL pool has about 9.1% price impact. Remove a quarter of the pool and the same buy has about 11.8%.</li><li><strong>Full removal</strong> empties the pool. Nobody can trade the token there anymore, and scanners flag a missing pair. DegenKit&#x27;s Scanner, for example, lowers the score when no pair is found.</li></ul>
+<p>Pulling all liquidity right after people bought is the classic rug-pull pattern. That is why buyers look for locked or burned LP tokens, and why unlocked liquidity is something to explain, not hide.</p>
+<figure><img src="/blog/img/how-to-remove-liquidity-2.webp" alt="What partial and full removal do to a pool&#x27;s depth and to the price impact of a 1 SOL buy." loading="lazy" decoding="async"><figcaption>Illustrative constant-product math, before fees. Thin pools make every trade move the price more.</figcaption></figure>
+<aside class="callout warning"><strong>Locked means locked</strong><p>If your LP tokens are locked or burned, you cannot remove that liquidity. That is the point of locking, so decide before you lock.</p></aside>
+<h2 id="removing-liquidity-on-degenkit">Removing liquidity on DegenKit</h2>
+<p>DegenKit&#x27;s <strong>Remove Liquidity</strong> tool works with Raydium standard (CPMM) pools.</p>
+<ol><li><strong>Connect the wallet that holds the LP tokens.</strong> The tool lists your Raydium pools with the estimated amounts on each side and your share of the pool. If a new pool isn&#x27;t listed yet, paste its pool ID.</li><li><strong>Choose how much to remove:</strong> 25%, 50%, 75% or 100% of your position.</li><li><strong>Set slippage tolerance:</strong> 0.5%, 1% or 3%; 1% is selected by default. It protects you if the pool changes while your transaction confirms.</li><li><strong>Review and sign.</strong> The tool shows what you should receive and a 0.02 SOL service fee. Withdrawn SOL arrives as regular SOL.</li></ol>
+<figure><video src="/blog/img/how-to-remove-liquidity-demo.mp4" autoplay loop muted playsinline preload="metadata" aria-label="Pools are found from the wallet&#x27;s LP tokens, a percentage is chosen, the estimate and fee are reviewed, and tokens and SOL return to the wallet."></video></figure>
+<h2 id="doing-it-openly">Doing it openly</h2>
+<p>If you need to adjust liquidity, say so before you do it and share the transaction afterwards. Explain the reason, the amount and what you plan next, such as moving to a different pair or rebalancing. A clear note turns a scary on-chain event into a known one.</p>
+<h2 id="questions-people-ask">Questions people ask</h2>
+<h3 id="can-i-remove-only-part-of-my-position">Can I remove only part of my position?</h3>
+<p>Yes. Choose 25%, 50% or 75%, and the rest stays in the pool earning its share of fees.</p>
+<h3 id="do-i-need-the-lp-tokens">Do I need the LP tokens?</h3>
+<p>Yes. Only the wallet that holds the LP tokens can withdraw. If they are lost or locked, so is that liquidity.</p>
+<h2 id="wrap-up">Wrap up</h2>
+<p>Removing liquidity burns LP tokens and returns your share of the pool as it stands now. It thins or empties the market, and buyers notice. Use it carefully, communicate first and publish the transaction. <a href="https://degenkit.app/launch/solana/">Open Remove Liquidity on DegenKit</a> when you are ready.</p>
+    </div>
+    <div class="share">
+      <b>Share this post</b>
+      <div class="share-btns">
+        <a class="s-x" href="https://x.com/intent/post?text=How%20to%20Remove%20Liquidity%20from%20a%20Raydium%20Pool%20%28and%20What%20Buyers%20See%29%20%E2%80%94%20via%20%40DegenKitApp&amp;url=https%3A%2F%2Fdegenkit.app%2Fblog%2Fhow-to-remove-liquidity%2F" target="_blank" rel="noopener noreferrer">Share on 𝕏</a>
+        <button class="s-copy" type="button" data-copy="https://degenkit.app/blog/how-to-remove-liquidity/">Copy link</button>
+      </div>
+    </div>
+    <aside class="cta">
+      <div><h3>Ready to launch your token?</h3><p>Pick a network, set the details, sign once. No code.</p></div>
+      <a class="btn-launch" href="/launch/">Launch App</a>
+    </aside>
+  </article>
+  <section class="related"><h3>Keep reading</h3><div class="grid"><a class="card" href="/blog/sol-or-usdc-liquidity-pair/">
+  <div class="cover"><img src="/blog/img/sol-or-usdc-liquidity-pair-cover.webp" alt="Two pool cards side by side, one pairing a token with SOL and the other with USDC." loading="lazy" decoding="async"></div>
+  <div class="c-body">
+    <div class="c-meta"><span class="chip">Guide</span><span class="chip">Liquidity</span><span class="chip">Solana</span><span>October 30, 2026</span></div>
+    <h2>SOL or USDC: Choosing the Pair for Your Liquidity Pool</h2>
+    <p>Your token&#x27;s pool pairs it with either SOL or USDC. That choice decides what your price is measured in, what buyers need, and how the dollar value moves. Here is how to choose.</p>
+  </div>
+</a><a class="card" href="/blog/creating-a-token-vs-adding-liquidity/">
+  <div class="cover"><img src="/blog/img/creating-a-token-vs-adding-liquidity-cover.webp" alt="A new token on one side and a token–SOL liquidity pool on the other, joined by a step labeled add liquidity." loading="lazy" decoding="async"></div>
+  <div class="c-body">
+    <div class="c-meta"><span class="chip">Guide</span><span class="chip">Liquidity</span><span class="chip">Solana</span><span>October 29, 2026</span></div>
+    <h2>Creating a Token vs. Adding Liquidity: Two Different Milestones</h2>
+    <p>A new token cannot be traded until a liquidity pool exists. Learn what a pool is, how the starting price is set, what LP tokens do and what locking or burning them means.</p>
+  </div>
+</a><a class="card" href="/blog/market-cap-vs-fdv-explained/">
+  <div class="cover"><img src="/blog/img/market-cap-vs-fdv-explained-cover.webp" alt="A token page showing price, market cap and FDV side by side, with the pool&#x27;s liquidity shown separately below." loading="lazy" decoding="async"></div>
+  <div class="c-body">
+    <div class="c-meta"><span class="chip">Guide</span><span class="chip">Tokenomics</span><span class="chip">Liquidity</span><span>October 30, 2026</span></div>
+    <h2>Price, Market Cap and FDV: What the Numbers on a Token Page Mean</h2>
+    <p>Price, market cap and fully diluted valuation are calculated from the same few inputs, yet they answer different questions. Learn how each is worked out and what none of them tells you.</p>
+  </div>
+</a></div></section>
+</main>
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="logo"><img src="/assets/icon.png" alt="" class="logo-icon"><span class="logo-text">DegenKit</span></div>
+        <p>Token creation, without the guesswork. Launch on Solana, Ethereum, BNB Chain, Base and Robinhood Chain.</p>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col"><h4>Site</h4><a href="/">Home</a><a href="/launch/">Launch App</a><a href="/blog/">Blog</a></div>
+        <div class="footer-col"><h4>Legal</h4><a href="/terms/">Terms &amp; Conditions</a><a href="/privacy/">Privacy Policy</a></div>
+        <div class="footer-col"><h4>Help</h4><a href="/support/">Support</a></div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 DegenKit. All rights reserved.</p>
+      <div class="footer-socials"><a class="social-icn" href="https://x.com/DegenKitApp" target="_blank" rel="noopener" aria-label="X / Twitter">𝕏</a></div>
+    </div>
+  </div>
+</footer>
+<script>
+(function(){var r=document.documentElement,b=document.getElementById('themeToggle');
+if(b)b.addEventListener('click',function(){var n=r.getAttribute('data-theme')==='light'?'dark':'light';r.setAttribute('data-theme',n);try{localStorage.setItem('degenkit-theme',n)}catch(e){}});
+document.querySelectorAll('[data-copy]').forEach(function(el){el.addEventListener('click',function(){var u=el.getAttribute('data-copy'),t=el.textContent;
+(navigator.clipboard?navigator.clipboard.writeText(u):Promise.reject()).then(function(){el.textContent='Copied ✓';setTimeout(function(){el.textContent=t},1600)}).catch(function(){window.prompt('Copy link',u)})})});})();
+</script>
+</body>
+</html>
