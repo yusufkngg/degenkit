@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18369032243"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-18369032243');
+</script>
+<!-- X Pixel base code -->
+<script>
+!function(e,t,n,s,u,a){e.twq||(s=e.twq=function(){s.exe?s.exe.apply(s,arguments):s.queue.push(arguments);
+},s.version='1.1',s.queue=[],u=t.createElement(n),u.async=!0,u.src='https://static.ads-twitter.com/uwt.js',
+a=t.getElementsByTagName(n)[0],a.parentNode.insertBefore(u,a))}(window,document,'script');
+twq('config','rfyik');
+</script>
+<!-- End X Pixel base code -->
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Token Approvals Explained: What You Allow and How to Revoke It | DegenKit Blog</title>
+<meta name="description" content="Before a DEX can move your ERC-20 tokens, you approve it. Learn what an approval is, why unlimited approvals carry risk, and how to check and revoke them.">
+<link rel="canonical" href="https://degenkit.app/blog/erc20-token-approvals-explained/">
+<link rel="alternate" type="application/rss+xml" title="DegenKit Blog" href="/blog/rss.xml">
+<link rel="icon" type="image/png" href="/assets/favicon.png">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#0B0B0E">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-10-30">
+<meta property="article:modified_time" content="2026-10-30">
+<meta property="og:image:alt" content="A wallet approval request showing a spender, a token and an allowance amount, next to a list of approvals with a revoke button.">
+<meta property="article:tag" content="Guide">
+<meta property="article:tag" content="Safety">
+<meta property="article:tag" content="Ethereum">
+<meta property="og:site_name" content="DegenKit">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Token Approvals Explained: What You Allow and How to Revoke It | DegenKit Blog">
+<meta property="og:description" content="Before a DEX can move your ERC-20 tokens, you approve it. Learn what an approval is, why unlimited approvals carry risk, and how to check and revoke them.">
+<meta property="og:url" content="https://degenkit.app/blog/erc20-token-approvals-explained/">
+<meta property="og:image" content="https://degenkit.app/blog/img/erc20-token-approvals-explained-cover.webp">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@DegenKitApp">
+<meta name="twitter:title" content="Token Approvals Explained: What You Allow and How to Revoke It | DegenKit Blog">
+<meta name="twitter:description" content="Before a DEX can move your ERC-20 tokens, you approve it. Learn what an approval is, why unlimited approvals carry risk, and how to check and revoke them.">
+<meta name="twitter:image" content="https://degenkit.app/blog/img/erc20-token-approvals-explained-cover.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/styles.css">
+<link rel="stylesheet" href="/assets/theme-icons.css">
+<link rel="stylesheet" href="/assets/blog.css">
+<script>try{var t=localStorage.getItem('degenkit-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Token Approvals Explained: What You Allow and How to Revoke It", "description": "Before a DEX can move your ERC-20 tokens, you approve it. Learn what an approval is, why unlimited approvals carry risk, and how to check and revoke them.", "datePublished": "2026-10-30", "dateModified": "2026-10-30", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://degenkit.app/blog/erc20-token-approvals-explained/"}, "url": "https://degenkit.app/blog/erc20-token-approvals-explained/", "inLanguage": "en", "image": "https://degenkit.app/blog/img/erc20-token-approvals-explained-cover.webp", "keywords": "Guide, Safety, Ethereum", "author": {"@type": "Organization", "name": "DegenKit", "url": "https://degenkit.app/"}, "publisher": {"@type": "Organization", "name": "DegenKit", "url": "https://degenkit.app/", "logo": {"@type": "ImageObject", "url": "https://degenkit.app/assets/icon.png"}}}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "DegenKit", "item": "https://degenkit.app/"}, {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://degenkit.app/blog/"}, {"@type": "ListItem", "position": 3, "name": "Token Approvals Explained: What You Allow and How to Revoke It", "item": "https://degenkit.app/blog/erc20-token-approvals-explained/"}]}</script>
+</head>
+<body>
+<header>
+  <div class="header-row">
+    <a class="logo" href="/"><img src="/assets/icon.png" alt="" class="logo-icon"><span class="logo-text">DegenKit</span></a>
+    <nav class="site-nav">
+      <a class="navlink" href="/#features">Features</a>
+      <a class="navlink" href="/#roadmap">Roadmap</a>
+      <a class="navlink" href="/blog/">Blog</a>
+      <a class="navlink" href="/#faq">FAQ</a>
+    </nav>
+    <div class="header-actions">
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light/dark theme" title="Toggle theme">◐</button>
+      <a class="btn-launch" href="/launch/">Launch App</a>
+    </div>
+  </div>
+</header>
+<main class="bwrap">
+  <article class="post">
+    <div class="p-head">
+      <nav aria-label="Breadcrumb"><a class="back" href="/blog/">← All posts</a></nav>
+      <div class="chips"><span class="chip">Guide</span><span class="chip">Safety</span><span class="chip">Ethereum</span></div>
+      <h1>Token Approvals Explained: What You Allow and How to Revoke It</h1>
+      <p class="lede">Before a DEX can move your ERC-20 tokens, you approve it. Learn what an approval is, why unlimited approvals carry risk, and how to check and revoke them.</p>
+      <div class="byline"><img src="/assets/icon.png" alt=""><span><b>DegenKit</b><i>October 30, 2026 · 4 min read</i></span></div>
+    </div>
+    <div class="cover hero"><img src="/blog/img/erc20-token-approvals-explained-cover.webp" alt="A wallet approval request showing a spender, a token and an allowance amount, next to a list of approvals with a revoke button." loading="lazy" decoding="async"></div>
+    <div class="prose">
+<p>The first time you sell a token on a DEX or add it to a pool, your wallet asks for an <strong>approval</strong>. It looks like a formality. It is actually a permission that stays in place after the trade, and it is worth understanding.</p>
+<h2 id="what-an-approval-is">What an approval is</h2>
+<p>The <a href="https://eips.ethereum.org/EIPS/eip-20" target="_blank" rel="noopener noreferrer">ERC-20 standard</a> defines three pieces:</p>
+<ul><li><strong>approve</strong> lets a <em>spender</em> (a contract or address) withdraw your tokens, multiple times, up to an amount you set.</li><li><strong>allowance</strong> returns how much that spender may still withdraw.</li><li><strong>transferFrom</strong> is what the spender calls to move tokens on your behalf.</li></ul>
+<p>A DEX router can&#x27;t take your tokens without this. That is why adding liquidity on Uniswap asks you to approve first, then confirm. <a href="https://support.uniswap.org/hc/en-us/articles/20915582427917" target="_blank" rel="noopener noreferrer">Uniswap&#x27;s v2 guide</a> notes the approval is its own step with its own network cost.</p>
+<figure><img src="/blog/img/erc20-token-approvals-explained-1.webp" alt="How an ERC-20 approval works: you approve a spender, the allowance is stored, and the spender can later move tokens up to that amount." loading="lazy" decoding="async"><figcaption>An approval is per token, per spender, per network. It stays until it&#x27;s used up or changed.</figcaption></figure>
+<h2 id="exact-vs-unlimited">Exact vs. unlimited</h2>
+<p>Many apps ask for an unlimited allowance so you don&#x27;t have to approve again. That&#x27;s convenient, but the permission stays open. If that contract is later exploited, or the approval was given to a malicious site, tokens up to the allowance can be taken without another prompt from you.</p>
+<p>An exact approval covers only what you are about to do. It costs one extra approval next time.</p>
+<aside class="callout warning"><strong>Read the spender</strong><p>Before approving, check the spender&#x27;s address and the amount in your wallet. A site you don&#x27;t recognize asking to approve your tokens is a red flag.</p></aside>
+<figure><video src="/blog/img/erc20-token-approvals-explained-demo.mp4" autoplay loop muted playsinline preload="metadata" aria-label="A wallet shows an approval request, an exact amount is chosen, the trade uses it, and later an old unlimited approval is found and revoked."></video></figure>
+<h2 id="how-to-check-and-revoke">How to check and revoke</h2>
+<p>On Ethereum, <a href="https://etherscan.io/TOKENAPPROVALCHECKER" target="_blank" rel="noopener noreferrer">Etherscan&#x27;s Token Approval Checker</a> lists the contracts approved to spend your tokens and how much is at risk. Connect your wallet, select the approvals you no longer need and choose <strong>Revoke Selected</strong>.</p>
+<p>A few facts to keep in mind:</p>
+<ul><li><strong>Revoking costs gas.</strong> <a href="https://support.opensea.io/en/articles/8867133-how-can-i-revoke-token-approvals-and-permissions-on-ethereum" target="_blank" rel="noopener noreferrer">OpenSea&#x27;s help article</a> notes that both approving and revoking require a network fee.</li><li><strong>Revoking sets the allowance to zero.</strong> It does not move any tokens.</li><li><strong>Approvals are per network.</strong> An approval on Ethereum is separate from one on Robinhood Chain. Use a tool that supports the network you are checking.</li></ul>
+<figure><img src="/blog/img/erc20-token-approvals-explained-2.webp" alt="A short routine for approvals: approve exact amounts, review the spender, check regularly and revoke what you no longer use." loading="lazy" decoding="async"><figcaption>Four habits that limit what any single approval can cost you.</figcaption></figure>
+<h2 id="for-token-creators">For token creators</h2>
+<p>Creating a token on DegenKit is a single transaction to the factory; it doesn&#x27;t need an approval. Approvals come later, when you add liquidity or move tokens through other apps. After your launch setup is done, it is worth reviewing what you approved from the creator wallet, since it usually holds a large share of the supply.</p>
+<h2 id="questions-people-ask">Questions people ask</h2>
+<h3 id="does-revoking-cancel-a-past-trade">Does revoking cancel a past trade?</h3>
+<p>No. It only stops future transfers by that spender.</p>
+<h3 id="why-does-my-wallet-sometimes-ask-me-to-sign-instead-of-approve">Why does my wallet sometimes ask me to sign instead of approve?</h3>
+<p>Some apps use signed permits. Uniswap v4, for example, asks for a Permit2 signature with no network cost alongside a normal approval. Read what you are signing as carefully as an approval.</p>
+<h2 id="wrap-up">Wrap up</h2>
+<p>An approval lets a contract move your tokens up to an allowance, and it stays until used or revoked. Prefer exact amounts, check the spender, and revoke what you no longer use. Then <a href="https://degenkit.app/launch/ethereum/">create your token on Ethereum</a> or <a href="https://degenkit.app/launch/robinhood/">Robinhood Chain</a> with a clean setup.</p>
+    </div>
+    <div class="share">
+      <b>Share this post</b>
+      <div class="share-btns">
+        <a class="s-x" href="https://x.com/intent/post?text=Token%20Approvals%20Explained%3A%20What%20You%20Allow%20and%20How%20to%20Revoke%20It%20%E2%80%94%20via%20%40DegenKitApp&amp;url=https%3A%2F%2Fdegenkit.app%2Fblog%2Ferc20-token-approvals-explained%2F" target="_blank" rel="noopener noreferrer">Share on 𝕏</a>
+        <button class="s-copy" type="button" data-copy="https://degenkit.app/blog/erc20-token-approvals-explained/">Copy link</button>
+      </div>
+    </div>
+    <aside class="cta">
+      <div><h3>Ready to launch your token?</h3><p>Pick a network, set the details, sign once. No code.</p></div>
+      <a class="btn-launch" href="/launch/">Launch App</a>
+    </aside>
+  </article>
+  <section class="related"><h3>Keep reading</h3><div class="grid"><a class="card" href="/blog/read-token-page-etherscan-blockscout/">
+  <div class="cover"><img src="/blog/img/read-token-page-etherscan-blockscout-cover.webp" alt="An explorer token page with supply, holders and transfers, and a Read Contract panel showing the tax rates." loading="lazy" decoding="async"></div>
+  <div class="c-body">
+    <div class="c-meta"><span class="chip">Guide</span><span class="chip">Safety</span><span class="chip">Ethereum</span><span>October 30, 2026</span></div>
+    <h2>How to Read a Token Page on Etherscan and Blockscout</h2>
+    <p>A block explorer shows a token&#x27;s supply, holders, transfers and contract. Learn where each lives on Etherscan and Blockscout, and how to check a tax token&#x27;s settings yourself.</p>
+  </div>
+</a><a class="card" href="/blog/add-liquidity-uniswap-erc20/">
+  <div class="cover"><img src="/blog/img/add-liquidity-uniswap-erc20-cover.webp" alt="A Uniswap-style new position screen pairing a new token with ETH, with the resulting pool card beside it." loading="lazy" decoding="async"></div>
+  <div class="c-body">
+    <div class="c-meta"><span class="chip">Guide</span><span class="chip">Liquidity</span><span class="chip">Ethereum</span><span>October 30, 2026</span></div>
+    <h2>How to Add Liquidity for a New Token on Uniswap</h2>
+    <p>Your ERC-20 needs a pool before anyone can trade it. Learn how to create one on Uniswap on Ethereum or Robinhood Chain, which version fits a tax token, and what you receive.</p>
+  </div>
+</a><a class="card" href="/blog/create-erc20-token-on-ethereum/">
+  <div class="cover"><img src="/blog/img/create-erc20-token-on-ethereum-cover.webp" alt="An Ethereum token creator form next to a finished ERC-20 token card showing a fixed supply." loading="lazy" decoding="async"></div>
+  <div class="c-body">
+    <div class="c-meta"><span class="chip">Guide</span><span class="chip">Ethereum</span><span class="chip">Token Launch</span><span>October 30, 2026</span></div>
+    <h2>How to Create an ERC-20 Token on Ethereum Without Coding</h2>
+    <p>A step-by-step guide to creating an ERC-20 token on Ethereum mainnet — wallet, ETH for gas, plain or tax token, and how to check the result on Etherscan.</p>
+  </div>
+</a></div></section>
+</main>
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="logo"><img src="/assets/icon.png" alt="" class="logo-icon"><span class="logo-text">DegenKit</span></div>
+        <p>Token creation, without the guesswork. Launch on Solana, Ethereum, BNB Chain, Base and Robinhood Chain.</p>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col"><h4>Site</h4><a href="/">Home</a><a href="/launch/">Launch App</a><a href="/blog/">Blog</a></div>
+        <div class="footer-col"><h4>Legal</h4><a href="/terms/">Terms &amp; Conditions</a><a href="/privacy/">Privacy Policy</a></div>
+        <div class="footer-col"><h4>Help</h4><a href="/support/">Support</a></div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 DegenKit. All rights reserved.</p>
+      <div class="footer-socials"><a class="social-icn" href="https://x.com/DegenKitApp" target="_blank" rel="noopener" aria-label="X / Twitter">𝕏</a></div>
+    </div>
+  </div>
+</footer>
+<script>
+(function(){var r=document.documentElement,b=document.getElementById('themeToggle');
+if(b)b.addEventListener('click',function(){var n=r.getAttribute('data-theme')==='light'?'dark':'light';r.setAttribute('data-theme',n);try{localStorage.setItem('degenkit-theme',n)}catch(e){}});
+document.querySelectorAll('[data-copy]').forEach(function(el){el.addEventListener('click',function(){var u=el.getAttribute('data-copy'),t=el.textContent;
+(navigator.clipboard?navigator.clipboard.writeText(u):Promise.reject()).then(function(){el.textContent='Copied ✓';setTimeout(function(){el.textContent=t},1600)}).catch(function(){window.prompt('Copy link',u)})})});})();
+</script>
+</body>
+</html>

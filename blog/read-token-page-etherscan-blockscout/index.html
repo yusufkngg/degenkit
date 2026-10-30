@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18369032243"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-18369032243');
+</script>
+<!-- X Pixel base code -->
+<script>
+!function(e,t,n,s,u,a){e.twq||(s=e.twq=function(){s.exe?s.exe.apply(s,arguments):s.queue.push(arguments);
+},s.version='1.1',s.queue=[],u=t.createElement(n),u.async=!0,u.src='https://static.ads-twitter.com/uwt.js',
+a=t.getElementsByTagName(n)[0],a.parentNode.insertBefore(u,a))}(window,document,'script');
+twq('config','rfyik');
+</script>
+<!-- End X Pixel base code -->
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>How to Read a Token Page on Etherscan and Blockscout | DegenKit Blog</title>
+<meta name="description" content="A block explorer shows a token&#x27;s supply, holders, transfers and contract. Learn where each lives on Etherscan and Blockscout, and how to check a tax token&#x27;s settings yourself.">
+<link rel="canonical" href="https://degenkit.app/blog/read-token-page-etherscan-blockscout/">
+<link rel="alternate" type="application/rss+xml" title="DegenKit Blog" href="/blog/rss.xml">
+<link rel="icon" type="image/png" href="/assets/favicon.png">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#0B0B0E">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-10-30">
+<meta property="article:modified_time" content="2026-10-30">
+<meta property="og:image:alt" content="An explorer token page with supply, holders and transfers, and a Read Contract panel showing the tax rates.">
+<meta property="article:tag" content="Guide">
+<meta property="article:tag" content="Safety">
+<meta property="article:tag" content="Ethereum">
+<meta property="og:site_name" content="DegenKit">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How to Read a Token Page on Etherscan and Blockscout | DegenKit Blog">
+<meta property="og:description" content="A block explorer shows a token&#x27;s supply, holders, transfers and contract. Learn where each lives on Etherscan and Blockscout, and how to check a tax token&#x27;s settings yourself.">
+<meta property="og:url" content="https://degenkit.app/blog/read-token-page-etherscan-blockscout/">
+<meta property="og:image" content="https://degenkit.app/blog/img/read-token-page-etherscan-blockscout-cover.webp">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@DegenKitApp">
+<meta name="twitter:title" content="How to Read a Token Page on Etherscan and Blockscout | DegenKit Blog">
+<meta name="twitter:description" content="A block explorer shows a token&#x27;s supply, holders, transfers and contract. Learn where each lives on Etherscan and Blockscout, and how to check a tax token&#x27;s settings yourself.">
+<meta name="twitter:image" content="https://degenkit.app/blog/img/read-token-page-etherscan-blockscout-cover.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/styles.css">
+<link rel="stylesheet" href="/assets/theme-icons.css">
+<link rel="stylesheet" href="/assets/blog.css">
+<script>try{var t=localStorage.getItem('degenkit-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "How to Read a Token Page on Etherscan and Blockscout", "description": "A block explorer shows a token's supply, holders, transfers and contract. Learn where each lives on Etherscan and Blockscout, and how to check a tax token's settings yourself.", "datePublished": "2026-10-30", "dateModified": "2026-10-30", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://degenkit.app/blog/read-token-page-etherscan-blockscout/"}, "url": "https://degenkit.app/blog/read-token-page-etherscan-blockscout/", "inLanguage": "en", "image": "https://degenkit.app/blog/img/read-token-page-etherscan-blockscout-cover.webp", "keywords": "Guide, Safety, Ethereum", "author": {"@type": "Organization", "name": "DegenKit", "url": "https://degenkit.app/"}, "publisher": {"@type": "Organization", "name": "DegenKit", "url": "https://degenkit.app/", "logo": {"@type": "ImageObject", "url": "https://degenkit.app/assets/icon.png"}}}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "DegenKit", "item": "https://degenkit.app/"}, {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://degenkit.app/blog/"}, {"@type": "ListItem", "position": 3, "name": "How to Read a Token Page on Etherscan and Blockscout", "item": "https://degenkit.app/blog/read-token-page-etherscan-blockscout/"}]}</script>
+</head>
+<body>
+<header>
+  <div class="header-row">
+    <a class="logo" href="/"><img src="/assets/icon.png" alt="" class="logo-icon"><span class="logo-text">DegenKit</span></a>
+    <nav class="site-nav">
+      <a class="navlink" href="/#features">Features</a>
+      <a class="navlink" href="/#roadmap">Roadmap</a>
+      <a class="navlink" href="/blog/">Blog</a>
+      <a class="navlink" href="/#faq">FAQ</a>
+    </nav>
+    <div class="header-actions">
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light/dark theme" title="Toggle theme">◐</button>
+      <a class="btn-launch" href="/launch/">Launch App</a>
+    </div>
+  </div>
+</header>
+<main class="bwrap">
+  <article class="post">
+    <div class="p-head">
+      <nav aria-label="Breadcrumb"><a class="back" href="/blog/">← All posts</a></nav>
+      <div class="chips"><span class="chip">Guide</span><span class="chip">Safety</span><span class="chip">Ethereum</span></div>
+      <h1>How to Read a Token Page on Etherscan and Blockscout</h1>
+      <p class="lede">A block explorer shows a token&#x27;s supply, holders, transfers and contract. Learn where each lives on Etherscan and Blockscout, and how to check a tax token&#x27;s settings yourself.</p>
+      <div class="byline"><img src="/assets/icon.png" alt=""><span><b>DegenKit</b><i>October 30, 2026 · 4 min read</i></span></div>
+    </div>
+    <div class="cover hero"><img src="/blog/img/read-token-page-etherscan-blockscout-cover.webp" alt="An explorer token page with supply, holders and transfers, and a Read Contract panel showing the tax rates." loading="lazy" decoding="async"></div>
+    <div class="prose">
+<p>Every EVM token has a public page on a block explorer. On Ethereum that is usually <strong>Etherscan</strong>. On Robinhood Chain it is <strong>Blockscout</strong>. The page answers most of the questions buyers ask, if you know where to look.</p>
+<h2 id="first-the-right-explorer">First, the right explorer</h2>
+<p>A token address only means something on its own network. Ethereum tokens are at <a href="https://etherscan.io" target="_blank" rel="noopener noreferrer">etherscan.io</a>. Robinhood Chain tokens are at <a href="https://robinhoodchain.blockscout.com" target="_blank" rel="noopener noreferrer">robinhoodchain.blockscout.com</a>. DegenKit links to the right one after you create a token and in My Tokens.</p>
+<h2 id="the-overview">The overview</h2>
+<p><a href="https://info.etherscan.com/understanding-token-page" target="_blank" rel="noopener noreferrer">Etherscan&#x27;s guide to the token page</a> describes the top section: name, symbol, the max total supply, the number of holders and the number of transfers. Blockscout shows the same basics.</p>
+<p>Check:</p>
+<ul><li><strong>Max total supply</strong> matches what the creator announced.</li><li><strong>Decimals</strong> are 18 for DegenKit EVM tokens.</li><li><strong>Holders</strong> is a reasonable number for how long the token has existed.</li></ul>
+<figure><img src="/blog/img/read-token-page-etherscan-blockscout-1.webp" alt="Where the key facts sit on a token page: overview, holders, transfers and contract." loading="lazy" decoding="async"><figcaption>Layouts differ slightly between explorers, but the same four areas are always there.</figcaption></figure>
+<h2 id="holders">Holders</h2>
+<p>The <strong>Holders</strong> tab lists every holder in order of the amount they hold. Look for:</p>
+<ul><li>The <strong>pool&#x27;s pair address</strong>, usually among the largest.</li><li>The <strong>creator wallet</strong> and how much it still holds.</li><li>Several similar-sized holders that appeared at the same time.</li></ul>
+<h2 id="transfers">Transfers</h2>
+<p>The <strong>Transfers</strong> tab shows every movement in time order. You can see when the supply left the creator, when liquidity was added and how buyers arrived. You can filter by address or transaction hash.</p>
+<h2 id="the-contract">The contract</h2>
+<p>The <strong>Contract</strong> tab shows the source code, when it has been verified, and the contract&#x27;s <strong>Read</strong> and <strong>Write</strong> functions. Read functions show stored values without a transaction.</p>
+<p>For a DegenKit tax token, read:</p>
+<ul><li><code>owner</code> — the zero address means ownership was renounced.</li><li><code>buyTaxBps</code> and <code>sellTaxBps</code> — rates in basis points, so 300 is 3%.</li><li><code>taxWallet</code> — where the tax goes.</li></ul>
+<figure><video src="/blog/img/read-token-page-etherscan-blockscout-demo.mp4" autoplay loop muted playsinline preload="metadata" aria-label="A token page is opened, the supply and holders are checked, the transfers are filtered, and the tax rates and owner are read from the contract."></video></figure>
+<aside class="callout tip"><strong>Read, don&#x27;t write</strong><p>You never need to connect a wallet to read a contract. Only connect for a write function you fully understand.</p></aside>
+<h2 id="logos-and-project-info">Logos and project info</h2>
+<p>Explorers add logos and links separately from the contract. <a href="https://docs.blockscout.com/using-blockscout/overviews/token-info" target="_blank" rel="noopener noreferrer">Blockscout&#x27;s documentation</a> explains that it takes market data from CoinGecko and CoinMarketCap, and accepts owner-submitted updates only after the contract source is verified and ownership is proven. A missing logo on a new token is normal. A logo is not proof of safety either.</p>
+<figure><img src="/blog/img/read-token-page-etherscan-blockscout-2.webp" alt="A checklist for a token page: right network, supply, decimals, holders, pool, owner and tax settings." loading="lazy" decoding="async"><figcaption>Ten minutes on the explorer answers most questions before you buy.</figcaption></figure>
+<h2 id="questions-people-ask">Questions people ask</h2>
+<h3 id="what-does-not-verified-mean">What does &quot;not verified&quot; mean?</h3>
+<p>The explorer has not been given the source code that matches the deployed bytecode, so it can&#x27;t show it. The token can still work; you just see less.</p>
+<h3 id="why-does-the-explorer-show-a-different-name-from-the-chart-site">Why does the explorer show a different name from the chart site?</h3>
+<p>Chart sites and explorers get logos and names from different sources. The contract address is what matters.</p>
+<h2 id="wrap-up">Wrap up</h2>
+<p>An explorer page shows supply, holders, transfers and the contract itself. On Ethereum use Etherscan, on Robinhood Chain use Blockscout, and for a tax token read the owner and rates yourself. Create or check your token from the <a href="https://degenkit.app/launch/ethereum/">Ethereum</a> or <a href="https://degenkit.app/launch/robinhood/">Robinhood Chain</a> launcher.</p>
+    </div>
+    <div class="share">
+      <b>Share this post</b>
+      <div class="share-btns">
+        <a class="s-x" href="https://x.com/intent/post?text=How%20to%20Read%20a%20Token%20Page%20on%20Etherscan%20and%20Blockscout%20%E2%80%94%20via%20%40DegenKitApp&amp;url=https%3A%2F%2Fdegenkit.app%2Fblog%2Fread-token-page-etherscan-blockscout%2F" target="_blank" rel="noopener noreferrer">Share on 𝕏</a>
+        <button class="s-copy" type="button" data-copy="https://degenkit.app/blog/read-token-page-etherscan-blockscout/">Copy link</button>
+      </div>
+    </div>
+    <aside class="cta">
+      <div><h3>Ready to launch your token?</h3><p>Pick a network, set the details, sign once. No code.</p></div>
+      <a class="btn-launch" href="/launch/">Launch App</a>
+    </aside>
+  </article>
+  <section class="related"><h3>Keep reading</h3><div class="grid"><a class="card" href="/blog/erc20-token-approvals-explained/">
+  <div class="cover"><img src="/blog/img/erc20-token-approvals-explained-cover.webp" alt="A wallet approval request showing a spender, a token and an allowance amount, next to a list of approvals with a revoke button." loading="lazy" decoding="async"></div>
+  <div class="c-body">
+    <div class="c-meta"><span class="chip">Guide</span><span class="chip">Safety</span><span class="chip">Ethereum</span><span>October 30, 2026</span></div>
+    <h2>Token Approvals Explained: What You Allow and How to Revoke It</h2>
+    <p>Before a DEX can move your ERC-20 tokens, you approve it. Learn what an approval is, why unlimited approvals carry risk, and how to check and revoke them.</p>
+  </div>
+</a><a class="card" href="/blog/add-liquidity-uniswap-erc20/">
+  <div class="cover"><img src="/blog/img/add-liquidity-uniswap-erc20-cover.webp" alt="A Uniswap-style new position screen pairing a new token with ETH, with the resulting pool card beside it." loading="lazy" decoding="async"></div>
+  <div class="c-body">
+    <div class="c-meta"><span class="chip">Guide</span><span class="chip">Liquidity</span><span class="chip">Ethereum</span><span>October 30, 2026</span></div>
+    <h2>How to Add Liquidity for a New Token on Uniswap</h2>
+    <p>Your ERC-20 needs a pool before anyone can trade it. Learn how to create one on Uniswap on Ethereum or Robinhood Chain, which version fits a tax token, and what you receive.</p>
+  </div>
+</a><a class="card" href="/blog/create-erc20-token-on-ethereum/">
+  <div class="cover"><img src="/blog/img/create-erc20-token-on-ethereum-cover.webp" alt="An Ethereum token creator form next to a finished ERC-20 token card showing a fixed supply." loading="lazy" decoding="async"></div>
+  <div class="c-body">
+    <div class="c-meta"><span class="chip">Guide</span><span class="chip">Ethereum</span><span class="chip">Token Launch</span><span>October 30, 2026</span></div>
+    <h2>How to Create an ERC-20 Token on Ethereum Without Coding</h2>
+    <p>A step-by-step guide to creating an ERC-20 token on Ethereum mainnet — wallet, ETH for gas, plain or tax token, and how to check the result on Etherscan.</p>
+  </div>
+</a></div></section>
+</main>
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="logo"><img src="/assets/icon.png" alt="" class="logo-icon"><span class="logo-text">DegenKit</span></div>
+        <p>Token creation, without the guesswork. Launch on Solana, Ethereum, BNB Chain, Base and Robinhood Chain.</p>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col"><h4>Site</h4><a href="/">Home</a><a href="/launch/">Launch App</a><a href="/blog/">Blog</a></div>
+        <div class="footer-col"><h4>Legal</h4><a href="/terms/">Terms &amp; Conditions</a><a href="/privacy/">Privacy Policy</a></div>
+        <div class="footer-col"><h4>Help</h4><a href="/support/">Support</a></div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 DegenKit. All rights reserved.</p>
+      <div class="footer-socials"><a class="social-icn" href="https://x.com/DegenKitApp" target="_blank" rel="noopener" aria-label="X / Twitter">𝕏</a></div>
+    </div>
+  </div>
+</footer>
+<script>
+(function(){var r=document.documentElement,b=document.getElementById('themeToggle');
+if(b)b.addEventListener('click',function(){var n=r.getAttribute('data-theme')==='light'?'dark':'light';r.setAttribute('data-theme',n);try{localStorage.setItem('degenkit-theme',n)}catch(e){}});
+document.querySelectorAll('[data-copy]').forEach(function(el){el.addEventListener('click',function(){var u=el.getAttribute('data-copy'),t=el.textContent;
+(navigator.clipboard?navigator.clipboard.writeText(u):Promise.reject()).then(function(){el.textContent='Copied ✓';setTimeout(function(){el.textContent=t},1600)}).catch(function(){window.prompt('Copy link',u)})})});})();
+</script>
+</body>
+</html>

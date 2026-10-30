@@ -11,9 +11,16 @@
   <url><loc>https://degenkit.app/terms/</loc><lastmod>2026-10-30</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
   <url><loc>https://degenkit.app/privacy/</loc><lastmod>2026-10-30</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
   <url><loc>https://degenkit.app/blog/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://degenkit.app/blog/add-liquidity-uniswap-erc20/</loc><lastmod>2026-10-30</lastmod><priority>0.6</priority></url>
+  <url><loc>https://degenkit.app/blog/create-erc20-token-on-ethereum/</loc><lastmod>2026-10-30</lastmod><priority>0.6</priority></url>
   <url><loc>https://degenkit.app/blog/dexscreener-and-coingecko-listing/</loc><lastmod>2026-10-30</lastmod><priority>0.6</priority></url>
+  <url><loc>https://degenkit.app/blog/erc20-token-approvals-explained/</loc><lastmod>2026-10-30</lastmod><priority>0.6</priority></url>
+  <url><loc>https://degenkit.app/blog/ethereum-gas-fees-explained/</loc><lastmod>2026-10-30</lastmod><priority>0.6</priority></url>
+  <url><loc>https://degenkit.app/blog/ethereum-vs-robinhood-chain/</loc><lastmod>2026-10-30</lastmod><priority>0.6</priority></url>
   <url><loc>https://degenkit.app/blog/how-to-remove-liquidity/</loc><lastmod>2026-10-30</lastmod><priority>0.6</priority></url>
+  <url><loc>https://degenkit.app/blog/manage-tax-token-renounce-ownership/</loc><lastmod>2026-10-30</lastmod><priority>0.6</priority></url>
   <url><loc>https://degenkit.app/blog/market-cap-vs-fdv-explained/</loc><lastmod>2026-10-30</lastmod><priority>0.6</priority></url>
+  <url><loc>https://degenkit.app/blog/read-token-page-etherscan-blockscout/</loc><lastmod>2026-10-30</lastmod><priority>0.6</priority></url>
   <url><loc>https://degenkit.app/blog/slippage-vs-price-impact/</loc><lastmod>2026-10-30</lastmod><priority>0.6</priority></url>
   <url><loc>https://degenkit.app/blog/sol-or-usdc-liquidity-pair/</loc><lastmod>2026-10-30</lastmod><priority>0.6</priority></url>
   <url><loc>https://degenkit.app/blog/creating-a-token-vs-adding-liquidity/</loc><lastmod>2026-10-29</lastmod><priority>0.6</priority></url>

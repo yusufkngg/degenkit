@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18369032243"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-18369032243');
+</script>
+<!-- X Pixel base code -->
+<script>
+!function(e,t,n,s,u,a){e.twq||(s=e.twq=function(){s.exe?s.exe.apply(s,arguments):s.queue.push(arguments);
+},s.version='1.1',s.queue=[],u=t.createElement(n),u.async=!0,u.src='https://static.ads-twitter.com/uwt.js',
+a=t.getElementsByTagName(n)[0],a.parentNode.insertBefore(u,a))}(window,document,'script');
+twq('config','rfyik');
+</script>
+<!-- End X Pixel base code -->
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Managing a Tax Token: Rates, Pools, Ownership and Renouncing | DegenKit Blog</title>
+<meta name="description" content="After you create a tax token, the owner can change rates, the tax wallet and the marked pools. Learn what each control does, what buyers check, and what renouncing ownership freezes.">
+<link rel="canonical" href="https://degenkit.app/blog/manage-tax-token-renounce-ownership/">
+<link rel="alternate" type="application/rss+xml" title="DegenKit Blog" href="/blog/rss.xml">
+<link rel="icon" type="image/png" href="/assets/favicon.png">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#0B0B0E">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-10-30">
+<meta property="article:modified_time" content="2026-10-30">
+<meta property="og:image:alt" content="A Manage tax panel with buy and sell rates, a marked pool address and a renounce ownership button.">
+<meta property="article:tag" content="Guide">
+<meta property="article:tag" content="Tax Token">
+<meta property="article:tag" content="Ethereum">
+<meta property="og:site_name" content="DegenKit">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Managing a Tax Token: Rates, Pools, Ownership and Renouncing | DegenKit Blog">
+<meta property="og:description" content="After you create a tax token, the owner can change rates, the tax wallet and the marked pools. Learn what each control does, what buyers check, and what renouncing ownership freezes.">
+<meta property="og:url" content="https://degenkit.app/blog/manage-tax-token-renounce-ownership/">
+<meta property="og:image" content="https://degenkit.app/blog/img/manage-tax-token-renounce-ownership-cover.webp">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@DegenKitApp">
+<meta name="twitter:title" content="Managing a Tax Token: Rates, Pools, Ownership and Renouncing | DegenKit Blog">
+<meta name="twitter:description" content="After you create a tax token, the owner can change rates, the tax wallet and the marked pools. Learn what each control does, what buyers check, and what renouncing ownership freezes.">
+<meta name="twitter:image" content="https://degenkit.app/blog/img/manage-tax-token-renounce-ownership-cover.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/styles.css">
+<link rel="stylesheet" href="/assets/theme-icons.css">
+<link rel="stylesheet" href="/assets/blog.css">
+<script>try{var t=localStorage.getItem('degenkit-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Managing a Tax Token: Rates, Pools, Ownership and Renouncing", "description": "After you create a tax token, the owner can change rates, the tax wallet and the marked pools. Learn what each control does, what buyers check, and what renouncing ownership freezes.", "datePublished": "2026-10-30", "dateModified": "2026-10-30", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://degenkit.app/blog/manage-tax-token-renounce-ownership/"}, "url": "https://degenkit.app/blog/manage-tax-token-renounce-ownership/", "inLanguage": "en", "image": "https://degenkit.app/blog/img/manage-tax-token-renounce-ownership-cover.webp", "keywords": "Guide, Tax Token, Ethereum", "author": {"@type": "Organization", "name": "DegenKit", "url": "https://degenkit.app/"}, "publisher": {"@type": "Organization", "name": "DegenKit", "url": "https://degenkit.app/", "logo": {"@type": "ImageObject", "url": "https://degenkit.app/assets/icon.png"}}}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "DegenKit", "item": "https://degenkit.app/"}, {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://degenkit.app/blog/"}, {"@type": "ListItem", "position": 3, "name": "Managing a Tax Token: Rates, Pools, Ownership and Renouncing", "item": "https://degenkit.app/blog/manage-tax-token-renounce-ownership/"}]}</script>
+</head>
+<body>
+<header>
+  <div class="header-row">
+    <a class="logo" href="/"><img src="/assets/icon.png" alt="" class="logo-icon"><span class="logo-text">DegenKit</span></a>
+    <nav class="site-nav">
+      <a class="navlink" href="/#features">Features</a>
+      <a class="navlink" href="/#roadmap">Roadmap</a>
+      <a class="navlink" href="/blog/">Blog</a>
+      <a class="navlink" href="/#faq">FAQ</a>
+    </nav>
+    <div class="header-actions">
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light/dark theme" title="Toggle theme">◐</button>
+      <a class="btn-launch" href="/launch/">Launch App</a>
+    </div>
+  </div>
+</header>
+<main class="bwrap">
+  <article class="post">
+    <div class="p-head">
+      <nav aria-label="Breadcrumb"><a class="back" href="/blog/">← All posts</a></nav>
+      <div class="chips"><span class="chip">Guide</span><span class="chip">Tax Token</span><span class="chip">Ethereum</span></div>
+      <h1>Managing a Tax Token: Rates, Pools, Ownership and Renouncing</h1>
+      <p class="lede">After you create a tax token, the owner can change rates, the tax wallet and the marked pools. Learn what each control does, what buyers check, and what renouncing ownership freezes.</p>
+      <div class="byline"><img src="/assets/icon.png" alt=""><span><b>DegenKit</b><i>October 30, 2026 · 4 min read</i></span></div>
+    </div>
+    <div class="cover hero"><img src="/blog/img/manage-tax-token-renounce-ownership-cover.webp" alt="A Manage tax panel with buy and sell rates, a marked pool address and a renounce ownership button." loading="lazy" decoding="async"></div>
+    <div class="prose">
+<p>A tax token keeps working after launch. On Ethereum, Robinhood Chain and DegenKit&#x27;s other EVM networks, the wallet that owns it can still adjust how the tax works. That flexibility is useful, and it is also exactly what buyers want to understand before they trust the token.</p>
+<p>If you are new to taxes, start with <a href="/blog/how-token-buy-sell-tax-works/">how buy and sell taxes work</a>.</p>
+<h2 id="where-the-controls-live">Where the controls live</h2>
+<p>Open <strong>My Tokens</strong> on the network&#x27;s launcher and connect the owner wallet. Each tax token shows its rates and owner. If your wallet is the owner, <strong>Manage tax</strong> opens five controls.</p>
+<figure><img src="/blog/img/manage-tax-token-renounce-ownership-1.webp" alt="The five controls in Manage tax: tax rates, liquidity pool, tax wallet, transfer ownership and renounce ownership." loading="lazy" decoding="async"><figcaption>Every change is a transaction from the owner wallet. Renouncing ends all of them.</figcaption></figure>
+<h2 id="1-tax-rates">1. Tax rates</h2>
+<p>Set the buy and sell tax anywhere from 0% to 100%; 0% turns that side off. DegenKit&#x27;s form warns that rates above 10% make buyers wary. A change applies to the next trade.</p>
+<h2 id="2-liquidity-pool">2. Liquidity pool</h2>
+<p>Taxes only apply to trades against pools you mark. After adding liquidity, paste the pair address and choose <strong>Mark as pool</strong>. You can also remove a pool from the list. Our guide to <a href="/blog/add-liquidity-uniswap-erc20/">adding liquidity on Uniswap</a> shows where to find that address.</p>
+<h2 id="3-tax-wallet">3. Tax wallet</h2>
+<p>The tax is paid in your token to the tax wallet. You can point it at a different address at any time.</p>
+<h2 id="4-transfer-ownership">4. Transfer ownership</h2>
+<p>Hands every control to a new address, such as a multisig. You lose control immediately. DegenKit warns that a wrong address can&#x27;t be recovered, so double-check it.</p>
+<h2 id="5-renounce-ownership">5. Renounce ownership</h2>
+<p>Sets the owner to nobody. The tax rates, tax wallet and marked pools are frozen forever. Nobody can change them afterwards, including you. My Tokens then shows the token as <strong>Ownership renounced · taxes frozen</strong>.</p>
+<aside class="callout warning"><strong>Order matters</strong><p>Renouncing freezes the pool list too. If you renounce before marking your pool, the tax will never apply to it. Add liquidity and mark the pool first.</p></aside>
+<figure><video src="/blog/img/manage-tax-token-renounce-ownership-demo.mp4" autoplay loop muted playsinline preload="metadata" aria-label="A pool is marked, the rates are reviewed, ownership is renounced after a confirmation, and the token shows as frozen."></video></figure>
+<h2 id="what-buyers-see">What buyers see</h2>
+<p>Anyone can read the contract on Etherscan or Blockscout. The buy and sell rates are stored in basis points, so 300 means 3%. If an owner exists, buyers know the rates could be raised later. A renounced token shows the zero address as owner.</p>
+<p>DegenKit&#x27;s tax token has no blacklist, no pause and no trading switch. The owner&#x27;s powers are limited to the controls above, but those still matter.</p>
+<figure><img src="/blog/img/manage-tax-token-renounce-ownership-2.webp" alt="What changes for buyers when an owner keeps control versus when ownership is renounced." loading="lazy" decoding="async"><figcaption>Keeping ownership keeps flexibility. Renouncing gives certainty. Both should be explained publicly.</figcaption></figure>
+<h2 id="keep-or-renounce">Keep or renounce?</h2>
+<p><strong>Keep ownership</strong> if you expect to lower taxes over time, add pools on other DEXs or change the tax wallet. Say publicly what you plan and why.</p>
+<p><strong>Renounce</strong> once the setup is final and you want buyers to know it can never change. Check the pools, rates and wallet carefully first.</p>
+<p><strong>Transfer to a multisig</strong> if you want flexibility but not one person holding the keys.</p>
+<h2 id="questions-people-ask">Questions people ask</h2>
+<h3 id="can-i-undo-a-renounce">Can I undo a renounce?</h3>
+<p>No. Once the owner is the zero address, no one can call the owner functions again.</p>
+<h3 id="does-changing-the-tax-wallet-move-tokens-already-collected">Does changing the tax wallet move tokens already collected?</h3>
+<p>No. It only changes where future tax goes.</p>
+<h2 id="wrap-up">Wrap up</h2>
+<p>A DegenKit tax token gives its owner five controls: rates, pools, tax wallet, transfer and renounce. Mark your pool before anything irreversible, explain your choices and share the transactions. Manage it from My Tokens on the <a href="https://degenkit.app/launch/ethereum/">Ethereum</a> or <a href="https://degenkit.app/launch/robinhood/">Robinhood Chain</a> launcher.</p>
+    </div>
+    <div class="share">
+      <b>Share this post</b>
+      <div class="share-btns">
+        <a class="s-x" href="https://x.com/intent/post?text=Managing%20a%20Tax%20Token%3A%20Rates%2C%20Pools%2C%20Ownership%20and%20Renouncing%20%E2%80%94%20via%20%40DegenKitApp&amp;url=https%3A%2F%2Fdegenkit.app%2Fblog%2Fmanage-tax-token-renounce-ownership%2F" target="_blank" rel="noopener noreferrer">Share on 𝕏</a>
+        <button class="s-copy" type="button" data-copy="https://degenkit.app/blog/manage-tax-token-renounce-ownership/">Copy link</button>
+      </div>
+    </div>
+    <aside class="cta">
+      <div><h3>Ready to launch your token?</h3><p>Pick a network, set the details, sign once. No code.</p></div>
+      <a class="btn-launch" href="/launch/">Launch App</a>
+    </aside>
+  </article>
+  <section class="related"><h3>Keep reading</h3><div class="grid"><a class="card" href="/blog/add-liquidity-uniswap-erc20/">
+  <div class="cover"><img src="/blog/img/add-liquidity-uniswap-erc20-cover.webp" alt="A Uniswap-style new position screen pairing a new token with ETH, with the resulting pool card beside it." loading="lazy" decoding="async"></div>
+  <div class="c-body">
+    <div class="c-meta"><span class="chip">Guide</span><span class="chip">Liquidity</span><span class="chip">Ethereum</span><span>October 30, 2026</span></div>
+    <h2>How to Add Liquidity for a New Token on Uniswap</h2>
+    <p>Your ERC-20 needs a pool before anyone can trade it. Learn how to create one on Uniswap on Ethereum or Robinhood Chain, which version fits a tax token, and what you receive.</p>
+  </div>
+</a><a class="card" href="/blog/create-erc20-token-on-ethereum/">
+  <div class="cover"><img src="/blog/img/create-erc20-token-on-ethereum-cover.webp" alt="An Ethereum token creator form next to a finished ERC-20 token card showing a fixed supply." loading="lazy" decoding="async"></div>
+  <div class="c-body">
+    <div class="c-meta"><span class="chip">Guide</span><span class="chip">Ethereum</span><span class="chip">Token Launch</span><span>October 30, 2026</span></div>
+    <h2>How to Create an ERC-20 Token on Ethereum Without Coding</h2>
+    <p>A step-by-step guide to creating an ERC-20 token on Ethereum mainnet — wallet, ETH for gas, plain or tax token, and how to check the result on Etherscan.</p>
+  </div>
+</a><a class="card" href="/blog/erc20-token-approvals-explained/">
+  <div class="cover"><img src="/blog/img/erc20-token-approvals-explained-cover.webp" alt="A wallet approval request showing a spender, a token and an allowance amount, next to a list of approvals with a revoke button." loading="lazy" decoding="async"></div>
+  <div class="c-body">
+    <div class="c-meta"><span class="chip">Guide</span><span class="chip">Safety</span><span class="chip">Ethereum</span><span>October 30, 2026</span></div>
+    <h2>Token Approvals Explained: What You Allow and How to Revoke It</h2>
+    <p>Before a DEX can move your ERC-20 tokens, you approve it. Learn what an approval is, why unlimited approvals carry risk, and how to check and revoke them.</p>
+  </div>
+</a></div></section>
+</main>
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="logo"><img src="/assets/icon.png" alt="" class="logo-icon"><span class="logo-text">DegenKit</span></div>
+        <p>Token creation, without the guesswork. Launch on Solana, Ethereum, BNB Chain, Base and Robinhood Chain.</p>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col"><h4>Site</h4><a href="/">Home</a><a href="/launch/">Launch App</a><a href="/blog/">Blog</a></div>
+        <div class="footer-col"><h4>Legal</h4><a href="/terms/">Terms &amp; Conditions</a><a href="/privacy/">Privacy Policy</a></div>
+        <div class="footer-col"><h4>Help</h4><a href="/support/">Support</a></div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 DegenKit. All rights reserved.</p>
+      <div class="footer-socials"><a class="social-icn" href="https://x.com/DegenKitApp" target="_blank" rel="noopener" aria-label="X / Twitter">𝕏</a></div>
+    </div>
+  </div>
+</footer>
+<script>
+(function(){var r=document.documentElement,b=document.getElementById('themeToggle');
+if(b)b.addEventListener('click',function(){var n=r.getAttribute('data-theme')==='light'?'dark':'light';r.setAttribute('data-theme',n);try{localStorage.setItem('degenkit-theme',n)}catch(e){}});
+document.querySelectorAll('[data-copy]').forEach(function(el){el.addEventListener('click',function(){var u=el.getAttribute('data-copy'),t=el.textContent;
+(navigator.clipboard?navigator.clipboard.writeText(u):Promise.reject()).then(function(){el.textContent='Copied ✓';setTimeout(function(){el.textContent=t},1600)}).catch(function(){window.prompt('Copy link',u)})})});})();
+</script>
+</body>
+</html>

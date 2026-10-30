@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18369032243"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-18369032243');
+</script>
+<!-- X Pixel base code -->
+<script>
+!function(e,t,n,s,u,a){e.twq||(s=e.twq=function(){s.exe?s.exe.apply(s,arguments):s.queue.push(arguments);
+},s.version='1.1',s.queue=[],u=t.createElement(n),u.async=!0,u.src='https://static.ads-twitter.com/uwt.js',
+a=t.getElementsByTagName(n)[0],a.parentNode.insertBefore(u,a))}(window,document,'script');
+twq('config','rfyik');
+</script>
+<!-- End X Pixel base code -->
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>How to Add Liquidity for a New Token on Uniswap | DegenKit Blog</title>
+<meta name="description" content="Your ERC-20 needs a pool before anyone can trade it. Learn how to create one on Uniswap on Ethereum or Robinhood Chain, which version fits a tax token, and what you receive.">
+<link rel="canonical" href="https://degenkit.app/blog/add-liquidity-uniswap-erc20/">
+<link rel="alternate" type="application/rss+xml" title="DegenKit Blog" href="/blog/rss.xml">
+<link rel="icon" type="image/png" href="/assets/favicon.png">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#0B0B0E">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-10-30">
+<meta property="article:modified_time" content="2026-10-30">
+<meta property="og:image:alt" content="A Uniswap-style new position screen pairing a new token with ETH, with the resulting pool card beside it.">
+<meta property="article:tag" content="Guide">
+<meta property="article:tag" content="Liquidity">
+<meta property="article:tag" content="Ethereum">
+<meta property="og:site_name" content="DegenKit">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How to Add Liquidity for a New Token on Uniswap | DegenKit Blog">
+<meta property="og:description" content="Your ERC-20 needs a pool before anyone can trade it. Learn how to create one on Uniswap on Ethereum or Robinhood Chain, which version fits a tax token, and what you receive.">
+<meta property="og:url" content="https://degenkit.app/blog/add-liquidity-uniswap-erc20/">
+<meta property="og:image" content="https://degenkit.app/blog/img/add-liquidity-uniswap-erc20-cover.webp">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@DegenKitApp">
+<meta name="twitter:title" content="How to Add Liquidity for a New Token on Uniswap | DegenKit Blog">
+<meta name="twitter:description" content="Your ERC-20 needs a pool before anyone can trade it. Learn how to create one on Uniswap on Ethereum or Robinhood Chain, which version fits a tax token, and what you receive.">
+<meta name="twitter:image" content="https://degenkit.app/blog/img/add-liquidity-uniswap-erc20-cover.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/styles.css">
+<link rel="stylesheet" href="/assets/theme-icons.css">
+<link rel="stylesheet" href="/assets/blog.css">
+<script>try{var t=localStorage.getItem('degenkit-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "How to Add Liquidity for a New Token on Uniswap", "description": "Your ERC-20 needs a pool before anyone can trade it. Learn how to create one on Uniswap on Ethereum or Robinhood Chain, which version fits a tax token, and what you receive.", "datePublished": "2026-10-30", "dateModified": "2026-10-30", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://degenkit.app/blog/add-liquidity-uniswap-erc20/"}, "url": "https://degenkit.app/blog/add-liquidity-uniswap-erc20/", "inLanguage": "en", "image": "https://degenkit.app/blog/img/add-liquidity-uniswap-erc20-cover.webp", "keywords": "Guide, Liquidity, Ethereum", "author": {"@type": "Organization", "name": "DegenKit", "url": "https://degenkit.app/"}, "publisher": {"@type": "Organization", "name": "DegenKit", "url": "https://degenkit.app/", "logo": {"@type": "ImageObject", "url": "https://degenkit.app/assets/icon.png"}}}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "DegenKit", "item": "https://degenkit.app/"}, {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://degenkit.app/blog/"}, {"@type": "ListItem", "position": 3, "name": "How to Add Liquidity for a New Token on Uniswap", "item": "https://degenkit.app/blog/add-liquidity-uniswap-erc20/"}]}</script>
+</head>
+<body>
+<header>
+  <div class="header-row">
+    <a class="logo" href="/"><img src="/assets/icon.png" alt="" class="logo-icon"><span class="logo-text">DegenKit</span></a>
+    <nav class="site-nav">
+      <a class="navlink" href="/#features">Features</a>
+      <a class="navlink" href="/#roadmap">Roadmap</a>
+      <a class="navlink" href="/blog/">Blog</a>
+      <a class="navlink" href="/#faq">FAQ</a>
+    </nav>
+    <div class="header-actions">
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light/dark theme" title="Toggle theme">◐</button>
+      <a class="btn-launch" href="/launch/">Launch App</a>
+    </div>
+  </div>
+</header>
+<main class="bwrap">
+  <article class="post">
+    <div class="p-head">
+      <nav aria-label="Breadcrumb"><a class="back" href="/blog/">← All posts</a></nav>
+      <div class="chips"><span class="chip">Guide</span><span class="chip">Liquidity</span><span class="chip">Ethereum</span></div>
+      <h1>How to Add Liquidity for a New Token on Uniswap</h1>
+      <p class="lede">Your ERC-20 needs a pool before anyone can trade it. Learn how to create one on Uniswap on Ethereum or Robinhood Chain, which version fits a tax token, and what you receive.</p>
+      <div class="byline"><img src="/assets/icon.png" alt=""><span><b>DegenKit</b><i>October 30, 2026 · 4 min read</i></span></div>
+    </div>
+    <div class="cover hero"><img src="/blog/img/add-liquidity-uniswap-erc20-cover.webp" alt="A Uniswap-style new position screen pairing a new token with ETH, with the resulting pool card beside it." loading="lazy" decoding="async"></div>
+    <div class="prose">
+<p>Creating an ERC-20 gives you a supply in your wallet. To make it tradable, you need a liquidity pool. On Ethereum and on Robinhood Chain, the usual place is <strong>Uniswap</strong>. DegenKit does not create EVM pools itself; you add liquidity on the DEX, then come back to DegenKit if you have a tax token.</p>
+<p>If the idea of a pool is new, start with <a href="/blog/creating-a-token-vs-adding-liquidity/">creating a token vs. adding liquidity</a>.</p>
+<h2 id="which-uniswap-version">Which Uniswap version?</h2>
+<p>Uniswap has several versions, and the web app lets you pick one when you start a position.</p>
+<ul><li><strong>v2</strong> pools hold both tokens across the full price range. You receive <strong>UNI-V2 tokens</strong> that represent your share. Each pair has its own contract address.</li><li><strong>v3 and v4</strong> let you choose a fee tier and a price range, and you receive an <strong>NFT</strong> that represents your position. If the price moves outside a custom range, the position stops earning fees.</li></ul>
+<p>For a plain token from DegenKit, any version works. For a <strong>tax token</strong>, the choice matters. <a href="https://developers.uniswap.org/docs/protocols/v3/concepts/unsupported-tokens" target="_blank" rel="noopener noreferrer">Uniswap&#x27;s v3 documentation</a> says fee-on-transfer tokens will not function with its router contracts. Uniswap v2&#x27;s <a href="https://developers.uniswap.org/docs/protocols/v2/guides/troubleshooting" target="_blank" rel="noopener noreferrer">troubleshooting guide</a> points to router functions built to support fee-on-transfer tokens.</p>
+<figure><img src="/blog/img/add-liquidity-uniswap-erc20-1.webp" alt="Uniswap v2 versus v3 and v4: what you receive, price range, fee tiers and which suits a tax token." loading="lazy" decoding="async"><figcaption>For a tax token, a v2 pair is the safer choice. Plain tokens work with any version.</figcaption></figure>
+<h2 id="step-by-step-v2">Step by step (v2)</h2>
+<p><a href="https://support.uniswap.org/hc/en-us/articles/20915582427917" target="_blank" rel="noopener noreferrer">Uniswap&#x27;s support guide</a> lists the steps:</p>
+<ol><li>Open the Uniswap app, connect your wallet and make sure it is on the right network.</li><li>Go to <strong>Pool</strong>, start a new position and choose the <strong>v2</strong> option in the version menu.</li><li>Select your token and ETH (or another pair token). Paste your contract address if your token isn&#x27;t listed.</li><li>Enter both amounts. In a new pool, the ratio of the two sets the starting price.</li><li><strong>Approve</strong> Uniswap to use your token. This is a separate transaction with its own gas.</li><li><strong>Confirm</strong> the position. UNI-V2 tokens arrive in your wallet.</li></ol>
+<aside class="callout warning"><strong>Check the starting price</strong><p>Deposit 100,000,000 tokens with 1 ETH and one token starts at 0.00000001 ETH. A wrong number of zeros gives a very different price, and the first trades will follow it.</p></aside>
+<figure><video src="/blog/img/add-liquidity-uniswap-erc20-demo.mp4" autoplay loop muted playsinline preload="metadata" aria-label="A new position is opened, the token and ETH are chosen, both amounts set the starting price, the approval and deposit are signed, and LP tokens arrive."></video></figure>
+<h2 id="tax-tokens-mark-the-pool">Tax tokens: mark the pool</h2>
+<p>A DegenKit tax token only charges tax on trades against pools you mark. After adding liquidity:</p>
+<ol><li>Open your liquidity transaction on the explorer and copy the <strong>pair address</strong>.</li><li>On DegenKit, go to <strong>My Tokens → Manage tax</strong>.</li><li>Paste the address and choose <strong>Mark as pool</strong>.</li></ol>
+<p>Until you do this, no tax is applied. Use the pair contract, not the router or your own wallet.</p>
+<figure><img src="/blog/img/add-liquidity-uniswap-erc20-2.webp" alt="The order of steps for a tax token: create, add a v2 pool, copy the pair address, mark it, then taxes apply." loading="lazy" decoding="async"><figcaption>Taxes start only after the pool is marked in My Tokens → Manage tax.</figcaption></figure>
+<h2 id="what-you-hold-afterwards">What you hold afterwards</h2>
+<p>Your UNI-V2 tokens (or position NFT) are what let you withdraw the liquidity later. Whoever holds them controls that liquidity. Buyers will ask whether it is locked or burned, so decide in advance and publish the transaction that proves it.</p>
+<h2 id="questions-people-ask">Questions people ask</h2>
+<h3 id="can-i-add-liquidity-on-robinhood-chain-the-same-way">Can I add liquidity on Robinhood Chain the same way?</h3>
+<p>Yes. Uniswap was available on Robinhood Chain from launch. Switch your wallet to Robinhood Chain first and make sure you have ETH there for gas.</p>
+<h3 id="how-much-should-i-add">How much should I add?</h3>
+<p>Only what you can afford to leave in the pool. A thin pool makes every trade move the price a lot.</p>
+<h2 id="wrap-up">Wrap up</h2>
+<p>Create the token on DegenKit, open a Uniswap pool with your token and ETH, approve and confirm, and keep the LP tokens safe. For a tax token, use a v2 pair and mark it in My Tokens. Start from the <a href="https://degenkit.app/launch/ethereum/">Ethereum</a> or <a href="https://degenkit.app/launch/robinhood/">Robinhood Chain</a> launcher.</p>
+    </div>
+    <div class="share">
+      <b>Share this post</b>
+      <div class="share-btns">
+        <a class="s-x" href="https://x.com/intent/post?text=How%20to%20Add%20Liquidity%20for%20a%20New%20Token%20on%20Uniswap%20%E2%80%94%20via%20%40DegenKitApp&amp;url=https%3A%2F%2Fdegenkit.app%2Fblog%2Fadd-liquidity-uniswap-erc20%2F" target="_blank" rel="noopener noreferrer">Share on 𝕏</a>
+        <button class="s-copy" type="button" data-copy="https://degenkit.app/blog/add-liquidity-uniswap-erc20/">Copy link</button>
+      </div>
+    </div>
+    <aside class="cta">
+      <div><h3>Ready to launch your token?</h3><p>Pick a network, set the details, sign once. No code.</p></div>
+      <a class="btn-launch" href="/launch/">Launch App</a>
+    </aside>
+  </article>
+  <section class="related"><h3>Keep reading</h3><div class="grid"><a class="card" href="/blog/create-erc20-token-on-ethereum/">
+  <div class="cover"><img src="/blog/img/create-erc20-token-on-ethereum-cover.webp" alt="An Ethereum token creator form next to a finished ERC-20 token card showing a fixed supply." loading="lazy" decoding="async"></div>
+  <div class="c-body">
+    <div class="c-meta"><span class="chip">Guide</span><span class="chip">Ethereum</span><span class="chip">Token Launch</span><span>October 30, 2026</span></div>
+    <h2>How to Create an ERC-20 Token on Ethereum Without Coding</h2>
+    <p>A step-by-step guide to creating an ERC-20 token on Ethereum mainnet — wallet, ETH for gas, plain or tax token, and how to check the result on Etherscan.</p>
+  </div>
+</a><a class="card" href="/blog/erc20-token-approvals-explained/">
+  <div class="cover"><img src="/blog/img/erc20-token-approvals-explained-cover.webp" alt="A wallet approval request showing a spender, a token and an allowance amount, next to a list of approvals with a revoke button." loading="lazy" decoding="async"></div>
+  <div class="c-body">
+    <div class="c-meta"><span class="chip">Guide</span><span class="chip">Safety</span><span class="chip">Ethereum</span><span>October 30, 2026</span></div>
+    <h2>Token Approvals Explained: What You Allow and How to Revoke It</h2>
+    <p>Before a DEX can move your ERC-20 tokens, you approve it. Learn what an approval is, why unlimited approvals carry risk, and how to check and revoke them.</p>
+  </div>
+</a><a class="card" href="/blog/ethereum-gas-fees-explained/">
+  <div class="cover"><img src="/blog/img/ethereum-gas-fees-explained-cover.webp" alt="A wallet confirmation screen breaking an Ethereum network fee into gas used, base fee and priority fee." loading="lazy" decoding="async"></div>
+  <div class="c-body">
+    <div class="c-meta"><span class="chip">Guide</span><span class="chip">Ethereum</span><span class="chip">Fees</span><span>October 30, 2026</span></div>
+    <h2>Ethereum Gas Fees Explained for Token Creators</h2>
+    <p>Gas, gwei, base fee and priority fee decide what a transaction costs on Ethereum. Learn how the fee is calculated, why it changes and how to read your wallet&#x27;s estimate.</p>
+  </div>
+</a></div></section>
+</main>
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="logo"><img src="/assets/icon.png" alt="" class="logo-icon"><span class="logo-text">DegenKit</span></div>
+        <p>Token creation, without the guesswork. Launch on Solana, Ethereum, BNB Chain, Base and Robinhood Chain.</p>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col"><h4>Site</h4><a href="/">Home</a><a href="/launch/">Launch App</a><a href="/blog/">Blog</a></div>
+        <div class="footer-col"><h4>Legal</h4><a href="/terms/">Terms &amp; Conditions</a><a href="/privacy/">Privacy Policy</a></div>
+        <div class="footer-col"><h4>Help</h4><a href="/support/">Support</a></div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 DegenKit. All rights reserved.</p>
+      <div class="footer-socials"><a class="social-icn" href="https://x.com/DegenKitApp" target="_blank" rel="noopener" aria-label="X / Twitter">𝕏</a></div>
+    </div>
+  </div>
+</footer>
+<script>
+(function(){var r=document.documentElement,b=document.getElementById('themeToggle');
+if(b)b.addEventListener('click',function(){var n=r.getAttribute('data-theme')==='light'?'dark':'light';r.setAttribute('data-theme',n);try{localStorage.setItem('degenkit-theme',n)}catch(e){}});
+document.querySelectorAll('[data-copy]').forEach(function(el){el.addEventListener('click',function(){var u=el.getAttribute('data-copy'),t=el.textContent;
+(navigator.clipboard?navigator.clipboard.writeText(u):Promise.reject()).then(function(){el.textContent='Copied ✓';setTimeout(function(){el.textContent=t},1600)}).catch(function(){window.prompt('Copy link',u)})})});})();
+</script>
+</body>
+</html>
