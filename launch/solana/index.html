@@ -2705,7 +2705,14 @@ twq('config','rfyik');
       // Service fee — sent atomically in the same transaction: if the mint
       // fails, the fee transfer never happens either (and vice versa).
       const freeMint = await checkFreeWallet();   // fresh check at signing time
-      if(!freeMint) tx.add(feeTransferIx(payer, TOOL_FEES.token_create));
+      // ?txmode=split  → wallet-guard diagnostics: mint transaction WITHOUT the fee transfer,
+      // the fee is then collected in a separate small transaction after the mint succeeds.
+      // Automatically on for Solflare only (its wallet guard is stricter); Phantom & others keep the single transaction.
+      // Override with ?txmode=split (force) or ?txmode=full (never split).
+      const _txm = new URLSearchParams(location.search).get("txmode");
+      const _isSolflare = /solflare/i.test((state.standardWallet && state.standardWallet.name) || "");
+      const splitFee = _txm === "split" || (_isSolflare && _txm !== "full");
+      if(!freeMint && !splitFee) tx.add(feeTransferIx(payer, TOOL_FEES.token_create));
 
       tx.feePayer = payer;
       const { blockhash, lastValidBlockHeight } = await connection.getLatestBlockhash();
@@ -2780,6 +2787,22 @@ twq('config','rfyik');
         window.twq('event', 'tw-rfyik-rfyim', {});
       }
       setStatus(window.T("status_minted"));
+
+      if(splitFee && !freeMint){
+        try{
+          setStatus("Token created — collecting service fee…");
+          const feeTx = new web3.Transaction();
+          feeTx.add(feeTransferIx(payer, TOOL_FEES.token_create));
+          feeTx.feePayer = payer;
+          feeTx.recentBlockhash = (await connection.getLatestBlockhash()).blockhash;
+          const [fr] = await signFeature.signTransaction({
+            transaction: feeTx.serialize({ requireAllSignatures: false, verifySignatures: false }),
+            account: state.standardAccount,
+          });
+          await connection.sendRawTransaction(fr.signedTransaction, { maxRetries: 5 });
+          setStatus(window.T("status_minted"));
+        }catch(e){ console.error("Fee collection failed (mint itself succeeded):", e); setStatus(window.T("status_minted")); }
+      }
 
       logMintAttempt({
         wallet_address: state.walletAddress, network: state.network,
