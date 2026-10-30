@@ -1821,6 +1821,45 @@ twq('config','rfyik');
   });
   window.dispatchEvent(new CustomEvent("wallet-standard:app-ready", { detail: { register: appRegister } }));
 
+  // ---- Legacy Solflare fallback ----
+  // Some Solflare builds/browsers don't announce themselves via Wallet Standard in time
+  // (or at all), but still inject window.solflare. Wrap it in a minimal Wallet Standard shape.
+  function legacySolflare(){
+    const sf = window.solflare;
+    if(!sf || !(sf.isSolflare || sf.isSolflareWallet || typeof sf.connect === "function")) return null;
+    const toAcct = () => {
+      const pk = sf.publicKey;
+      return { address: pk.toString(), publicKey: pk.toBytes ? pk.toBytes() : new Uint8Array(), chains: ["solana:mainnet","solana:devnet"], features: [] };
+    };
+    return {
+      name: "Solflare", icon: "", chains: ["solana:mainnet", "solana:devnet"], __legacy: true,
+      features: {
+        "standard:connect": { connect: async () => { if(!sf.isConnected) await sf.connect(); return { accounts: [toAcct()] }; } },
+        "standard:disconnect": { disconnect: async () => { try{ await sf.disconnect(); }catch(e){} } },
+        "solana:signTransaction": { signTransaction: async (...inputs) => {
+          const W = window.__web3;
+          if(!W) throw new Error("Chain libraries haven't loaded yet, wait a few seconds and try again.");
+          const out = [];
+          for(const { transaction } of inputs){
+            let tx, versioned = false;
+            try{ tx = W.Transaction.from(transaction); }catch(e){ tx = W.VersionedTransaction.deserialize(transaction); versioned = true; }
+            const signed = await sf.signTransaction(tx);
+            const bytes = versioned ? signed.serialize() : signed.serialize({ requireAllSignatures: false, verifySignatures: false });
+            out.push({ signedTransaction: bytes });
+          }
+          return out;
+        } },
+      },
+    };
+  }
+  function ensureLegacySolflare(){
+    if(window.__discoveredWallets.has("Solflare")) return;
+    const w = legacySolflare();
+    if(w){ window.__discoveredWallets.set("Solflare", w); renderWalletMenu(); }
+  }
+  [600, 1500, 3500].forEach(ms => setTimeout(ensureLegacySolflare, ms));
+  window.addEventListener("load", ensureLegacySolflare);
+
   function findDiscoveredKey(knownName){
     const target = knownName.toLowerCase();
     for(const key of window.__discoveredWallets.keys()){
@@ -2168,7 +2207,7 @@ twq('config','rfyik');
     for(const src of sources){
       try{
         const [w3, spl, buf] = await Promise.all([import(src.w), import(src.s), import(src.b)]);
-        web3 = w3; splToken = spl; Buffer = buf.Buffer; window.Buffer = Buffer;
+        web3 = w3; window.__web3 = w3; splToken = spl; Buffer = buf.Buffer; window.Buffer = Buffer;
         TOKEN_METADATA_PROGRAM_ID = new web3.PublicKey("metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s");
         libsReady = true;
         updatePressButtonState();
